@@ -1,6 +1,6 @@
 <template>
   <section>
-    <button :class="buttonStyle">
+    <button :class="getStyle">
       <slot></slot>
     </button>
   </section>
@@ -8,7 +8,13 @@
 
 <script>
 export default {
-    props:['buttonStyle']
+    props:['solid'],
+    computed:{
+      getStyle(){
+        if (this.solid == true) {return 'solid'}
+        else {return 'hollow'}
+      }
+    }
 }
 </script>
 
