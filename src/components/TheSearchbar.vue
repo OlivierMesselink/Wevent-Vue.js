@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-    <div id="searchbarBase">
+    <div id="test">
       <div id="baseWrapper">
         <div id="locationDiv">
           <h3 id="loactionH3">Waar wil je naartoe?</h3>
@@ -10,7 +10,7 @@
           <h3 id="amountH3">Met hoeveel mensen?</h3>
           <p id="amountP">
             {{ localSearchQuery.amount }}
-            {{ MoreThanOnePerson }}
+            {{ getCorrectNoun }}
           </p>
         </div>
         <div id="budgetDiv">
@@ -19,19 +19,29 @@
         </div>
         <div id="dateDiv">
           <h3 id="dateH3">Wanneer wil je gaan?</h3>
-          <p id="dateP">{{ localSearchQuery.date }}</p>
+          <p id="dateP">
+            {{ localSearchQuery.date }} om {{ localSearchQuery.time }} uur
+          </p>
         </div>
       </div>
       <base-button id="searchButton" buttonStyle="solid">Zoeken</base-button>
     </div>
-
-    <div id="searchbarInput">
-      <div id="inputWrapper">
-        <div id="locationInputDiv">
-          <h3>Selecteer een locatie</h3>
-          <p>Nijmegen - Centrum</p>
-        </div>
-        <div id=""></div>
+    <div id="inputWrapper">
+      <div v-show="locationBoxOpen" id="locationInputDiv">
+        <h3>Selecteer een locatie</h3>
+        <p>Nijmegen - Centrum</p>
+      </div>
+      <div v-show="amountBOxOpen" id="amountInputDiv">
+        <h3>Selecteer een locatie</h3>
+        <p>Nijmegen - Centrum</p>
+      </div>
+      <div v-show="budgetBoxOpen" id="budgetInputDiv">
+        <h3>Selecteer een locatie</h3>
+        <p>Nijmegen - Centrum</p>
+      </div>
+      <div v-show="dateBoxOpen" id="dateInputDiv">
+        <h3>Selecteer een locatie</h3>
+        <p>Nijmegen - Centrum</p>
       </div>
     </div>
   </div>
@@ -46,12 +56,17 @@ export default {
         amount: 2,
         budget: "€ 20 tot 40 p.p.",
         date: "11-5-2021",
+        time: "19:00",
       },
+      locationBoxOpen: true,
+      amountBOxOpen: true,
+      budgetBoxOpen: true,
+      dateBoxOpen: true,
     };
   },
 
   computed: {
-    MoreThanOnePerson() {
+    getCorrectNoun() {
       if (this.localSearchQuery.amount > 1) {
         return "personen";
       } else {
@@ -68,10 +83,16 @@ export default {
 #wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
+  width: 1100px;
 }
 
 #searchbarBase {
+  display: flex;
+  align-items: center;
+}
+
+#test{
   display: flex;
   align-items: center;
 }
@@ -114,12 +135,20 @@ export default {
 
 #searchButton {
   margin: 0 0 0 -40px;
+  position: relative;
+  right: 0%;
 }
 
-#searchbarInput {
-  margin: 20px 0 0 0;
-  background-color: white;
+#inputWrapper {
   display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-self: stretch;
+}
+
+#inputWrapper > div {
+  margin: 20px 5px 0 5px;
+  background-color: white;
   padding: 40px;
   border-radius: 10px;
 }
