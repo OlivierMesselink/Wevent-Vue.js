@@ -3,6 +3,8 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     isLoggedin: false,
+    currentAccount: {username: 'Olivier', password: null},
+
     searchQuery: {
       location: "",
       groupSize: null,
@@ -32,4 +34,12 @@ export default createStore({
     },
   },
   modules: {},
+  getters:{
+    getLoggedinState(state){
+      return state.isLoggedin
+    },
+    getAccountData(state){
+      return state.currentAccount
+    }
+  }
 });
