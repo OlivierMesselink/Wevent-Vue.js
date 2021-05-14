@@ -36,7 +36,7 @@ button {
 }
 
 .hollow {
-  background-color: white;
+  background-color: transparent;
   color: var(--orange);
 }
 

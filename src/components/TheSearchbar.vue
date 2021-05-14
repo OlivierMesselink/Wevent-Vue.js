@@ -125,7 +125,7 @@ export default {
         this.localSearchQuery.budget +
         " tot \u20ac " +
         (this.localSearchQuery.budget + 10) +
-        " p.p."
+        " per persoon"
       );
     },
     displayCorrectDate(){

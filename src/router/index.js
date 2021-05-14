@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import TheLandingPage from '../components/Pages/TheLandingPage.vue';
 
 const routes = [
-
+  {
+    path: '/', component: TheLandingPage
+  }
 ]
 
 const router = createRouter({

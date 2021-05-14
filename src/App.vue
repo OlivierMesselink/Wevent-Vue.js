@@ -1,26 +1,6 @@
 <template>
-  <section id="main">
-    <div id="content">
-      <the-searchbar></the-searchbar>
-    </div>
-  </section>
+<router-view></router-view>
 </template>
-
-<script>
-import TheSearchbar from "./components/TheSearchbar.vue";
-
-export default {
-  components: {
-    TheSearchbar,
-  },
-  data() {
-    return {
-      data: this.$store.state.searchQuery,
-    };
-  },
-};
-</script>
-
 
 <style>
 :root {
@@ -31,20 +11,5 @@ export default {
   --blue: #86b9cf;
   --lightBlue: #a6c9d8;
   --background: #d6e0e4;
-}
-
-#main {
-  height: 100vh;
-  width: 100vw;
-  overflow: none;
-  background-image: url("../src/assets/blob-scene-haikei.svg");
-  background-size: cover;
-  display: flex;
-
-  align-items: center;
-}
-
-#content {
-  padding: 0px 220px;
 }
 </style>
