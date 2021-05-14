@@ -12,7 +12,7 @@
         </div>
         <div v-if="locationBoxOpen" class="dropdown">
           <ul>
-            <li v-for="location in locations" :key="location.id">
+            <li v-for="location in locations" :key="location.id" @click="setLocation(location.name)">
               {{ location.name }}
             </li>
           </ul>
@@ -63,11 +63,12 @@
         <div @click="toggleDate">
           <h3 id="dateH3">Wanneer wil je gaan?</h3>
           <p id="dateP">
-            {{ localSearchQuery.date }} om {{ localSearchQuery.time }} uur
+            {{ displayCorrectDate }} om {{ localSearchQuery.time }}
           </p>
         </div>
-        <div v-if="dateBoxOpen" class="dropdown">
-          <h3>Date</h3>
+        <div v-if="dateBoxOpen" class="dropdown" id="dateDropdown">
+          <input type="date" v-model="localSearchQuery.date">
+          <input type="time" v-model="localSearchQuery.time">
         </div>
       </div>
     </div>
@@ -81,16 +82,14 @@
 </template>
 
 <script>
-import BaseButton from "./UI/BaseButton.vue";
 export default {
-  components: { BaseButton },
   data() {
     return {
       localSearchQuery: {
         location: "Nijmegen - Centrum",
         amount: 2,
         budget: 20,
-        date: "11-5-2021",
+        date: "2021-05-14",
         time: "19:00",
       },
       locationBoxOpen: false,
@@ -106,6 +105,8 @@ export default {
         { value: 40, active: false },
         { value: 50, active: false },
       ],
+      options: exampleOptions,
+      selections: ["a2", "b1"],
     };
   },
 
@@ -127,6 +128,14 @@ export default {
         " p.p."
       );
     },
+    displayCorrectDate(){
+      const workDate = this.localSearchQuery.date
+      const year = workDate.slice(0,4)
+      const month = workDate.slice(5,7)
+      const day = workDate.slice(8,10)
+
+      return day + '-' + month + '-' + year
+    }
   },
 
   methods: {
@@ -165,6 +174,9 @@ export default {
         this.localSearchQuery.amount = 8;
       }
     },
+    setLocation(newLocation){
+      this.localSearchQuery.location = newLocation
+    },  
     submitSearchQuery() {
       this.$store.dispatch({
         type: "updateSearchQuery",
@@ -206,8 +218,43 @@ export default {
         this.localSearchQuery.budget = 50;
       }
     },
+    setCurrentTimeAndDate() {
+      const today = new Date();
+      const date = today.getFullYear() +"-" + '0' + (today.getMonth() + 1) + "-" + today.getDate();
+      const time = (today.getHours() + 2) + ":" + today.getMinutes();
+
+      this.localSearchQuery.time = time;
+      this.localSearchQuery.date = date;
+
+    },
   },
+  mounted(){
+    this.setCurrentTimeAndDate()
+  }
 };
+
+const exampleOptions = [
+  [
+    {
+      label: "00",
+      value: "00",
+    },
+    {
+      label: "01",
+      value: "a2",
+    },
+  ],
+  [
+    {
+      label: "B1",
+      value: "b1",
+    },
+    {
+      label: "B2",
+      value: "b2",
+    },
+  ],
+];
 </script>
 
 <style scoped>
@@ -316,8 +363,52 @@ export default {
   height: 220px;
 }
 
-#budgetDropdown input[type="radio"] {
-  visibility: hidden;
-  cursor: pointer;
+#dateDropdown input[type="date"]{
+  font-family: "open-sans", sans-serif;
+  color: var(--black);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 10px 20px;
+
 }
+
+#dateDropdown input[type="time"]{
+  font-family: "open-sans", sans-serif;
+  color: var(--black);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 10px 20px;
+  padding: 4px;
+}
+
+#dateDropdown input[type="date"]::-webkit-datetime-edit, input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-clear-button {
+  color: #fff;
+  position: relative;
+}
+
+#dateDropdown input[type="date"]::-webkit-datetime-edit-year-field{
+  position: absolute !important;
+  border-left:1px solid #8c8c8c;
+  padding: 2px;
+  color:#000;
+  left: 56px;
+  padding-right: 2px ;
+}
+
+#dateDropdown input[type="date"]::-webkit-datetime-edit-month-field{
+  position: absolute !important;
+  border-left:1px solid #8c8c8c;
+  padding: 2px;
+  padding-left:6px ;
+  color:#000;
+  left: 26px;
+}
+
+#dateDropdown input[type="date"]::-webkit-datetime-edit-day-field{
+  position: absolute !important;
+  color:#000;
+  padding: 2px;
+  left: 4px;
+}
+
 </style>
