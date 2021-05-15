@@ -3,7 +3,10 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     isLoggedin: false,
-    currentAccount: {username: 'Olivier', password: null},
+    currentAccount: {username: null, password: null, firstname: null, surname: null},
+    userDatabase:[
+      {username: 'OlivierMesselink', password: '1234', firstname: 'Olivier', surname: 'Messelink'}
+    ],
 
     searchQuery: {
       location: "",
@@ -27,11 +30,22 @@ export default createStore({
       state.searchQuery.date = payload.date;
       state.searchQuery.time = payload.time;
     },
+    updateLogin(state, payload){
+      state.currentAccount.username = payload.username;
+      state.currentAccount.password = payload.password;
+      state.currentAccount.firstname = payload.firstname;
+      state.currentAccount.surname = payload.surname;
+
+      state.isLoggedin = true
+    }
   },
   actions: {
     updateSearchQuery(context, payload) {
       context.commit("updateSearchQuery", payload);
     },
+    updateLogin(context, payload){
+      context.commit('updateLogin', payload);
+    }
   },
   modules: {},
   getters:{
@@ -40,6 +54,9 @@ export default createStore({
     },
     getAccountData(state){
       return state.currentAccount
+    },
+    getUserDatabase(state){
+      return state.userDatabase
     }
   }
 });

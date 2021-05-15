@@ -6,9 +6,9 @@
       </div>
       <div id="navButtons">
         <base-button v-if="!loggedIn" buttonStyle="hollow">Aanmelden</base-button        >
-        <base-button @click="login" v-if="!loggedIn" buttonStyle="solid">Inloggen</base-button>
+        <base-button @click="login" v-if="!loggedIn" buttonStyle="hollow">Inloggen</base-button>
         <div id="loggedinDiv">
-          <a><h3 v-if="loggedIn">Hallo {{ user.username }}</h3></a>
+          <a><h3 v-if="loggedIn">Hallo {{ user.firstname }}</h3></a>
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@ export default {
   },
   methods:{
     login(){
-      this.$store.dispatch('login','olivier')
+      this.$router.push('/login')
     }
   }
 };
@@ -34,9 +34,10 @@ export default {
 
 <style scoped>
 #navWrapper {
-  margin-top: 40px; /* <- REMOVE THIS BEFORE BUILD/USE! */
+  padding: 40px 0px; /* <- REMOVE THIS BEFORE BUILD/USE! */
   position: absolute;
   width: 100%;
+  background-image: linear-gradient(rgba(48, 48, 48, 0.267), rgba(255, 255, 255, 0))
 }
 
 #navContent {

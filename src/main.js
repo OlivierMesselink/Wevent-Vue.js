@@ -8,10 +8,12 @@ import ToggleButton from './components/UI/ToggleButton.vue';
 import TheNavbar from './components/TheNavbar.vue'; 
 
 
+
 const app = createApp(App)
 
 app.use(store)
 app.use(router)
+
 
 app.component('base-button', BaseButton)
 app.component('toggle-button', ToggleButton)
