@@ -186,7 +186,7 @@ export default {
         date: this.localSearchQuery.date,
         time: this.localSearchQuery.time,
       });
-      console.log(this.$store.state.searchQuery);
+      this.$router.push('/search')
     },
     setBudget(value) {
       if (value == 20) {
