@@ -1,106 +1,23 @@
 <template>
   <div id="wrapper">
-<<<<<<< HEAD
     <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
       <div id="listContent">
-        <transition-group>
-          <div
-            :class="{
-              listItem: openCard != listItem.title,
-              activeItem: openCard == listItem.title,
-            }"
-=======
-    <transition name="fade">
-      <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
-        <div id="listContent">
-          <div
-            id="listItem"
->>>>>>> main
-            v-for="listItem in list"
-            :key="listItem.title"
-            @mouseenter="
-              moveMarker(listItem.lat, listItem.lang, listItem.title)
-            "
-          >
-            <div
-              id="listItemImage"
-              :style="{ backgroundImage: 'url(' + listItem.imageLink + ')' }"
-            ></div>
-            <div id="listItemContent">
-              <h1>{{ listItem.title }}</h1>
-              <h2>{{ listItem.subtitle }}</h2>
-              <p>{{ listItem.description }}</p>
-<<<<<<< HEAD
-              <transition name="expandContent">
-                <div v-show="openCard == listItem.title" id="expandedItem">
-                  <h3>Selecteer een tijd:</h3>
-                  <div class="timeButtons">
-                    <toggle-button
-                      :solid="localSearchQuery.time == '1900'"
-                      @click="setTime(1900)"
-                      >19:00</toggle-button
-                    >
-                    <toggle-button
-                      :solid="localSearchQuery.time == '1915'"
-                      @click="setTime(1915)"
-                      >19:15</toggle-button
-                    >
-                    <toggle-button
-                      :solid="localSearchQuery.time == '1930'"
-                      @click="setTime(1930)"
-                      >19:30</toggle-button
-                    >
-                  </div>
-                  <div class="timeButtons">
-                    <toggle-button
-                      :solid="localSearchQuery.time == '1945'"
-                      @click="setTime(1945)"
-                      >19:45</toggle-button
-                    >
-                    <toggle-button
-                      :solid="localSearchQuery.time == '2000'"
-                      @click="setTime(2000)"
-                      >20:00</toggle-button
-                    >
-                    <toggle-button
-                      :solid="localSearchQuery.time == '2015'"
-                      @click="setTime(2015)"
-                      >20:15</toggle-button
-                    >
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Eventuele opmerking (allergieën etc.)."
-                  />
-                </div>
-              </transition>
-              <a id="reserveButton" @click="expandItem(listItem.title)"
-=======
-              <a id="reserveButton"
->>>>>>> main
-                ><img src="../../assets/calendar.png" />
-                <p>RESERVEREN</p></a
-              >
-            </div>
-            <div id="ListItemButtons">
-              <div>
-                <img
-                  v-if="!listItem.pinned"
-                  id="pinImg"
-                  src="../../assets/tack-inactive.png"
-                />
-                <img v-else id="pinImg" src="../../assets/tack-active.png" />
-              </div>
-              <img id="Stars" />
-            </div>
-          </div>
-<<<<<<< HEAD
-        </transition-group>
-=======
-        </div>
->>>>>>> main
+        <the-list-item
+          v-for="listItem in list"
+          :key="listItem.title"
+          :listItem="listItem"
+          :localSearchQuery="localSearchQuery"
+          @mouseenter="moveMarker(listItem.lat, listItem.lang, listItem.title)"
+          :ExpandClass="{
+            listItem: openCard != listItem.title,
+            activeItem: openCard == listItem.title,
+          }"
+          :openCard="openCard"
+          @expand="expandItem(listItem.title)"
+          @changeTime="setTime"
+        ></the-list-item>
       </div>
-    </transition>
+    </div>
     <div :class="{ normalMap: listIsOpen, maxMap: !listIsOpen }">
       <GoogleMap
         api-key="AIzaSyBB1DuzHUMiX1M4ZVWf4sKYvGceHWVWpEM"
@@ -131,32 +48,28 @@
 <script>
 import { GoogleMap, Marker } from "vue3-google-map";
 import BaseButton from "../UI/BaseButton.vue";
+import TheListItem from "../UI/TheListItem.vue";
 
 export default {
   components: {
     GoogleMap,
     Marker,
     BaseButton,
+    TheListItem,
   },
   data() {
     BaseButton;
     return {
-<<<<<<< HEAD
       localSearchQuery: {
         amount: 2,
         time: "1900",
         date: "",
       },
-=======
->>>>>>> main
-      center: { lat: 0, lng: 0 },
+      center: { lat: 51.84768967381224, lng: 5.854428604054124 },
       listIsOpen: true,
       list: null,
       markerOptions: null,
-<<<<<<< HEAD
       openCard: "",
-=======
->>>>>>> main
     };
   },
   methods: {
@@ -165,11 +78,7 @@ export default {
     },
     moveMarker(lat, lang) {
       const newLatLng = { lat: lat, lng: lang };
-<<<<<<< HEAD
       this.$refs.mapRef.map.setZoom(16);
-=======
-      this.$refs.mapRef.map.setZoom(15);
->>>>>>> main
       this.$refs.mapRef.map.panTo(newLatLng);
     },
     getMarkerOptions(lat, lang, title) {
@@ -196,7 +105,7 @@ export default {
     },
     loadList() {
       fetch(
-        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/restaurants.json"
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/nijmegen/restaurants.json"
       )
         .then((response) => {
           if (response.ok) {
@@ -208,11 +117,10 @@ export default {
           for (const id in data) {
             results.push({
               id: id,
-              title: data[id].title,
-              subtitle: data[id].subtitle,
-              imageLink: data[id].img,
+              title: data[id].id,
+              subtitle: data[id].location,
+              imageLink: data[id].imgLink,
               description: data[id].description,
-              pinned: data[id].pinned,
               lat: data[id].lat,
               lang: data[id].lang,
             });
@@ -221,19 +129,18 @@ export default {
           this.list = results;
         });
     },
-<<<<<<< HEAD
     expandItem(cardName) {
       if (this.openCard == cardName) {
         this.openCard = "";
       } else {
         this.openCard = cardName;
       }
+
     },
     setTime(time) {
       this.localSearchQuery.time = time;
+      console.log(time)
     },
-=======
->>>>>>> main
   },
   computed: {
     getButtonTxt() {
@@ -271,10 +178,7 @@ export default {
   align-items: stretch;
   overflow: scroll;
   background-color: var(--background);
-<<<<<<< HEAD
   transition: all 0.2s ease-in-out;
-=======
->>>>>>> main
 }
 
 .openList::-webkit-scrollbar {
@@ -288,11 +192,7 @@ export default {
 }
 
 .normalMap {
-<<<<<<< HEAD
   width: 100%;
-=======
-  width: 60vw;
->>>>>>> main
   height: 100vh;
   position: relative;
 }
@@ -314,26 +214,18 @@ export default {
   padding: -10px;
 }
 
-<<<<<<< HEAD
 .listItem {
-=======
-#listItem {
->>>>>>> main
   margin: 20px;
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   display: flex;
   flex-direction: row;
-<<<<<<< HEAD
   justify-content: space-between;
-=======
->>>>>>> main
   cursor: pointer;
   background-color: white;
   transition: all 0.1s ease-in-out;
 }
 
-<<<<<<< HEAD
 .listItem:hover {
   transform: scale(1.01);
 }
@@ -349,12 +241,6 @@ export default {
   transition: all 0.1s ease-in-out;
 }
 
-=======
-#listItem:hover {
-  transform: scale(1.01);
-}
-
->>>>>>> main
 #listItemContent h1 {
   font-family: "raleway", sans-serif;
   font-weight: 900;
@@ -390,11 +276,8 @@ export default {
 #listItemContent {
   padding: 25px;
   width: 500px;
-<<<<<<< HEAD
   display: flex;
   flex-direction: column;
-=======
->>>>>>> main
 }
 
 #listItemContent a {
@@ -440,7 +323,6 @@ export default {
   margin: 0 0 20px 0;
   display: none;
 }
-<<<<<<< HEAD
 
 .timeButtons {
   display: flex;
@@ -502,15 +384,4 @@ export default {
   opacity: 0;
   transform: scale(0);
 }
-
-.listItemAnimation-enter-active {
-  transition: all 0.2s ease-in;
-}
-
-.listItemAnimation-leave-active {
-  transition: all 0.2s ease-out;
-  position: absolute;}
-
-=======
->>>>>>> main
 </style>
