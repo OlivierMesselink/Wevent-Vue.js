@@ -1,5 +1,6 @@
 <template>
   <div id="wrapper">
+<<<<<<< HEAD
     <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
       <div id="listContent">
         <transition-group>
@@ -8,6 +9,13 @@
               listItem: openCard != listItem.title,
               activeItem: openCard == listItem.title,
             }"
+=======
+    <transition name="fade">
+      <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
+        <div id="listContent">
+          <div
+            id="listItem"
+>>>>>>> main
             v-for="listItem in list"
             :key="listItem.title"
             @mouseenter="
@@ -22,6 +30,7 @@
               <h1>{{ listItem.title }}</h1>
               <h2>{{ listItem.subtitle }}</h2>
               <p>{{ listItem.description }}</p>
+<<<<<<< HEAD
               <transition name="expandContent">
                 <div v-show="openCard == listItem.title" id="expandedItem">
                   <h3>Selecteer een tijd:</h3>
@@ -66,6 +75,9 @@
                 </div>
               </transition>
               <a id="reserveButton" @click="expandItem(listItem.title)"
+=======
+              <a id="reserveButton"
+>>>>>>> main
                 ><img src="../../assets/calendar.png" />
                 <p>RESERVEREN</p></a
               >
@@ -82,9 +94,13 @@
               <img id="Stars" />
             </div>
           </div>
+<<<<<<< HEAD
         </transition-group>
+=======
+        </div>
+>>>>>>> main
       </div>
-    </div>
+    </transition>
     <div :class="{ normalMap: listIsOpen, maxMap: !listIsOpen }">
       <GoogleMap
         api-key="AIzaSyBB1DuzHUMiX1M4ZVWf4sKYvGceHWVWpEM"
@@ -125,16 +141,22 @@ export default {
   data() {
     BaseButton;
     return {
+<<<<<<< HEAD
       localSearchQuery: {
         amount: 2,
         time: "1900",
         date: "",
       },
+=======
+>>>>>>> main
       center: { lat: 0, lng: 0 },
       listIsOpen: true,
       list: null,
       markerOptions: null,
+<<<<<<< HEAD
       openCard: "",
+=======
+>>>>>>> main
     };
   },
   methods: {
@@ -143,7 +165,11 @@ export default {
     },
     moveMarker(lat, lang) {
       const newLatLng = { lat: lat, lng: lang };
+<<<<<<< HEAD
       this.$refs.mapRef.map.setZoom(16);
+=======
+      this.$refs.mapRef.map.setZoom(15);
+>>>>>>> main
       this.$refs.mapRef.map.panTo(newLatLng);
     },
     getMarkerOptions(lat, lang, title) {
@@ -195,6 +221,7 @@ export default {
           this.list = results;
         });
     },
+<<<<<<< HEAD
     expandItem(cardName) {
       if (this.openCard == cardName) {
         this.openCard = "";
@@ -205,6 +232,8 @@ export default {
     setTime(time) {
       this.localSearchQuery.time = time;
     },
+=======
+>>>>>>> main
   },
   computed: {
     getButtonTxt() {
@@ -242,7 +271,10 @@ export default {
   align-items: stretch;
   overflow: scroll;
   background-color: var(--background);
+<<<<<<< HEAD
   transition: all 0.2s ease-in-out;
+=======
+>>>>>>> main
 }
 
 .openList::-webkit-scrollbar {
@@ -256,7 +288,11 @@ export default {
 }
 
 .normalMap {
+<<<<<<< HEAD
   width: 100%;
+=======
+  width: 60vw;
+>>>>>>> main
   height: 100vh;
   position: relative;
 }
@@ -278,18 +314,26 @@ export default {
   padding: -10px;
 }
 
+<<<<<<< HEAD
 .listItem {
+=======
+#listItem {
+>>>>>>> main
   margin: 20px;
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   display: flex;
   flex-direction: row;
+<<<<<<< HEAD
   justify-content: space-between;
+=======
+>>>>>>> main
   cursor: pointer;
   background-color: white;
   transition: all 0.1s ease-in-out;
 }
 
+<<<<<<< HEAD
 .listItem:hover {
   transform: scale(1.01);
 }
@@ -305,6 +349,12 @@ export default {
   transition: all 0.1s ease-in-out;
 }
 
+=======
+#listItem:hover {
+  transform: scale(1.01);
+}
+
+>>>>>>> main
 #listItemContent h1 {
   font-family: "raleway", sans-serif;
   font-weight: 900;
@@ -340,8 +390,11 @@ export default {
 #listItemContent {
   padding: 25px;
   width: 500px;
+<<<<<<< HEAD
   display: flex;
   flex-direction: column;
+=======
+>>>>>>> main
 }
 
 #listItemContent a {
@@ -387,6 +440,7 @@ export default {
   margin: 0 0 20px 0;
   display: none;
 }
+<<<<<<< HEAD
 
 .timeButtons {
   display: flex;
@@ -457,4 +511,6 @@ export default {
   transition: all 0.2s ease-out;
   position: absolute;}
 
+=======
+>>>>>>> main
 </style>
