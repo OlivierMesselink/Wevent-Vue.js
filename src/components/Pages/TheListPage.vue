@@ -1,10 +1,13 @@
 <template>
   <div id="wrapper">
-    <transition name="fade">
-      <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
-        <div id="listContent">
+    <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
+      <div id="listContent">
+        <transition-group>
           <div
-            id="listItem"
+            :class="{
+              listItem: openCard != listItem.title,
+              activeItem: openCard == listItem.title,
+            }"
             v-for="listItem in list"
             :key="listItem.title"
             @mouseenter="
@@ -19,7 +22,50 @@
               <h1>{{ listItem.title }}</h1>
               <h2>{{ listItem.subtitle }}</h2>
               <p>{{ listItem.description }}</p>
-              <a id="reserveButton"
+              <transition name="expandContent">
+                <div v-show="openCard == listItem.title" id="expandedItem">
+                  <h3>Selecteer een tijd:</h3>
+                  <div class="timeButtons">
+                    <toggle-button
+                      :solid="localSearchQuery.time == '1900'"
+                      @click="setTime(1900)"
+                      >19:00</toggle-button
+                    >
+                    <toggle-button
+                      :solid="localSearchQuery.time == '1915'"
+                      @click="setTime(1915)"
+                      >19:15</toggle-button
+                    >
+                    <toggle-button
+                      :solid="localSearchQuery.time == '1930'"
+                      @click="setTime(1930)"
+                      >19:30</toggle-button
+                    >
+                  </div>
+                  <div class="timeButtons">
+                    <toggle-button
+                      :solid="localSearchQuery.time == '1945'"
+                      @click="setTime(1945)"
+                      >19:45</toggle-button
+                    >
+                    <toggle-button
+                      :solid="localSearchQuery.time == '2000'"
+                      @click="setTime(2000)"
+                      >20:00</toggle-button
+                    >
+                    <toggle-button
+                      :solid="localSearchQuery.time == '2015'"
+                      @click="setTime(2015)"
+                      >20:15</toggle-button
+                    >
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Eventuele opmerking (allergieën etc.)."
+                  />
+                </div>
+              </transition>
+              <a id="reserveButton" @click="expandItem(listItem.title)"
                 ><img src="../../assets/calendar.png" />
                 <p>RESERVEREN</p></a
               >
@@ -36,9 +82,9 @@
               <img id="Stars" />
             </div>
           </div>
-        </div>
+        </transition-group>
       </div>
-    </transition>
+    </div>
     <div :class="{ normalMap: listIsOpen, maxMap: !listIsOpen }">
       <GoogleMap
         api-key="AIzaSyBB1DuzHUMiX1M4ZVWf4sKYvGceHWVWpEM"
@@ -68,18 +114,27 @@
 
 <script>
 import { GoogleMap, Marker } from "vue3-google-map";
+import BaseButton from "../UI/BaseButton.vue";
 
 export default {
   components: {
     GoogleMap,
     Marker,
+    BaseButton,
   },
   data() {
+    BaseButton;
     return {
+      localSearchQuery: {
+        amount: 2,
+        time: "1900",
+        date: "",
+      },
       center: { lat: 0, lng: 0 },
       listIsOpen: true,
       list: null,
       markerOptions: null,
+      openCard: "",
     };
   },
   methods: {
@@ -88,7 +143,7 @@ export default {
     },
     moveMarker(lat, lang) {
       const newLatLng = { lat: lat, lng: lang };
-      this.$refs.mapRef.map.setZoom(15);
+      this.$refs.mapRef.map.setZoom(16);
       this.$refs.mapRef.map.panTo(newLatLng);
     },
     getMarkerOptions(lat, lang, title) {
@@ -140,6 +195,16 @@ export default {
           this.list = results;
         });
     },
+    expandItem(cardName) {
+      if (this.openCard == cardName) {
+        this.openCard = "";
+      } else {
+        this.openCard = cardName;
+      }
+    },
+    setTime(time) {
+      this.localSearchQuery.time = time;
+    },
   },
   computed: {
     getButtonTxt() {
@@ -170,13 +235,14 @@ export default {
 }
 
 .openList {
-  width: 40vw;
+  width: 1260px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   overflow: scroll;
   background-color: var(--background);
+  transition: all 0.2s ease-in-out;
 }
 
 .openList::-webkit-scrollbar {
@@ -190,7 +256,7 @@ export default {
 }
 
 .normalMap {
-  width: 60vw;
+  width: 100%;
   height: 100vh;
   position: relative;
 }
@@ -212,19 +278,31 @@ export default {
   padding: -10px;
 }
 
-#listItem {
+.listItem {
   margin: 20px;
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   cursor: pointer;
   background-color: white;
   transition: all 0.1s ease-in-out;
 }
 
-#listItem:hover {
+.listItem:hover {
   transform: scale(1.01);
+}
+
+.activeItem {
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  transition: all 0.1s ease-in-out;
 }
 
 #listItemContent h1 {
@@ -262,6 +340,8 @@ export default {
 #listItemContent {
   padding: 25px;
   width: 500px;
+  display: flex;
+  flex-direction: column;
 }
 
 #listItemContent a {
@@ -307,4 +387,74 @@ export default {
   margin: 0 0 20px 0;
   display: none;
 }
+
+.timeButtons {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  width: 260px;
+}
+
+#expandedItem {
+  margin: 40px 0 0 0;
+}
+
+#expandedItem h3 {
+  font-family: "open-sans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--grey);
+  margin: 0px 0 20px 0;
+}
+
+#expandedItem input {
+  width: 75%;
+  color: black;
+  margin: 15px 0px;
+  border: none;
+  padding: 14px 14px;
+  border-radius: 10px;
+  background-color: #a6c9d831;
+}
+
+#expandedItem input::placeholder {
+  font-style: italic;
+}
+
+.expandContent-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.expandContent-enter-active {
+  transition: all 0.2s ease-in-out;
+}
+
+.expandContent-enter-to {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.expandContent-leave-from {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.expandContent-leave-active {
+  transition: all 0.2s ease-in-out;
+}
+
+.expandContent-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.listItemAnimation-enter-active {
+  transition: all 0.2s ease-in;
+}
+
+.listItemAnimation-leave-active {
+  transition: all 0.2s ease-out;
+  position: absolute;}
+
 </style>
