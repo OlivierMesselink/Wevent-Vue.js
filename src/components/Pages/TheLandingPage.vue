@@ -1,14 +1,36 @@
 <template>
-    <the-navbar></the-navbar>
-  <section id="content">
-    <div id="wrapper">
-    <the-searchbar></the-searchbar>
-
+  <the-navbar></the-navbar>
+  <section id="search">
+    <div id="searchWrapper">
+      <div>
+        <h1>Vind jouw activiteit!</h1>
+        <the-searchbar></the-searchbar>
+      </div>
     </div>
-        <div id="backdrop1"></div>
+    <div id="backdrop1"></div>
     <div id="backdrop2"></div>
     <div id="backdrop3"></div>
+    <div id="featuredDiv">
+      <a :href="featured.link" target="blank">
+        <p>{{ featured.title }}</p>
+      </a>
+    </div>
   </section>
+  <section id="account">
+    <div id="accountWrapper">
+      <div id="accLeftColumn">
+        <h1>Maak een account aan!</h1>
+        <div id="accCardsDiv">
+          <div class="accCard"></div>
+          <div class="accCard"></div>
+          <div class="accCard"></div>
+          <div class="accCard"></div>
+        </div>
+      </div>
+      <div id="accLeftColumn"></div>
+    </div>
+  </section>
+  <section id="featured"></section>
 </template>
 
 <script>
@@ -17,19 +39,36 @@ export default {
   components: {
     TheSearchbar,
   },
+  data() {
+    return {
+      featured: {
+        title: "leip cafe",
+        link: "https://www.leipcafe.nl",
+      },
+    };
+  },
 };
 </script>
 
 <style scoped>
-#content {
+#search {
   height: 100vh;
   width: 100vw;
   display: flex;
 }
 
-#wrapper {
+#searchWrapper {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 0 380px;
+}
+
+h1 {
+  font-family: "raleway", sans-serif;
+  font-weight: 800;
+  font-size: 58px;
+  margin-bottom: 60px;
 }
 
 #backdrop1 {
@@ -58,5 +97,47 @@ export default {
   background-color: var(--background);
   z-index: -3;
   background-size: cover;
+}
+
+#featuredDiv {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+}
+
+#featuredDiv a {
+  font-family: "open-sans", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+  text-decoration: none;
+}
+
+#account {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  background-color: var(--background);
+  overflow-y: hidden;
+}
+
+#accountWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 380px;
+}
+
+#accCardsDiv{
+  display: flex;
+
+}
+
+.accCard {
+  height: 200px;
+  width: 200px;
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 10px;
 }
 </style>

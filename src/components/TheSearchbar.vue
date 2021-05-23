@@ -10,13 +10,19 @@
             :placeholder="localSearchQuery.location"
           />
         </div>
-        <div v-if="locationBoxOpen" class="dropdown">
-          <ul>
-            <li v-for="location in locations" :key="location.id" @click="setLocation(location.name)">
-              {{ location.name }}
-            </li>
-          </ul>
-        </div>
+        <transition name="fade">
+          <div v-if="locationBoxOpen" class="dropdown">
+            <ul>
+              <li
+                v-for="location in locations"
+                :key="location.id"
+                @click="setLocation(location.name)"
+              >
+                {{ location.name }}
+              </li>
+            </ul>
+          </div>
+        </transition>
       </div>
       <div id="amountDiv">
         <div @click="toggleAmount">
@@ -26,38 +32,42 @@
             {{ getCorrectNoun }}
           </p>
         </div>
-        <div v-if="amountBOxOpen" class="dropdown" id="amountDropdown">
-          <h3>Aantal personen:</h3>
-          <div id="changeAmountDiv">
-            <base-button buttonStyle="solid" @click="changeAmount(-1)"
-              >-</base-button
-            >
-            <h2>{{ localSearchQuery.amount }}</h2>
-            <base-button buttonStyle="solid" @click="changeAmount(1)"
-              >+</base-button
-            >
+        <transition name="fade">
+          <div v-if="amountBOxOpen" class="dropdown" id="amountDropdown">
+            <h3>Aantal personen:</h3>
+            <div id="changeAmountDiv">
+              <base-button buttonStyle="solid" @click="changeAmount(-1)"
+                >-</base-button
+              >
+              <h2>{{ localSearchQuery.amount }}</h2>
+              <base-button buttonStyle="solid" @click="changeAmount(1)"
+                >+</base-button
+              >
+            </div>
           </div>
-        </div>
+        </transition>
       </div>
       <div id="budgetDiv">
         <div @click="toggleBudget">
           <h3 id="budgetH3">Wat is je budget?</h3>
           <p id="budgetP">{{ getBudget }}</p>
         </div>
-        <div v-if="budgetBoxOpen" class="dropdown" id="budgetDropdown">
-          <toggle-button @click="setBudget(20)" :solid="budgets[0].active"
-            >€20 tot €30</toggle-button
-          >
-          <toggle-button @click="setBudget(30)" :solid="budgets[1].active"
-            >€30 tot €40</toggle-button
-          >
-          <toggle-button @click="setBudget(40)" :solid="budgets[2].active"
-            >€40 tot €50</toggle-button
-          >
-          <toggle-button @click="setBudget(50)" :solid="budgets[3].active"
-            >€50 tot €60</toggle-button
-          >
-        </div>
+        <transition name="fade">
+          <div v-if="budgetBoxOpen" class="dropdown" id="budgetDropdown">
+            <toggle-button @click="setBudget(20)" :solid="budgets[0].active"
+              >€20 tot €30</toggle-button
+            >
+            <toggle-button @click="setBudget(30)" :solid="budgets[1].active"
+              >€30 tot €40</toggle-button
+            >
+            <toggle-button @click="setBudget(40)" :solid="budgets[2].active"
+              >€40 tot €50</toggle-button
+            >
+            <toggle-button @click="setBudget(50)" :solid="budgets[3].active"
+              >€50 tot €60</toggle-button
+            >
+          </div>
+        </transition>
       </div>
       <div id="dateDiv">
         <div @click="toggleDate">
@@ -66,10 +76,12 @@
             {{ displayCorrectDate }} om {{ localSearchQuery.time }}
           </p>
         </div>
-        <div v-if="dateBoxOpen" class="dropdown" id="dateDropdown">
-          <input type="date" v-model="localSearchQuery.date">
-          <input type="time" v-model="localSearchQuery.time">
-        </div>
+        <transition name="fade">
+          <div v-if="dateBoxOpen" class="dropdown" id="dateDropdown">
+            <input type="date" v-model="localSearchQuery.date" />
+            <input type="time" v-model="localSearchQuery.time" />
+          </div>
+        </transition>
       </div>
     </div>
     <base-button
@@ -128,14 +140,14 @@ export default {
         " per persoon"
       );
     },
-    displayCorrectDate(){
-      const workDate = this.localSearchQuery.date
-      const year = workDate.slice(0,4)
-      const month = workDate.slice(5,7)
-      const day = workDate.slice(8,10)
+    displayCorrectDate() {
+      const workDate = this.localSearchQuery.date;
+      const year = workDate.slice(0, 4);
+      const month = workDate.slice(5, 7);
+      const day = workDate.slice(8, 10);
 
-      return day + '-' + month + '-' + year
-    }
+      return day + "-" + month + "-" + year;
+    },
   },
 
   methods: {
@@ -174,9 +186,9 @@ export default {
         this.localSearchQuery.amount = 8;
       }
     },
-    setLocation(newLocation){
-      this.localSearchQuery.location = newLocation
-    },  
+    setLocation(newLocation) {
+      this.localSearchQuery.location = newLocation;
+    },
     submitSearchQuery() {
       this.$store.dispatch({
         type: "updateSearchQuery",
@@ -186,7 +198,7 @@ export default {
         date: this.localSearchQuery.date,
         time: this.localSearchQuery.time,
       });
-      this.$router.push('/search')
+      this.$router.push("/search");
     },
     setBudget(value) {
       if (value == 20) {
@@ -220,17 +232,22 @@ export default {
     },
     setCurrentTimeAndDate() {
       const today = new Date();
-      const date = today.getFullYear() +"-" + '0' + (today.getMonth() + 1) + "-" + today.getDate();
-      const time = (today.getHours() + 2) + ":" + today.getMinutes();
+      const date =
+        today.getFullYear() +
+        "-" +
+        "0" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      const time = today.getHours() + 2 + ":" + today.getMinutes();
 
       this.localSearchQuery.time = time;
       this.localSearchQuery.date = date;
-
     },
   },
-  mounted(){
-    this.setCurrentTimeAndDate()
-  }
+  mounted() {
+    this.setCurrentTimeAndDate();
+  },
 };
 
 const exampleOptions = [
@@ -258,8 +275,6 @@ const exampleOptions = [
 </script>
 
 <style scoped>
-
-
 #searchbarWrapper {
   display: flex;
   align-items: center;
@@ -363,16 +378,15 @@ const exampleOptions = [
   height: 220px;
 }
 
-#dateDropdown input[type="date"]{
+#dateDropdown input[type="date"] {
   font-family: "open-sans", sans-serif;
   color: var(--black);
   font-size: 15px;
   font-weight: 600;
   margin: 10px 20px;
-
 }
 
-#dateDropdown input[type="time"]{
+#dateDropdown input[type="time"] {
   font-family: "open-sans", sans-serif;
   color: var(--black);
   font-size: 15px;
@@ -381,34 +395,51 @@ const exampleOptions = [
   padding: 4px;
 }
 
-#dateDropdown input[type="date"]::-webkit-datetime-edit, input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-clear-button {
+#dateDropdown input[type="date"]::-webkit-datetime-edit,
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
   color: #fff;
   position: relative;
 }
 
-#dateDropdown input[type="date"]::-webkit-datetime-edit-year-field{
+#dateDropdown input[type="date"]::-webkit-datetime-edit-year-field {
   position: absolute !important;
-  border-left:1px solid #8c8c8c;
+  border-left: 1px solid #8c8c8c;
   padding: 2px;
-  color:#000;
+  color: #000;
   left: 56px;
-  padding-right: 2px ;
+  padding-right: 2px;
 }
 
-#dateDropdown input[type="date"]::-webkit-datetime-edit-month-field{
+#dateDropdown input[type="date"]::-webkit-datetime-edit-month-field {
   position: absolute !important;
-  border-left:1px solid #8c8c8c;
+  border-left: 1px solid #8c8c8c;
   padding: 2px;
-  padding-left:6px ;
-  color:#000;
+  padding-left: 6px;
+  color: #000;
   left: 26px;
 }
 
-#dateDropdown input[type="date"]::-webkit-datetime-edit-day-field{
+#dateDropdown input[type="date"]::-webkit-datetime-edit-day-field {
   position: absolute !important;
-  color:#000;
+  color: #000;
   padding: 2px;
   left: 4px;
 }
 
+.fade-enter-from {
+  opacity: 0;
+  transform: scale(.5);
+}
+.fade-enter-active {
+  transition: all 0.075s ease-out;
+}
+.fade-leave-active {
+  transition: all 0.075s ease-in;
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(.5);
+}
 </style>

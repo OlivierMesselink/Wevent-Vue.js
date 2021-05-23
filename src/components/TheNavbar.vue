@@ -5,8 +5,8 @@
         <img :src="logoImg" />
       </div>
       <div id="navButtons">
-        <base-button v-if="!loggedIn" buttonStyle="hollow">Aanmelden</base-button        >
-        <base-button @click="login" v-if="!loggedIn" buttonStyle="hollow">Inloggen</base-button>
+        <base-button v-if="!loggedIn" buttonStyle="solid">Aanmelden</base-button        >
+        <base-button @click="login" v-if="!loggedIn" buttonStyle="solid">Inloggen</base-button>
         <div id="loggedinDiv">
           <a><h3 v-if="loggedIn">Hallo {{ user.firstname }}</h3></a>
         </div>
