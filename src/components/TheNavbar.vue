@@ -35,7 +35,7 @@ export default {
 <style scoped>
 #navWrapper {
   padding: 40px 0px; /* <- REMOVE THIS BEFORE BUILD/USE! */
-  position: absolute;
+  position: fixed;
   width: 100%;
   background-image: linear-gradient(rgba(48, 48, 48, 0.267), rgba(255, 255, 255, 0));
   z-index: 10;

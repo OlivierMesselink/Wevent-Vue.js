@@ -1,7 +1,7 @@
 <template>
-  <div id="wrapper">
+  <div class="wrapper">
     <the-navbar></the-navbar>
-    <section id="search">
+    <section class="child" id="search">
       <div id="searchWrapper">
         <div>
           <h1>Vind jouw activiteit!</h1>
@@ -18,14 +18,13 @@
       </div>
     </section>
 
-    <div class="section">
+    <section class="child">
       <the-account-ad></the-account-ad>
-      <section id="featured"></section>
-    </div>
+    </section>
 
-    <div class="section">
+    <section class="child">
       <the-featured-list></the-featured-list>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -52,9 +51,16 @@ export default {
 </script>
 
 <style scoped>
-#wrapper {
-  width: 100vw;
-  overflow-y: hidden;
+.wrapper {
+  max-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  position: relative;;
+}
+
+.child{
+  scroll-snap-align: start;
 }
 
 #search {
@@ -79,10 +85,11 @@ h1 {
 
 #backdrop1 {
   position: absolute;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   background-image: url("../../assets/backdrop.png");
   z-index: -1;
+  overflow-y: visible;
 }
 
 #backdrop2 {

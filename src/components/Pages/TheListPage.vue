@@ -160,7 +160,6 @@ export default {
   },
   mounted() {
     this.loadList();
-    console.log(this.list);
   },
 };
 </script>

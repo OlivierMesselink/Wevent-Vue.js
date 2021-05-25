@@ -283,7 +283,7 @@ export default {
 
 #baseWrapper h3 {
   font-family: "Raleway", sans-serif;
-  color: var(--grey);
+  color: black;
   font-size: 16px;
   font-weight: 800;
   margin: 0px 0px 10px 0px;

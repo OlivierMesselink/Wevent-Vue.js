@@ -1,64 +1,168 @@
 <template>
-    <section>
-        <div id="contentWrapper">
-            <div id="content"></div>
+  <section>
+    <div
+      id="contentWrapper"
+      @mouseenter="hover = true"
+      @mouseleave="hover = false"
+      :style="{ backgroundImage: 'url(' + item.imageLink + ')' }"
+    >
+      <div id="gradient"></div>
+      <transition name="icons">
+        <div v-if="hover" id="icons">
+          <fa v-if="item.category.bar" class="ico" icon="beer"></fa>
+          <fa v-if="item.category.lunch" class="ico" icon="coffee"></fa>
+          <fa v-if="item.category.restaurant" class="ico" icon="utensils"></fa>
+          <fa v-if="item.category.hotel" class="ico" icon="bed"></fa>
         </div>
-    </section>
+      </transition>
+      <transition name="rating">
+        <div v-if="hover" id="rating">
+          <fa v-if="item.rating >= 1" class="ratingIco" icon="star"></fa>
+          <fa v-if="item.rating >= 2" class="ratingIco" icon="star"></fa>
+          <fa v-if="item.rating >= 3" class="ratingIco" icon="star"></fa>
+          <fa v-if="item.rating >= 4" class="ratingIco" icon="star"></fa>
+          <fa v-if="item.rating >= 5" class="ratingIco" icon="star"></fa>
+
+          <fa v-if="item.rating <= 1" :icon="['far', 'star']"></fa>
+          <fa v-if="item.rating <= 2" :icon="['far', 'star']"></fa>
+          <fa v-if="item.rating <= 3" :icon="['far', 'star']"></fa>
+          <fa v-if="item.rating <= 4" :icon="['far', 'star']"></fa>
+        </div>
+      </transition>
+      <div id="content">
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.subtitle }}</p>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
 export default {
-    data(){
-        return{
-            list: ''
-        }
-    },
-    methods:{
-        loadList() {
-      fetch(
-        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/nijmegen/restaurants.json"
-      )
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          const results = [];
-          for (const id in data) {
-            results.push({
-              id: id,
-              title: data[id].id,
-              subtitle: data[id].location,
-              imageLink: data[id].imgLink,
-              description: data[id].description,
-              lat: data[id].lat,
-              lang: data[id].lang,
-            });
-          }
-
-          this.list = results;
-        });
-    }
-    },
-    mounted(){
-        this.loadList
-    }
-}
+  props: ["item"],
+  data() {
+    return {
+      list: "",
+      hover: false,
+    };
+  },
+};
 </script>
 
 <style scoped>
 
-#contentWrapper{
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    width: 450px;
-    height: 300px;
+
+#contentWrapper {
+  position: relative;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  width: 420px;
+  height: 300px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-size: cover;
+  background-blend-mode: multiply;
+  color: white;
 }
 
-#content{
-    padding: 40px;
+#gradient {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 25%,
+    rgba(255, 255, 255, 0) 65%
+  );
+  opacity: 0.7;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
 }
 
+#gradient:hover {
+  opacity: 0.5;
+}
+
+#contentWrapper:hover {
+  transform: scale(1.05);
+}
+
+#content {
+  padding: 40px;
+  position: absolute;
+  bottom: 0px;
+  color: inherit;
+}
+
+#icons {
+  margin: 40px;
+  padding: 12px;
+  color: white;
+  font-size: 16px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  /* background-color: #fe9362d3; */
+  background-color: var(--orange);
+  border-radius: 10px;
+}
+
+.ico {
+  margin: 0 5px;
+}
+
+#rating {
+  padding: 40px;
+  color: var(--orange);
+  font-size: 16px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+
+  border-radius: 10px;
+}
+
+h2 {
+  color: inherit;
+  font-family: "raleway", sans-serif;
+  font-weight: 700;
+  font-size: 21px;
+  margin: 0 0 10px 0;
+}
+
+p {
+  color: inherit;
+  opacity: 0.8;
+  font-family: "open sans", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.icons-enter-from,
+.icons-leave-to {
+  transform: translatey(-30px);
+  opacity: 0;
+}
+
+.icons-enter-to,
+.icons-leave-from {
+  transform: translatey(0px);
+  opacity: 1;
+}
+
+.icons-leave-active,
+.rating-leave-active {
+  transition: all 0.2s ease-in;
+}
+
+.icons-enter-active,
+.rating-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.rating-enter-from,
+.rating-leave-to {
+  transform: translatey(30px);
+  opacity: 0;
+}
 </style>

@@ -1,9 +1,14 @@
 <template>
   <section id="featuredWrapper">
+    <div id="backdrop"></div>
     <div id="featuredContent">
       <h1>Uitgelicht</h1>
       <div id="list">
-          <the-featured-item v-for="listItem in list" :key="listItem.title"></the-featured-item>
+        <the-featured-item
+          v-for="listItem in list.slice(0, 8)"
+          :key="listItem.title"
+          :item="listItem"
+        ></the-featured-item>
       </div>
     </div>
   </section>
@@ -14,16 +19,16 @@
 import TheFeaturedItem from "./UI/TheFeaturedItem.vue";
 
 export default {
-    components:{
-        TheFeaturedItem
-    },
-    data(){
-        return{
-            list: ''
-        }
-    },
-    methods:{
-        loadList() {
+  components: {
+    TheFeaturedItem,
+  },
+  data() {
+    return {
+      list: "",
+    };
+  },
+  methods: {
+    loadList() {
       fetch(
         "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/nijmegen/restaurants.json"
       )
@@ -43,19 +48,18 @@ export default {
               description: data[id].description,
               lat: data[id].lat,
               lang: data[id].lang,
+              category: data[id].category,
+              rating: data[id].rating
             });
           }
-
           this.list = results;
-          console.log(results)
         });
-    }
     },
-    mounted(){
-        this.loadList;
-        console.log(this.list)
-    }
-}
+  },
+  mounted() {
+    this.loadList();
+  },
+};
 </script>
 
 <style scoped>
@@ -67,9 +71,9 @@ export default {
 
 #featuredContent {
   padding: 0px 380px;
-  height: 100%
-  ;
+  height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -79,5 +83,24 @@ h1 {
   font-weight: 800;
   font-size: 58px;
   margin-bottom: 60px;
+}
+
+#list{
+  display: grid;
+  width: 100%;
+  grid-template-columns:  380px 380px 380px 380px;
+  row-gap: 30px;
+  justify-content: space-between;
+}
+
+#backdrop{
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../assets/concrete_texture.jpg");
+  mix-blend-mode: hard-light;
+  opacity: 15%;
+  z-index: 0;
+  background-size: cover;
 }
 </style>
