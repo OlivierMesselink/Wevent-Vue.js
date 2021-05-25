@@ -37,11 +37,11 @@
             <h3>Aantal personen:</h3>
             <div id="changeAmountDiv">
               <base-button buttonStyle="solid" @click="changeAmount(-1)"
-                >-</base-button
+                ><fa icon="minus"></fa></base-button
               >
               <h2>{{ localSearchQuery.amount }}</h2>
               <base-button buttonStyle="solid" @click="changeAmount(1)"
-                >+</base-button
+                ><fa icon="plus"></fa></base-button
               >
             </div>
           </div>
@@ -117,8 +117,6 @@ export default {
         { value: 40, active: false },
         { value: 50, active: false },
       ],
-      options: exampleOptions,
-      selections: ["a2", "b1"],
     };
   },
 
@@ -249,29 +247,6 @@ export default {
     this.setCurrentTimeAndDate();
   },
 };
-
-const exampleOptions = [
-  [
-    {
-      label: "00",
-      value: "00",
-    },
-    {
-      label: "01",
-      value: "a2",
-    },
-  ],
-  [
-    {
-      label: "B1",
-      value: "b1",
-    },
-    {
-      label: "B2",
-      value: "b2",
-    },
-  ],
-];
 </script>
 
 <style scoped>

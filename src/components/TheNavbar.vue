@@ -8,7 +8,7 @@
         <base-button v-if="!loggedIn" buttonStyle="solid">Aanmelden</base-button        >
         <base-button @click="login" v-if="!loggedIn" buttonStyle="solid">Inloggen</base-button>
         <div id="loggedinDiv">
-          <a><h3 v-if="loggedIn">Hallo {{ user.firstname }}</h3></a>
+          <a><h3 v-if="loggedIn"> {{ user.firstname }} <fa class="ico" icon='user-circle'></fa></h3></a>
         </div>
       </div>
     </div>
@@ -63,13 +63,20 @@ img {
 h3 {
   font-family: "open-sans", sans-serif;
   font-weight: 700;
-  font-size: 16px;
-  color: var(--orange);
+  font-size: 18px;
+  color: black;
 }
 
 #loggedinDiv{
   display: flex;
   align-items: center;
+  cursor: pointer;
+}
+
+.ico{
+  font-size: 36px;
+  vertical-align: middle;
+  margin: 0 10px;
 }
 
 #loggedinDiv{

@@ -1,43 +1,44 @@
 <template>
-  <the-navbar></the-navbar>
-  <section id="search">
-    <div id="searchWrapper">
-      <div>
-        <h1>Vind jouw activiteit!</h1>
-        <the-searchbar></the-searchbar>
-      </div>
-    </div>
-    <div id="backdrop1"></div>
-    <div id="backdrop2"></div>
-    <div id="backdrop3"></div>
-    <div id="featuredDiv">
-      <a :href="featured.link" target="blank">
-        <p>{{ featured.title }}</p>
-      </a>
-    </div>
-  </section>
-  <section id="account">
-    <div id="accountWrapper">
-      <div id="accLeftColumn">
-        <h1>Maak een account aan!</h1>
-        <div id="accCardsDiv">
-          <div class="accCard"></div>
-          <div class="accCard"></div>
-          <div class="accCard"></div>
-          <div class="accCard"></div>
+  <div id="wrapper">
+    <the-navbar></the-navbar>
+    <section id="search">
+      <div id="searchWrapper">
+        <div>
+          <h1>Vind jouw activiteit!</h1>
+          <the-searchbar></the-searchbar>
         </div>
       </div>
-      <div id="accLeftColumn"></div>
+      <div id="backdrop1"></div>
+      <div id="backdrop2"></div>
+      <div id="backdrop3"></div>
+      <div id="featuredDiv">
+        <a :href="featured.link" target="blank">
+          <p>{{ featured.title }}</p>
+        </a>
+      </div>
+    </section>
+
+    <div class="section">
+      <the-account-ad></the-account-ad>
+      <section id="featured"></section>
     </div>
-  </section>
-  <section id="featured"></section>
+
+    <div class="section">
+      <the-featured-list></the-featured-list>
+    </div>
+  </div>
 </template>
 
 <script>
 import TheSearchbar from "../TheSearchbar.vue";
+import TheAccountAd from "../TheAccountAd.vue";
+import TheFeaturedList from "../TheFeaturedList.vue";
+
 export default {
   components: {
     TheSearchbar,
+    TheAccountAd,
+    TheFeaturedList
   },
   data() {
     return {
@@ -51,6 +52,11 @@ export default {
 </script>
 
 <style scoped>
+#wrapper {
+  width: 100vw;
+  overflow-y: hidden;
+}
+
 #search {
   height: 100vh;
   width: 100vw;
@@ -111,33 +117,5 @@ h1 {
   font-size: 16px;
   color: white;
   text-decoration: none;
-}
-
-#account {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  background-color: var(--background);
-  overflow-y: hidden;
-}
-
-#accountWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 380px;
-}
-
-#accCardsDiv{
-  display: flex;
-
-}
-
-.accCard {
-  height: 200px;
-  width: 200px;
-  background-color: white;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 10px;
 }
 </style>
