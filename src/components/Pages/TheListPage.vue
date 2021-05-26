@@ -1,4 +1,5 @@
 <template>
+    <the-mini-navbar v-if="true"></the-mini-navbar>
   <div id="wrapper">
     <transition name="listFade">
       <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
@@ -62,6 +63,7 @@
 import { GoogleMap, Marker } from "vue3-google-map";
 import BaseButton from "../UI/BaseButton.vue";
 import TheListItem from "../UI/TheListItem.vue";
+import TheMiniNavbar from "../UI/TheMiniNavbar.vue";
 
 export default {
   components: {
@@ -69,6 +71,7 @@ export default {
     Marker,
     BaseButton,
     TheListItem,
+    TheMiniNavbar
   },
   data() {
     BaseButton;
@@ -198,11 +201,12 @@ export default {
 <style scoped>
 #wrapper {
   display: flex;
+
 }
 
 .openList {
   width: 1260px;
-  height: 100vh;
+  height: 92vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -223,13 +227,13 @@ export default {
 
 .normalMap {
   width: 100%;
-  height: 100vh;
+  height: 92vh;
   position: relative;
 }
 
 .maxMap {
   width: 100vw;
-  height: 100vh;
+  height: 92vh;
   position: relative;
 }
 

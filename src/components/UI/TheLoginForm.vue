@@ -5,33 +5,54 @@
     </div>
 
     <div id="formBlock">
-      <div id="emailInput" v-if="signUp">
+      <div id="emailInput">
         <h2>Email adres</h2>
-        <input id="inputEmail" type="text" placeholder="jan@jansen.com" />
+        <input
+          id="inputEmail"
+          v-if="!signUp"
+          type="text"
+          v-model="login.email"
+          placeholder="jan@jansen.com"
+        />
+        <input
+          id="inputEmail"
+          v-if="signUp"
+          type="text"
+          v-model="register.email"
+          placeholder="jan@jansen.com"
+        />
       </div>
-
-      <h2>Gebruikersnaam</h2>
-      <input
-        id="inputUser"
-        type="text"
-        placeholder="Jan Janssen"
-        v-model="login.username"
-      />
       <h2>Wachtwoord</h2>
       <input
         id="inputPass"
+        v-if="signUp"
+        :type="getPasswordInputType"
+        placeholder="Wachtwoord"
+        v-model="register.password"
+      />
+
+      <input
+        id="inputPass"
+        v-if="!signUp"
         :type="getPasswordInputType"
         placeholder="Wachtwoord"
         v-model="login.password"
       />
-      <img @click="togglePassVisibility" v-if="!showPass" src="../../assets/eye_open.svg">
-      <img @click="togglePassVisibility" v-if="showPass" src="../../assets/eye_shut.svg">
+
+      <img
+        @click="togglePassVisibility"
+        v-if="!showPass"
+        src="../../assets/eye_open.svg"
+      />
+      <img
+        @click="togglePassVisibility"
+        v-if="showPass"
+        src="../../assets/eye_shut.svg"
+      />
       <p v-if="wrongCreds" id="wrongCredDiv">
-        Wrong credentials, please try again.
+        Ongeldige inloggegevens, probeer het opnieuw.
       </p>
-      <base-button @click="submitLogin" id="submitButton" buttonStyle="solid"
-        >Inloggen</base-button
-      >
+      <base-button @click="registerUser" id="submitButton" buttonStyle="solid">{{getButtonTxt}}</base-button>
       <div id="createAcc">
         <p>
           <a v-on:click="toggleSignUp" href="#">{{ getA }}</a>
@@ -49,6 +70,8 @@
 </template>
 
 <script>
+import { projectAuth } from "../../firebaseConfig.js";
+
 export default {
   data() {
     return {
@@ -59,6 +82,10 @@ export default {
         username: "",
         password: "",
       },
+      register: {
+        email: "",
+        password: "",
+      },
       userDatabase: this.$store.getters.getUserDatabase,
     };
   },
@@ -66,23 +93,40 @@ export default {
     toggleSignUp() {
       this.signUp = !this.signUp;
     },
-    submitLogin() {
-      if (!this.signUp) {
-        const database = this.userDatabase;
-
-        for (var i = 0; i < database.length; i++) {
-          if (this.login.username == database[i].username) {
-              if (this.login.password == database[i].password) {
-                  this.$store.dispatch('updateLogin', database[i])
-                  this.$router.push('/');
-              }else {this.wrongCreds = true; this.login.password = ''}
-          }else {this.wrongCreds = true; this.login.password = ''}
-        }
-      }
+    togglePassVisibility() {
+      this.showPass = !this.showPass;
     },
-    togglePassVisibility(){
-        this.showPass = !this.showPass
+    loginUser(){
+      projectAuth.signInWithEmailAndPassword(this.login.email, this.login.password).then((userCredential) => {
+    this.user = userCredential.user;
+    this.$router.push("/");
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if(errorMessage || errorCode){
+      this.wrongCreds = true
     }
+  });
+    },
+    registerUser() {
+      if(!this.signUp){
+        this.loginUser()
+        return
+      } 
+      projectAuth.createUserWithEmailAndPassword(
+          this.register.email,
+          this.register.password
+        )
+        .then((userCredential) => {
+          alert("Successfully registered! Please login.");
+          this.user = userCredential.user;
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    },
   },
   computed: {
     getHeader() {
@@ -99,10 +143,17 @@ export default {
         return "Account maken";
       }
     },
-    getPasswordInputType(){
-        if(this.showPass)   {return 'text'}
-        else                {return 'password'}
+    getPasswordInputType() {
+      if (this.showPass) {
+        return "text";
+      } else {
+        return "password";
+      }
     },
+    getButtonTxt(){
+      if(this.signUp) {return "Maak account"}
+      else            {return "Inloggen"}
+    }
   },
 };
 </script>
@@ -170,12 +221,16 @@ a {
   margin-bottom: 20px;
 }
 
-#formBlock img{
-    position: absolute;
-    height: 24px;
-    margin: 25px 0 0 -45px;
-    opacity: 50%;
-    cursor: pointer;
+#formBlock img {
+  position: absolute;
+  height: 24px;
+  margin: 25px 0 0 -45px;
+  opacity: 50%;
+  cursor: pointer;
+}
+
+#formBlock input::placeholder{
+  opacity: .6;
 }
 
 #createAcc {

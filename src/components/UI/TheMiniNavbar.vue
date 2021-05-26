@@ -1,13 +1,22 @@
 <template>
   <section id="navWrapper">
     <div id="navContent">
-      <div id="logo">
-        <img :src="logoImg" />
+      <div id="backButton">
+        <base-button buttonStyle="solid" @click="back">Terug</base-button>
       </div>
+      <div @click="back" id="logo"><img :src="logoImg" /></div>
       <div id="navButtons">
-        <base-button @click="login" v-if="!loggedIn" buttonStyle="solid">Inloggen</base-button>
+        <base-button v-if="!loggedIn" buttonStyle="solid"
+          >Aanmelden</base-button
+        >
+        <base-button @click="login" v-if="!loggedIn" buttonStyle="solid"
+          >Inloggen</base-button
+        >
         <div id="loggedinDiv">
-          <a><h3 v-if="loggedIn"> {{ user.firstname }} <fa class="ico" icon='user-circle'></fa></h3></a>
+          <a
+            ><h3 v-if="loggedIn">
+              {{ user.firstname }} <fa class="ico" icon="user-circle"></fa></h3
+          ></a>
         </div>
       </div>
     </div>
@@ -19,29 +28,37 @@ export default {
   data() {
     return {
       loggedIn: this.$store.getters.getLoggedinState,
-      logoImg: require("../assets/wevent_logo.png"),
+      logoImg: require("../../assets/wevent_logo.png"),
       user: this.$store.getters.getAccountData,
     };
   },
-  methods:{
-    login(){
-      this.$router.push('/login')
-    }
-  }
+  methods: {
+    login() {
+      this.$router.push("/login");
+    },
+    back() {
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
 <style scoped>
 #navWrapper {
-  padding: 40px 0px; /* <- REMOVE THIS BEFORE BUILD/USE! */
-  position: fixed;
+  height: 8vh;
+  position: relative;
   width: 100%;
-  background-image: linear-gradient(rgba(48, 48, 48, 0.267), rgba(255, 255, 255, 0));
+
+  /* background-image: linear-gradient(rgba(48, 48, 48, 0.267), rgba(255, 255, 255, 0)); */
   z-index: 10;
+  background-color: var(--background);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  overflow: none;
 }
 
 #navContent {
   padding: 0 380px;
+  height: 100%;
   display: flex;
   flex-direction: row;
   /* background-color:var(--blue); */
@@ -50,7 +67,8 @@ export default {
 }
 
 img {
-  height: 70px;
+  height: 55px;
+  cursor: pointer;
 }
 
 #navButtons {
@@ -66,19 +84,19 @@ h3 {
   color: black;
 }
 
-#loggedinDiv{
+#loggedinDiv {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.ico{
+.ico {
   font-size: 36px;
   vertical-align: middle;
   margin: 0 10px;
 }
 
-#loggedinDiv{
+#loggedinDiv {
   font-family: "open-sans", sans-serif;
   font-weight: 600;
   font-size: 14px;

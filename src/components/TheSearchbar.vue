@@ -102,7 +102,7 @@ export default {
         amount: 2,
         budget: 20,
         date: "",
-        time: "",
+        time: null,
       },
       locationBoxOpen: false,
       amountBOxOpen: false,
