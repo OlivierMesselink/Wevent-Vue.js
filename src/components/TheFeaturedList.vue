@@ -49,7 +49,7 @@ export default {
               lat: data[id].lat,
               lang: data[id].lang,
               category: data[id].category,
-              rating: data[id].rating
+              rating: data[id].rating,
             });
           }
           this.list = results;
@@ -63,44 +63,90 @@ export default {
 </script>
 
 <style scoped>
-#featuredWrapper {
-  height: 100vh;
-  width: 100vw;
-  background-color: var(--background);
+@media only screen and (min-width: 2160px) {
+  #featuredWrapper {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--background);
+  }
+
+  #featuredContent {
+    padding: 0px 380px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h1 {
+    font-family: "raleway", sans-serif;
+    font-weight: 800;
+    font-size: 58px;
+    margin-bottom: 60px;
+  }
+
+  #list {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 380px 380px 380px 380px;
+    row-gap: 30px;
+    justify-content: space-between;
+  }
+
+  #backdrop {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../assets/concrete_texture.jpg");
+    mix-blend-mode: hard-light;
+    opacity: 15%;
+    z-index: 0;
+    background-size: cover;
+  }
 }
 
-#featuredContent {
-  padding: 0px 380px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+@media only screen and (max-width: 1920px) {
+  #featuredWrapper {
+    height: 100vh;
+    /* padding: 80px; */
+    width: 100vw;
+    background-color: var(--background);
+  }
 
-h1 {
-  font-family: "raleway", sans-serif;
-  font-weight: 800;
-  font-size: 58px;
-  margin-bottom: 60px;
-}
+  #featuredContent {
+    padding: 0px 120px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-#list{
-  display: grid;
-  width: 100%;
-  grid-template-columns:  380px 380px 380px 380px;
-  row-gap: 30px;
-  justify-content: space-between;
-}
+  h1 {
+    font-family: "raleway", sans-serif;
+    font-weight: 800;
+    font-size: 58px;
+    margin-bottom: 60px;
+  }
 
-#backdrop{
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  background-image: url("../assets/concrete_texture.jpg");
-  mix-blend-mode: hard-light;
-  opacity: 15%;
-  z-index: 0;
-  background-size: cover;
+  #list {
+    display: grid;
+    width: 1280px;
+    grid-template-columns: 25% 25% 25% 25%;
+    row-gap: 30px;
+    justify-content: space-between;
+  }
+
+  #backdrop {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../assets/concrete_texture.jpg");
+    mix-blend-mode: hard-light;
+    opacity: 15%;
+    z-index: 0;
+    background-size: cover;
+  }
 }
 </style>

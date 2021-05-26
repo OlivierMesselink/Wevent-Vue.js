@@ -1,23 +1,27 @@
 <template>
   <div id="wrapper">
-    <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
-      <div id="listContent">
-        <the-list-item
-          v-for="listItem in list"
-          :key="listItem.title"
-          :listItem="listItem"
-          :localSearchQuery="localSearchQuery"
-          @mouseenter="moveMarker(listItem.lat, listItem.lang, listItem.title)"
-          :ExpandClass="{
-            listItem: openCard != listItem.title,
-            activeItem: openCard == listItem.title,
-          }"
-          :openCard="openCard"
-          @expand="expandItem(listItem.title)"
-          @changeTime="setTime"
-        ></the-list-item>
+    <transition name="listFade">
+      <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
+        <div id="listContent">
+          <the-list-item
+            v-for="listItem in list"
+            :key="listItem.title"
+            :listItem="listItem"
+            :localSearchQuery="localSearchQuery"
+            @mouseenter="
+              moveMarker(listItem.lat, listItem.lang, listItem.title)
+            "
+            :ExpandClass="{
+              listItem: openCard != listItem.title,
+              activeItem: openCard == listItem.title,
+            }"
+            :openCard="openCard"
+            @expand="expandItem(listItem.title)"
+            @changeTime="setTime"
+          ></the-list-item>
+        </div>
       </div>
-    </div>
+    </transition>
     <div :class="{ normalMap: listIsOpen, maxMap: !listIsOpen }">
       <GoogleMap
         api-key="AIzaSyBB1DuzHUMiX1M4ZVWf4sKYvGceHWVWpEM"
@@ -38,7 +42,16 @@
         <Marker
           v-for="item in list"
           :key="item.title"
-          :options="getMarkerOptions(item.lat, item.lang, item.title)"
+          :options="
+            getMarkerOptions(
+              item.lat,
+              item.lang,
+              item.title,
+              getMarkerColor(item.title),
+              getMarkerSize(item.title),
+              getMarkerZindex(item.title)
+            )
+          "
         />
       </GoogleMap>
     </div>
@@ -70,36 +83,34 @@ export default {
       list: null,
       markerOptions: null,
       openCard: "",
+      selectedMarker: "",
     };
   },
   methods: {
     closeList() {
       this.listIsOpen = !this.listIsOpen;
     },
-    moveMarker(lat, lang) {
+    moveMarker(lat, lang, title) {
       const newLatLng = { lat: lat, lng: lang };
       this.$refs.mapRef.map.setZoom(16);
       this.$refs.mapRef.map.panTo(newLatLng);
+      this.selectedMarker = title;
     },
-    getMarkerOptions(lat, lang, title) {
+    getMarkerOptions(lat, lang, title, markerColor, size, Zindex) {
       const newLatLng = { lat: lat, lng: lang };
       return {
         position: newLatLng,
         title: title,
-        label: {
-          text: title,
-          color: "black",
-          fontSize: "20px",
-          fontWeight: "bolder",
-        },
         icon: {
           path:
-            "m 12,2.4000002 c -2.7802903,0 -5.9650002,1.5099999 -5.9650002,5.8299998 0,1.74375 1.1549213,3.264465 2.3551945,4.025812 1.2002732,0.761348 2.4458987,0.763328 2.6273057,2.474813 L 12,24 12.9825,14.68 c 0.179732,-1.704939 1.425357,-1.665423 2.626049,-2.424188 C 16.809241,11.497047 17.965,9.94 17.965,8.23 17.965,3.9100001 14.78029,2.4000002 12,2.4000002 Z",
-          fillColor: "#fe9462",
+            "M20,0C9,0,0,9,0,20c0,14.8,20,38.7,20,38.7s20-24,20-38.7C40.1,9,31.1,0,20,0z M20,30.4	c-5.7,0-10.4-4.6-10.4-10.4S14.3,9.7,20,9.7s10.4,4.6,10.4,10.4S25.8,30.4,20,30.4z",
+          fillColor: markerColor,
           fillOpacity: 1.0,
-          strokeColor: "#000000",
+          strokeColor: "#edb295",
           strokeWeight: 0,
-          scale: 2.4,
+          scale: size,
+          zIndex: Zindex,
+          optimized: false, 
         },
       };
     },
@@ -135,11 +146,31 @@ export default {
       } else {
         this.openCard = cardName;
       }
-
     },
     setTime(time) {
       this.localSearchQuery.time = time;
-      console.log(time)
+      console.log(time);
+    },
+    getMarkerColor(title) {
+      if (this.selectedMarker == title) {
+        return "#fe9462";
+      } else {
+        return "#86b9cf";
+      }
+    },
+    getMarkerSize(title) {
+      if (this.selectedMarker == title) {
+        return 1.3;
+      } else {
+        return 1;
+      }
+    },
+    getMarkerZindex(title) {
+      if (this.selectedMarker == title) {
+        return 999;
+      } else {
+        return 0;
+      }
     },
   },
   computed: {
@@ -382,5 +413,17 @@ export default {
 .expandContent-leave-to {
   opacity: 0;
   transform: scale(0);
+}
+
+.listFade-enter-from {
+  transform: translateX(-400px);
+}
+
+.listFade-enter-to {
+  transform: translateX(0px);
+}
+
+.listFade-enter-active {
+  transition: all 0.2s ease-in-out;
 }
 </style>
