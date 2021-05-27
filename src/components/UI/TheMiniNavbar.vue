@@ -6,9 +6,6 @@
       </div>
       <div @click="back" id="logo"><img :src="logoImg" /></div>
       <div id="navButtons">
-        <base-button v-if="!loggedIn" buttonStyle="solid"
-          >Aanmelden</base-button
-        >
         <base-button @click="login" v-if="!loggedIn" buttonStyle="solid"
           >Inloggen</base-button
         >

@@ -99,7 +99,9 @@ export default {
     loginUser(){
       projectAuth.signInWithEmailAndPassword(this.login.email, this.login.password).then((userCredential) => {
     this.user = userCredential.user;
-    this.$router.push("/");
+    console.log(userCredential.user.uid)
+    // this.$store.dispatch('updateLogin', userCredential.user)
+    // this.$router.push("/");
   })
   .catch((error) => {
     var errorCode = error.code;
