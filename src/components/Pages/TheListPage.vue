@@ -1,5 +1,6 @@
 <template>
-    <the-mini-navbar v-if="true"></the-mini-navbar>
+    <the-mini-navbar v-if="true">
+    </the-mini-navbar>
   <div id="wrapper">
     <transition name="listFade">
       <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
@@ -39,6 +40,7 @@
             :buttonStyle="getButtonstyle"
             >{{ getButtonTxt }}</base-button
           >
+          <div id="searchbar"><the-mini-searchbar></the-mini-searchbar></div>
         </CustomControl>
         <Marker
           v-for="item in list"
@@ -55,6 +57,7 @@
           "
         />
       </GoogleMap>
+            
     </div>
   </div>
 </template>
@@ -64,6 +67,7 @@ import { GoogleMap, Marker } from "vue3-google-map";
 import BaseButton from "../UI/BaseButton.vue";
 import TheListItem from "../UI/TheListItem.vue";
 import TheMiniNavbar from "../UI/TheMiniNavbar.vue";
+import TheMiniSearchbar from "../TheMiniSearchbar.vue";
 
 export default {
   components: {
@@ -71,7 +75,8 @@ export default {
     Marker,
     BaseButton,
     TheListItem,
-    TheMiniNavbar
+    TheMiniNavbar,
+    TheMiniSearchbar
   },
   data() {
     BaseButton;
@@ -87,6 +92,7 @@ export default {
       markerOptions: null,
       openCard: "",
       selectedMarker: "",
+      searchHover: false
     };
   },
   methods: {
@@ -158,7 +164,7 @@ export default {
       if (this.selectedMarker == title) {
         return "#fe9462";
       } else {
-        return "#86b9cf";
+        return "#3C3C3C";
       }
     },
     getMarkerSize(title) {
@@ -206,7 +212,7 @@ export default {
 
 .openList {
   width: 1260px;
-  height: 92vh;
+  height: 93vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -227,20 +233,21 @@ export default {
 
 .normalMap {
   width: 100%;
-  height: 92vh;
+  height: 93vh;
   position: relative;
 }
 
 .maxMap {
   width: 100vw;
-  height: 92vh;
+  height: 93vh;
   position: relative;
 }
 
 #backButton {
   position: absolute;
-  top: 20px;
+  top: 40px;
   left: 20px;
+  z-index: 2;
 }
 
 #backButton img {
@@ -389,6 +396,18 @@ export default {
 
 #expandedItem input::placeholder {
   font-style: italic;
+}
+
+#searchbar{
+  position: absolute;
+  top: 0px;
+  padding: 20px 0 60px 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0,0,0);
+  background: linear-gradient(180deg, rgba(0,0,0,0.2690651260504201) 25%, rgba(255,255,255,0) 81%);
 }
 
 .expandContent-enter-from {

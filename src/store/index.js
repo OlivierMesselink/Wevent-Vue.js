@@ -16,7 +16,7 @@ export default createStore({
       { id: 1, name: "Nijmegen - Centrum" },
       { id: 2, name: "Nijmegen - Oost" },
       { id: 3, name: "Arnhem - Centrum" },
-      { id: 4, name: "Arnhem - spijkerkwartier" },
+      { id: 4, name: "Arnhem - Spijkerkwartier" },
     ],
   },
   mutations: {
@@ -29,7 +29,6 @@ export default createStore({
     },
     updateLogin(state, payload){
       state.currentAccount = payload
-      console.log(state.currentAccount)
       state.isLoggedin = true
     }
   },

@@ -21,6 +21,4 @@ const getUser = () => {
     return{ user }
 }
 
-console.log(projectAuth)
-
 export  {projectDb, projectAuth, getUser}

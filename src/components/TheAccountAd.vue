@@ -8,32 +8,29 @@
             <fa class="ico" icon="comments"></fa>
             <h3>Chat met vrienden</h3>
             <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium.
+              Creëer groepen en chats met je vrienden. Zo kun je gemakkelijk
+              afspraken maken en plannen.
             </p>
           </div>
           <div class="accCard">
             <fa class="ico" icon="receipt"></fa>
             <h3>Rekeningen delen</h3>
             <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium.
+              Voorgeschoten voor je vrienden tijdens het laatste uitje? Deel gemakkelijk de rekening!
             </p>
           </div>
           <div class="accCard">
             <fa class="ico" icon="certificate"></fa>
             <h3>Kortingsacties</h3>
             <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium.
+              Krijg speciale kortingen kortingen en acties voor cafe’s, restaurants en zelfs festivals!
             </p>
           </div>
           <div class="accCard">
             <fa class="ico" icon="poll"></fa>
             <h3>Event polls</h3>
             <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium.
+              Oneigheid over welk cafe, restaurant of evenement? Gebruike de ingebouwde polls en hak de knoop door!
             </p>
           </div>
         </div>
@@ -48,7 +45,7 @@
 </template>
 
 <style scoped>
-@media only screen and (min-width: 2160px) {
+@media only screen and (min-width: 2100px) {
   #account {
     height: 100vh;
     width: 100vw;
@@ -109,7 +106,7 @@
     font-size: 14px;
     line-height: 18px;
     color: var(--grey);
-    width: 90%;
+    width: %;
   }
 
   .ico {
@@ -142,7 +139,7 @@
   }
 }
 
-@media only screen and (min-width: 1920px) {
+@media only screen (min-width: 720px) and (max-width: 1920px) {
   #account {
     height: 100vh;
     width: 100vw;
@@ -212,7 +209,7 @@
   }
 
   #accLeftColumn img {
-    margin: 120px 0 0 0 ;
+    margin: 120px 0 0 0;
     height: 450px;
   }
 

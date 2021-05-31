@@ -12,6 +12,7 @@
         </div>
         <transition name="fade">
           <div v-if="locationBoxOpen" class="dropdown">
+            <h3 id="amountH3">Selecteer een locatie:</h3>
             <ul>
               <li
                 v-for="location in locations"
@@ -36,13 +37,13 @@
           <div v-if="amountBOxOpen" class="dropdown" id="amountDropdown">
             <h3>Aantal personen:</h3>
             <div id="changeAmountDiv">
-              <base-button buttonStyle="solid" @click="changeAmount(-1)"
-                ><fa icon="minus"></fa></base-button
-              >
+              <fa
+                class="ico"
+                icon="minus-circle"
+                @click="changeAmount(-1)"
+              ></fa>
               <h2>{{ localSearchQuery.amount }}</h2>
-              <base-button buttonStyle="solid" @click="changeAmount(1)"
-                ><fa icon="plus"></fa></base-button
-              >
+              <fa class="ico" icon="plus-circle" @click="changeAmount(1)"></fa>
             </div>
           </div>
         </transition>
@@ -50,22 +51,63 @@
       <div id="budgetDiv">
         <div @click="toggleBudget">
           <h3 id="budgetH3">Wat is je budget?</h3>
-          <p id="budgetP">{{ getBudget }}</p>
+          <div id="budgetIcons">
+            <the-budget-rating
+              :budget="localSearchQuery.budget"
+            ></the-budget-rating>
+          </div>
         </div>
         <transition name="fade">
           <div v-if="budgetBoxOpen" class="dropdown" id="budgetDropdown">
-            <toggle-button @click="setBudget(20)" :solid="budgets[0].active"
-              >€20 tot €30</toggle-button
-            >
-            <toggle-button @click="setBudget(30)" :solid="budgets[1].active"
-              >€30 tot €40</toggle-button
-            >
-            <toggle-button @click="setBudget(40)" :solid="budgets[2].active"
-              >€40 tot €50</toggle-button
-            >
-            <toggle-button @click="setBudget(50)" :solid="budgets[3].active"
-              >€50 tot €60</toggle-button
-            >
+            <h3 id="amountH3">Selecteer je budget:</h3>
+            <div id="sliderRating">
+              <fa
+                @click="localSearchQuery.budget = 1"
+                :class="{
+                  active: localSearchQuery.budget >= 1,
+                  inactive: localSearchQuery.budget < 1,
+                }"
+                icon="euro-sign"
+              ></fa>
+              <fa
+                @click="localSearchQuery.budget = 2"
+                :class="{
+                  active: localSearchQuery.budget >= 2,
+                  inactive: localSearchQuery.budget < 2,
+                }"
+                icon="euro-sign"
+              ></fa>
+              <fa
+                @click="localSearchQuery.budget = 3"
+                :class="{
+                  active: localSearchQuery.budget >= 3,
+                  inactive: localSearchQuery.budget < 3,
+                }"
+                icon="euro-sign"
+              ></fa>
+              <fa
+                @click="localSearchQuery.budget = 4"
+                :class="{
+                  active: localSearchQuery.budget >= 4,
+                  inactive: localSearchQuery.budget < 4,
+                }"
+                icon="euro-sign"
+              ></fa>
+              <fa
+                @click="localSearchQuery.budget = 5"
+                :class="{
+                  active: localSearchQuery.budget >= 5,
+                  inactive: localSearchQuery.budget < 5,
+                }"
+                icon="euro-sign"
+              ></fa>
+            </div>
+            <input
+              v-model="localSearchQuery.budget"
+              type="range"
+              min="1"
+              max="5"
+            />
           </div>
         </transition>
       </div>
@@ -78,8 +120,10 @@
         </div>
         <transition name="fade">
           <div v-if="dateBoxOpen" class="dropdown" id="dateDropdown">
+            <h3 id="amountH3">Selecteer een tijdstip:</h3>
             <input type="date" v-model="localSearchQuery.date" />
             <input type="time" v-model="localSearchQuery.time" />
+            <base-button @click="setCurrentTimeAndDate" id="todayButton" buttonStyle='hollow'>Vandaag</base-button>
           </div>
         </transition>
       </div>
@@ -94,13 +138,18 @@
 </template>
 
 <script>
+import TheBudgetRating from "./UI/TheBudgetRating.vue";
+
 export default {
+  components: {
+    TheBudgetRating,
+  },
   data() {
     return {
       localSearchQuery: {
         location: "Nijmegen - Centrum",
         amount: 2,
-        budget: 20,
+        budget: 2,
         date: "",
         time: null,
       },
@@ -110,13 +159,6 @@ export default {
       dateBoxOpen: false,
 
       locations: this.$store.state.locations,
-
-      budgets: [
-        { value: 20, active: true },
-        { value: 30, active: false },
-        { value: 40, active: false },
-        { value: 50, active: false },
-      ],
     };
   },
 
@@ -129,15 +171,7 @@ export default {
         return "persoon";
       }
     },
-    getBudget() {
-      return (
-        "\u20ac " +
-        this.localSearchQuery.budget +
-        " tot \u20ac " +
-        (this.localSearchQuery.budget + 10) +
-        " per persoon"
-      );
-    },
+    /* converts american date notation to europe notation */
     displayCorrectDate() {
       const workDate = this.localSearchQuery.date;
       const year = workDate.slice(0, 4);
@@ -175,6 +209,7 @@ export default {
       this.locationBoxOpen = false;
       this.dateBoxOpen = !this.dateBoxOpen;
     },
+    /* makes sure amount var does not exceed 8 or falls below 1 */
     changeAmount(change) {
       this.localSearchQuery.amount = this.localSearchQuery.amount + change;
       if (this.localSearchQuery.amount <= 1) {
@@ -187,47 +222,7 @@ export default {
     setLocation(newLocation) {
       this.localSearchQuery.location = newLocation;
     },
-    submitSearchQuery() {
-      this.$store.dispatch({
-        type: "updateSearchQuery",
-        location: this.localSearchQuery.location,
-        amount: this.localSearchQuery.amount,
-        budget: this.localSearchQuery.budget,
-        date: this.localSearchQuery.date,
-        time: this.localSearchQuery.time,
-      });
-      this.$router.push("/search");
-    },
-    setBudget(value) {
-      if (value == 20) {
-        this.budgets[0].active = true;
-        this.budgets[1].active = false;
-        this.budgets[2].active = false;
-        this.budgets[3].active = false;
-        this.localSearchQuery.budget = 20;
-      }
-      if (value == 30) {
-        this.budgets[0].active = false;
-        this.budgets[1].active = true;
-        this.budgets[2].active = false;
-        this.budgets[3].active = false;
-        this.localSearchQuery.budget = 30;
-      }
-      if (value == 40) {
-        this.budgets[0].active = false;
-        this.budgets[1].active = false;
-        this.budgets[2].active = true;
-        this.budgets[3].active = false;
-        this.localSearchQuery.budget = 40;
-      }
-      if (value == 50) {
-        this.budgets[0].active = false;
-        this.budgets[1].active = false;
-        this.budgets[2].active = false;
-        this.budgets[3].active = true;
-        this.localSearchQuery.budget = 50;
-      }
-    },
+    /* finds current time and date and updates searchQuery */
     setCurrentTimeAndDate() {
       const today = new Date();
       const date =
@@ -327,9 +322,29 @@ export default {
   margin: 0 0 0 -30px;
 }
 
+#amountDropdown {
+  margin-right: -40px;
+  display: ;
+}
+
 #changeAmountDiv {
   display: flex;
   align-items: center;
+}
+
+#changeAmountDiv .ico {
+  color: var(--orange);
+  font-size: 32px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+#changeAmountDiv .ico:hover {
+  transform: scale(1.1);
 }
 
 #amountDiv h2 {
@@ -338,19 +353,98 @@ export default {
   font-size: 42px;
   font-weight: 800;
   margin: 10px 20px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
 #amountDropdown {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-left: -25px;
 }
+
 
 #budgetDropdown {
   display: flex;
+  width: 80%;
   flex-direction: column;
   justify-content: space-between;
-  height: 220px;
+  text-align: center;
+  margin-left: -60px;
+}
+
+#sliderRating {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 20px 0 12px 0;
+}
+
+#sliderRating .active {
+  color: var(--orange);
+  font-size: 21px;
+  transition: all 800ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
+  transform: translatey(-2px);
+  cursor: pointer;
+}
+
+#sliderRating .inactive {
+  color: var(--lightGrey);
+  font-size: 21px;
+  transition: all 800ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
+  cursor: pointer;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 10px 0 0 0;
+}
+
+input[type="range"]::-moz-range-track {
+  background: var(--orange);
+}
+
+input[type="range"]::-moz-range-track {
+  background: var(--orange);
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--orange);
+  margin-top: -4px;
+  cursor: pointer;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: #ccc;
+}
+
+#dateDropdown{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#todayButton{
+  margin: 15px 0 0 0 ;
 }
 
 #dateDropdown input[type="date"] {
@@ -404,7 +498,7 @@ input[type="date"]::-webkit-clear-button {
 
 .fade-enter-from {
   opacity: 0;
-  transform: scale(.5);
+  transform: scale(0.5);
 }
 .fade-enter-active {
   transition: all 0.075s ease-out;
@@ -415,6 +509,8 @@ input[type="date"]::-webkit-clear-button {
 
 .fade-leave-to {
   opacity: 0;
-  transform: scale(.5);
+  transform: scale(0.5);
 }
+
+
 </style>

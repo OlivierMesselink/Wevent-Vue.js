@@ -5,9 +5,14 @@
         <img :src="logoImg" />
       </div>
       <div id="navButtons">
-        <base-button @click="login" v-if="!loggedIn" buttonStyle="solid">Inloggen</base-button>
-        <div id="loggedinDiv">
-          <a><h3 v-if="loggedIn"> {{ user.firstname }} <fa class="ico" icon='user-circle'></fa></h3></a>
+        <base-button @click="login" v-if="!loggedIn" buttonStyle="solid"
+          >Inloggen</base-button
+        >
+        <div id="loggedinDiv" v-if="loggedIn">
+          <div id="userDiv">
+            <h3>{{ user }} <fa class="ico" icon="user-circle"></fa></h3>
+          </div>
+          <p @click="logout">Uitloggen</p>
         </div>
       </div>
     </div>
@@ -15,19 +20,40 @@
 </template>
 
 <script>
+import { projectAuth } from "../firebaseConfig.js";
+
 export default {
   data() {
     return {
-      loggedIn: this.$store.getters.getLoggedinState,
+      loggedIn: false,
       logoImg: require("../assets/wevent_logo.png"),
-      user: this.$store.getters.getAccountData,
+      user: null,
     };
   },
-  methods:{
-    login(){
-      this.$router.push('/login')
-    }
-  }
+  methods: {
+    login() {
+      this.$router.push("/login");
+    },
+    logout() {
+      projectAuth.signOut().then(() => {
+          this.$router.go()
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
+
+  },
+  beforeCreate() {
+    projectAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.loggedIn = true;
+        this.user = user.email;
+      } else {
+        this.loggedIn = false;
+      }
+    });
+  },
 };
 </script>
 
@@ -36,7 +62,10 @@ export default {
   padding: 40px 0px; /* <- REMOVE THIS BEFORE BUILD/USE! */
   position: fixed;
   width: 100%;
-  background-image: linear-gradient(rgba(48, 48, 48, 0.267), rgba(255, 255, 255, 0));
+  background-image: linear-gradient(
+    rgba(48, 48, 48, .267),
+    rgba(255, 255, 255, 0)
+  );
   z-index: 10;
 }
 
@@ -55,33 +84,50 @@ img {
 
 #navButtons {
   display: flex;
-  width: 240px;
+  /* width: 240px; */
   justify-content: space-between;
 }
 
-h3 {
-  font-family: "open-sans", sans-serif;
-  font-weight: 700;
-  font-size: 18px;
+#userDiv {
   color: black;
+  transition: all 0.2s ease-in-out;
 }
 
-#loggedinDiv{
+#userDiv:hover {
+  transform: scale(1.05);
+}
+
+h3 {
+  font-family: "raleway", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+#loggedinDiv {
   display: flex;
+  flex-direction: row;
   align-items: center;
   cursor: pointer;
-}
-
-.ico{
-  font-size: 36px;
-  vertical-align: middle;
-  margin: 0 10px;
-}
-
-#loggedinDiv{
-  font-family: "open-sans", sans-serif;
-  font-weight: 600;
+  font-family: "raleway", sans-serif;
+  font-weight: 800;
   font-size: 14px;
   color: var(--orange);
+}
+
+#loggedinDiv p {
+  color: crimson;
+  font-weight: 600;
+  text-decoration: underline;
+  transition: all 0.2s ease-in-out;
+}
+
+#loggedinDiv p:hover {
+  transform: scale(1.05);
+}
+
+.ico {
+  font-size: 32px;
+  vertical-align: middle;
+  margin: 0 15px;
 }
 </style>

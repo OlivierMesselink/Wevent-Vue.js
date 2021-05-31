@@ -1,19 +1,17 @@
 <template>
   <section id="navWrapper">
     <div id="navContent">
-      <div id="backButton">
-        <base-button buttonStyle="solid" @click="back">Terug</base-button>
-      </div>
       <div @click="back" id="logo"><img :src="logoImg" /></div>
+      <div><h1>Restaurants in Nijmegen</h1></div>
       <div id="navButtons">
         <base-button @click="login" v-if="!loggedIn" buttonStyle="solid"
           >Inloggen</base-button
         >
-        <div id="loggedinDiv">
-          <a
-            ><h3 v-if="loggedIn">
-              {{ user.firstname }} <fa class="ico" icon="user-circle"></fa></h3
-          ></a>
+        <div id="loggedinDiv" v-if="loggedIn">
+          <div id="userDiv">
+            <h3>{{ user }} <fa class="ico" icon="user-circle"></fa></h3>
+          </div>
+          <p @click="logout">Uitloggen</p>
         </div>
       </div>
     </div>
@@ -21,12 +19,14 @@
 </template>
 
 <script>
+import { projectAuth } from "../../firebaseConfig.js";
+
 export default {
   data() {
     return {
-      loggedIn: this.$store.getters.getLoggedinState,
+      loggedIn: false,
       logoImg: require("../../assets/wevent_logo.png"),
-      user: this.$store.getters.getAccountData,
+      user: "",
     };
   },
   methods: {
@@ -37,12 +37,23 @@ export default {
       this.$router.push("/");
     },
   },
+  /* this checks if the user is logged in */
+  beforeCreate() {
+    projectAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.loggedIn = true;
+        this.user = user.email;
+      } else {
+        this.loggedIn = false;
+      }
+    });
+  },
 };
 </script>
 
 <style scoped>
 #navWrapper {
-  height: 8vh;
+  height: 7vh;
   position: relative;
   width: 100%;
 
@@ -58,7 +69,6 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: row;
-  /* background-color:var(--blue); */
   justify-content: space-between;
   align-items: center;
 }
@@ -68,35 +78,59 @@ img {
   cursor: pointer;
 }
 
-#navButtons {
-  display: flex;
-  width: 240px;
-  justify-content: space-between;
-}
-
-h3 {
-  font-family: "open-sans", sans-serif;
+h1 {
+  font-family: "raleway", sans-serif;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 28px;
   color: black;
 }
 
+#navButtons {
+  display: flex;
+  /* width: 240px; */
+  justify-content: space-between;
+}
+
+#userDiv {
+  color: black;
+  transition: all 0.2s ease-in-out;
+}
+
+#userDiv:hover {
+  transform: scale(1.05);
+}
+
+h3 {
+  font-family: "raleway", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+
 #loggedinDiv {
   display: flex;
+  flex-direction: row;
   align-items: center;
   cursor: pointer;
+  font-family: "raleway", sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--orange);
+}
+
+#loggedinDiv p {
+  color: crimson;
+  font-weight: 600;
+  text-decoration: underline;
+  transition: all 0.2s ease-in-out;
+}
+
+#loggedinDiv p:hover {
+  transform: scale(1.05);
 }
 
 .ico {
-  font-size: 36px;
+  font-size: 32px;
   vertical-align: middle;
-  margin: 0 10px;
-}
-
-#loggedinDiv {
-  font-family: "open-sans", sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--orange);
+  margin: 0 15px;
 }
 </style>
