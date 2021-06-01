@@ -237,6 +237,9 @@ export default {
       this.localSearchQuery.time = time;
       this.localSearchQuery.date = date;
     },
+    submitSearchQuery(){
+      this.$router.push('/search')
+    }
   },
   mounted() {
     this.setCurrentTimeAndDate();

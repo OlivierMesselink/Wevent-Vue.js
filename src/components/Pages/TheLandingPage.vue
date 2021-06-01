@@ -56,7 +56,7 @@ export default {
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-snap-type: y mandatory;
-  position: relative;;
+  position: relative;
 }
 
 .child{
