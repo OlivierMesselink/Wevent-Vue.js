@@ -5,6 +5,14 @@
     </div>
 
     <div id="formBlock">
+      <div v-if="signUp" id="userInput">
+        <h2>Gebruikersnaam</h2>
+        <div id="">
+        <input v-model="register.firstname" />
+        <input v-model="register.lastname" />
+        </div>
+      </div>
+
       <div id="emailInput">
         <h2>Email adres</h2>
         <input
@@ -87,13 +95,14 @@ export default {
       wrongCreds: false,
       showPass: false,
       login: {
-        username: "",
+        firstname: "",
+        lastname: "",
         password: "",
       },
       register: {
         email: "",
         password: "",
-        username: "",
+        username: "Ollie",
       },
       userDatabase: this.$store.getters.getUserDatabase,
     };
@@ -101,7 +110,7 @@ export default {
   methods: {
     toggleSignUp() {
       this.signUp = !this.signUp;
-      this.wrongCreds = false
+      this.wrongCreds = false;
     },
     togglePassVisibility() {
       this.showPass = !this.showPass;
@@ -130,15 +139,31 @@ export default {
             this.register.password
           )
           .then((userCredential) => {
-            alert("Successfully registered! Please login.");
-            this.user = userCredential.user;
-            this.$router.push("/");
+            alert("Successfully registered: ", userCredential);
           })
           .catch((error) => {
             alert(error.message);
           });
-      }else {this.loginUser()}
-    }, 
+      } else {
+        this.loginUser();
+      }
+    },
+    test() {
+
+      const fetchUrl = "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" + this.register.username + ".json"
+
+      fetch(
+        fetchUrl,
+        {method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: this.register.username,
+          email: this.register.email, 
+        }),}
+      )
+        .then((response) => response.json())
+        .then((data) => (this.postId = data.id));
+    },
   },
   computed: {
     getHeader() {

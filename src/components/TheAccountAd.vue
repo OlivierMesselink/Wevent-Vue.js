@@ -36,7 +36,7 @@
         </div>
       </div>
       <div id="accLeftColumn">
-        <img src="../assets/mockup_mbook.png" />
+        <img src="https://wevent-app.000webhostapp.com/mockup_mbook.bd6b7f54.png" />
       </div>
     </div>
     <div id="backdrop2"></div>

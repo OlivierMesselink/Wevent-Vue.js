@@ -7,11 +7,10 @@
         <base-button @click="login" v-if="!loggedIn" buttonStyle="solid"
           >Inloggen</base-button
         >
-        <div id="loggedinDiv" v-if="loggedIn">
+        <div @click="$router.push('/account')" id="loggedinDiv" v-if="loggedIn">
           <div id="userDiv">
             <h3>{{ user }} <fa class="ico" icon="user-circle"></fa></h3>
           </div>
-          <p @click="logout">Uitloggen</p>
         </div>
       </div>
     </div>
@@ -74,8 +73,14 @@ export default {
 }
 
 img {
-  height: 55px;
+  height: 70px;
   cursor: pointer;
+  transition: all .2s ease-in-out;
+  transform: scale(.9);
+}
+
+img:hover{
+  transform: scale(1);
 }
 
 h1 {
