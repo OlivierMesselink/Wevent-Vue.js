@@ -2,7 +2,7 @@
   <div id="wrapper">
     <section id="navColumn">
       <h1>Jouw account</h1>
-      <h3>{{ user }}</h3>
+      <h3>{{ user.Name }}</h3>
       <div id="navItems">
         <h4
           @click="gotoAccount"
@@ -49,7 +49,7 @@
             </div>
             <div class="inputDiv">
               <label for="email">Email adres</label>
-              <input type="text" name="email" />
+              <input type="text" name="email" v-model="user.Email" />
             </div>
             <div class="inputDiv">
               <label for="password">Wachtwoord</label>
@@ -90,8 +90,7 @@ import { projectAuth } from "../../firebaseConfig.js";
 export default {
   data() {
     return {
-      user: null,
-      userId: null,
+      user: {},
       openTab: {
         acc: true,
         favo: false,
@@ -129,8 +128,18 @@ export default {
       this.openTab.reservations = true;
     },
     loadUserData() {
-      
-    }
+      fetch(
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/-MbAbDd5Zx4dBxfgDj-N.json"
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+            this.user = data
+        });
+    },
   },
   /* this checks if the user is logged in */
   beforeCreate() {
