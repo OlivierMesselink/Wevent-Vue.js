@@ -6,10 +6,10 @@
 
     <div id="formBlock">
       <div v-if="signUp" id="userInput">
-        <h2>Gebruikersnaam</h2>
-        <div id="">
-        <input v-model="register.firstname" />
-        <input v-model="register.lastname" />
+        <h2>Voor en achternaam</h2>
+        <div id="nameDiv">
+        <input v-model="register.firstname" placeholder="Voornaam" />
+        <input v-model="register.lastname" placeholder="Achternaam" />
         </div>
       </div>
 
@@ -95,14 +95,14 @@ export default {
       wrongCreds: false,
       showPass: false,
       login: {
-        firstname: "",
-        lastname: "",
+        email: "",
         password: "",
       },
       register: {
         email: "",
         password: "",
-        username: "Ollie",
+        firstname: "",
+        lastname: ""
       },
       userDatabase: this.$store.getters.getUserDatabase,
     };
@@ -139,7 +139,8 @@ export default {
             this.register.password
           )
           .then((userCredential) => {
-            alert("Successfully registered: ", userCredential);
+            this.addUserToDb(userCredential.user.uid);
+            this.$router.push("/")
           })
           .catch((error) => {
             alert(error.message);
@@ -148,16 +149,15 @@ export default {
         this.loginUser();
       }
     },
-    test() {
-
-      const fetchUrl = "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" + this.register.username + ".json"
-
+    addUserToDb(userId) {
+      const fetchUrl = "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" + userId + ".json"
       fetch(
         fetchUrl,
         {method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: this.register.username,
+          firstname: this.register.firstname,
+          lastname: this.register.lastname,
           email: this.register.email, 
         }),}
       )
@@ -275,5 +275,16 @@ a {
 
 #createAcc {
   margin-top: 40px;
+}
+
+#nameDiv{
+  display: flex;
+  width: 79%;
+  justify-content: space-between;
+}
+
+#nameDiv input{
+  width: 43%;
+  margin: 20px 0px 40px 0;
 }
 </style>

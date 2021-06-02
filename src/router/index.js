@@ -17,8 +17,6 @@ const routes = [
     component: TheBusinessRegistration,
     meta: { title: "Wevent.nl | Je onderneming registreren" },
   },
-
-
 ]
 
 

@@ -2,7 +2,7 @@
   <div id="wrapper">
     <section id="navColumn">
       <h1>Jouw account</h1>
-      <h3>{{ user.Name }}</h3>
+      <h3>Welkom {{ user.firstname + " " + user.lastname }}</h3>
       <div id="navItems">
         <h4
           @click="gotoAccount"
@@ -26,6 +26,15 @@
           Favorieten
         </h4>
         <h4 @click="logout" class="navItem" id="logout">Uitloggen</h4>
+        <span id="line"></span>
+        <h4 class="navItem" id="addBusiness">Onderneming toevoegen</h4>
+        <h4
+          class="navItem"
+          :class="{ grey: !user.businessAcc }"
+          id="manageBusiness"
+        >
+          Ondernemingen beheren
+        </h4>
       </div>
     </section>
     <section id="contentColumn">
@@ -42,31 +51,47 @@
               >
             </div>
           </div>
-          <form>
+          <form @submit.prevent>
             <div class="inputDiv">
               <label for="name">Gebruikersnaam</label>
-              <input type="text" name="name" />
+              <input
+                :placeholder="user.firstname + ' ' + user.lastname"
+                type="text"
+                name="name"
+                disabled
+              />
             </div>
             <div class="inputDiv">
               <label for="email">Email adres</label>
-              <input type="text" name="email" v-model="user.Email" />
+              <input
+                :placeholder="user.email"
+                type="text"
+                name="email"
+                v-model="user.Email"
+                disabled
+              />
             </div>
             <div class="inputDiv">
               <label for="password">Wachtwoord</label>
               <div id="passwordField">
-                <input type="text" name="password" />
+                <input
+                  placeholder="**********"
+                  type="text"
+                  name="password"
+                  disabled
+                />
                 <base-button buttonStyle="hollow">Aanpassen</base-button>
               </div>
             </div>
           </form>
           <div id="removeAcc">
             <div>
-              <h4>Account verwijderen</h4>
+              <h4  >Account verwijderen</h4>
               <p>
                 Als je je account verwijderd verlies je al je persoonlijke data
               </p>
             </div>
-            <a>Account verwijderen</a>
+            <a @click="removeModalOpen = true">Account verwijderen</a>
           </div>
         </div>
       </transition>
@@ -82,15 +107,31 @@
       </transition>
     </section>
   </div>
+
+  <the-modal
+  v-if="removeModalOpen"
+  @confirm="removeUser()"
+  @cancel="removeModalOpen = false"
+  title="Zeker weten?"
+  subtitle="Je staat op het punt om je account te verwijderen"
+  message="Wanneer je je gebruikersaccount verwijderd gaan al je persoonlijke gegevens verloren. Dus je ook je pin's vrienden en reserveringsdata. Er is later geen manier om deze data terug te krijgen."
+  confirm="Verwijderen"
+  cancel="Annuleren"
+  ></the-modal>
 </template>
 
 <script>
 import { projectAuth } from "../../firebaseConfig.js";
+import TheModal from "./TheModal.vue";
 
 export default {
+  components:{
+    TheModal
+  },
   data() {
     return {
       user: {},
+      userId: "",
       openTab: {
         acc: true,
         favo: false,
@@ -98,6 +139,8 @@ export default {
       },
       reservations: null,
       favorites: null,
+      authUser: {},
+      removeModalOpen: false
     };
   },
   methods: {
@@ -127,28 +170,46 @@ export default {
       this.openTab.acc = false;
       this.openTab.reservations = true;
     },
-    loadUserData() {
-      fetch(
-        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/-MbAbDd5Zx4dBxfgDj-N.json"
-      )
+    loadUserData(Id) {
+      const url =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        Id +
+        ".json";
+
+      fetch(url)
         .then((response) => {
           if (response.ok) {
             return response.json();
           }
         })
         .then((data) => {
-            this.user = data
+          this.user = data;
+          console.log(data);
+          console.log(this.user);
         });
+    },
+    removeUser() {
+      var user = projectAuth.currentUser;
+      user
+          .delete()
+          .then(function () {
+            this.$router.push("/")
+          })
+          .catch(function (error) {
+            alert(error)
+          });
+
     },
   },
   /* this checks if the user is logged in */
   beforeCreate() {
     projectAuth.onAuthStateChanged((user) => {
       if (user) {
-        this.userId = user.id;
-        this.loadUserData();
+        const Id = user.uid;
+        this.authUser = user;
+        this.loadUserData(Id);
       } else {
-        this.$router.push("/login");
+        this.$router.push("/");
       }
     });
   },
@@ -159,12 +220,13 @@ export default {
 @media screen and (max-width: 1920px) {
   #wrapper {
     display: flex;
-    margin: 100px 100px 0 0;
+    justify-content: center;
+    margin: 100px 0px 0 0;
   }
 
   #navColumn {
     text-align: right;
-    margin: 0 60px 0 0;
+    margin: 0 100px 0 0;
   }
 
   h1 {
@@ -192,6 +254,13 @@ export default {
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 15px;
+  }
+
+  #line {
+    border-bottom: 1px solid var(--lightBlue);
+    width: 40%;
+    margin: 25px 0 40px 0;
+    align-self: flex-end;
   }
 
   .navItem {
@@ -265,6 +334,15 @@ export default {
     align-items: center;
   }
 
+  .grey {
+    color: var(--lightGrey);
+    cursor: default;
+  }
+
+  .grey:hover {
+    text-decoration: none;
+  }
+
   #removeAcc p {
     margin: 10px 0 0 0;
     width: 80%;
@@ -304,6 +382,7 @@ export default {
     align-items: center;
     font-size: 100px;
     line-height: 0px;
+    color: var(--background);
   }
 
   #accImg {

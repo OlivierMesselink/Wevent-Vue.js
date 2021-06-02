@@ -46,4 +46,39 @@ button {
     transform: scale(1.05);
 }
 
+.confirm{
+  display: inline-block;
+  font-family: "open-sans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  border: crimson 3px solid;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 12px 20px;
+  background-color: crimson;
+  color: white;
+}
+
+.confirm:hover{
+  transform: scale(1.05);
+}
+
+.confirmAlt{
+  display: inline-block;
+  font-family: "open-sans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  border: var(--grey) 3px solid;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 12px 20px;
+  background-color: transparent;
+  color: var(--grey);
+}
+
+.confirmAlt:hover{
+  transform: scale(1.05);
+}
 </style>

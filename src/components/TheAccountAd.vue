@@ -139,7 +139,7 @@
   }
 }
 
-@media only screen (min-width: 720px) and (max-width: 1920px) {
+@media only screen and (max-width: 1920px) {
   #account {
     height: 100vh;
     width: 100vw;

@@ -449,4 +449,12 @@ export default {
 .listFade-enter-active {
   transition: all 0.2s ease-in-out;
 }
+
+@media only screen and (max-width: 1920px) {
+  #backButton{
+    top: auto;
+    bottom: 20px;
+  }
+}
+
 </style>
