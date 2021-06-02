@@ -37,7 +37,7 @@ export default {
   components: {
     TheSearchbar,
     TheAccountAd,
-    TheFeaturedList
+    TheFeaturedList,
   },
   data() {
     return {
@@ -56,10 +56,10 @@ export default {
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-snap-type: y mandatory;
-  position: relative;;
+  position: relative;
 }
 
-.child{
+.child {
   scroll-snap-align: start;
 }
 
