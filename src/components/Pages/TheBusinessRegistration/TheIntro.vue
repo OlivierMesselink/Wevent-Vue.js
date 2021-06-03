@@ -74,6 +74,10 @@ export default {};
   margin-bottom: 5%;
 }
 
+.bullet-margin {
+  margin-right: 1%;
+}
+
 #intro-body {
   color: var(--grey);
   display: flex;
