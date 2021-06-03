@@ -104,7 +104,7 @@ export default {
       modalData:{
         restaurant: '',
         amount:'',
-        city: "nijmegen",
+        city: "Nijmegen",
         time: '',
         date: ''
       }
