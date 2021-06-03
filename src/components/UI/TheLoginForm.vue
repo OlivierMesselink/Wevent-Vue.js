@@ -8,8 +8,8 @@
       <div v-if="signUp" id="userInput">
         <h2>Voor en achternaam</h2>
         <div id="nameDiv">
-        <input v-model="register.firstname" placeholder="Voornaam" />
-        <input v-model="register.lastname" placeholder="Achternaam" />
+          <input v-model="register.firstname" placeholder="Voornaam" />
+          <input v-model="register.lastname" placeholder="Achternaam" />
         </div>
       </div>
 
@@ -77,10 +77,10 @@
     </div>
 
     <p id="gdprP">
-      We use cookies and similar tools to improve your shopping experience,
-      provide our services, understand how customers use our services so that we
-      can make improvements, and to display advertising, including
-      interest-based advertising.
+      Wij gebruiken cookies om het gebruik van onze app te faciliteren/ het
+      inloggen op onze website te vergemakkelijken/ uw instellingen en
+      voorkeuren te onthouden. U kunt deze cookies uitzetten via uw browser maar
+      dit kan het functioneren van onze website negatief aantasten.
     </p>
   </div>
 </template>
@@ -102,7 +102,7 @@ export default {
         email: "",
         password: "",
         firstname: "",
-        lastname: ""
+        lastname: "",
       },
       userDatabase: this.$store.getters.getUserDatabase,
     };
@@ -140,7 +140,7 @@ export default {
           )
           .then((userCredential) => {
             this.addUserToDb(userCredential.user.uid);
-            this.$router.push("/")
+            this.$router.push("/");
           })
           .catch((error) => {
             alert(error.message);
@@ -150,17 +150,20 @@ export default {
       }
     },
     addUserToDb(userId) {
-      const fetchUrl = "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" + userId + ".json"
-      fetch(
-        fetchUrl,
-        {method: "PUT",
+      const fetchUrl =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        userId +
+        ".json";
+      fetch(fetchUrl, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           firstname: this.register.firstname,
           lastname: this.register.lastname,
-          email: this.register.email, 
-        }),}
-      )
+          email: this.register.email,
+          businnessAcc: false,
+        }),
+      })
         .then((response) => response.json())
         .then((data) => (this.postId = data.id));
     },
@@ -277,13 +280,13 @@ a {
   margin-top: 40px;
 }
 
-#nameDiv{
+#nameDiv {
   display: flex;
   width: 79%;
   justify-content: space-between;
 }
 
-#nameDiv input{
+#nameDiv input {
   width: 43%;
   margin: 20px 0px 40px 0;
 }

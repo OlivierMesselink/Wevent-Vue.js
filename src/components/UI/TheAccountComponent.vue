@@ -27,7 +27,13 @@
         </h4>
         <h4 @click="logout" class="navItem" id="logout">Uitloggen</h4>
         <span id="line"></span>
-        <h4 class="navItem" id="addBusiness">Onderneming toevoegen</h4>
+        <h4
+          @click="$router.push('/business-registration')"
+          class="navItem"
+          id="addBusiness"
+        >
+          Onderneming toevoegen
+        </h4>
         <h4
           class="navItem"
           :class="{ grey: !user.businessAcc }"
@@ -71,7 +77,7 @@
                 disabled
               />
             </div>
-            <div class="inputDiv">
+            <div class="inputDiv" v-if="!passResetRequested">
               <label for="password">Wachtwoord</label>
               <div id="passwordField">
                 <input
@@ -80,13 +86,25 @@
                   name="password"
                   disabled
                 />
-                <base-button buttonStyle="hollow">Aanpassen</base-button>
+                <base-button @click="resetPass" buttonStyle="hollow"
+                  >Aanpassen</base-button
+                >
               </div>
+            </div>
+            <div
+              class="inputDiv"
+              id="passRequestedDiv"
+              v-if="passResetRequested"
+            >
+              <h4>
+                Er is een email verzonden naar je emailadres om het Wachtwoord
+                te resetten
+              </h4>
             </div>
           </form>
           <div id="removeAcc">
             <div>
-              <h4  >Account verwijderen</h4>
+              <h4>Account verwijderen</h4>
               <p>
                 Als je je account verwijderd verlies je al je persoonlijke data
               </p>
@@ -109,14 +127,14 @@
   </div>
 
   <the-modal
-  v-if="removeModalOpen"
-  @confirm="removeUser()"
-  @cancel="removeModalOpen = false"
-  title="Zeker weten?"
-  subtitle="Je staat op het punt om je account te verwijderen"
-  message="Wanneer je je gebruikersaccount verwijderd gaan al je persoonlijke gegevens verloren. Dus je ook je pin's vrienden en reserveringsdata. Er is later geen manier om deze data terug te krijgen."
-  confirm="Verwijderen"
-  cancel="Annuleren"
+    v-if="removeModalOpen"
+    @confirm="removeUser()"
+    @cancel="removeModalOpen = false"
+    title="Zeker weten?"
+    subtitle="Je staat op het punt om je account te verwijderen"
+    message="Wanneer je je gebruikersaccount verwijderd gaan al je persoonlijke gegevens verloren. Dus je ook je pin's vrienden en reserveringsdata. Er is later geen manier om deze data terug te krijgen."
+    confirm="Verwijderen"
+    cancel="Annuleren"
   ></the-modal>
 </template>
 
@@ -125,8 +143,8 @@ import { projectAuth } from "../../firebaseConfig.js";
 import TheModal from "./TheModal.vue";
 
 export default {
-  components:{
-    TheModal
+  components: {
+    TheModal,
   },
   data() {
     return {
@@ -140,10 +158,12 @@ export default {
       reservations: null,
       favorites: null,
       authUser: {},
-      removeModalOpen: false
+      removeModalOpen: false,
+      passResetRequested: false
     };
   },
   methods: {
+    /* logs out the user */
     logout() {
       projectAuth
         .signOut()
@@ -170,6 +190,7 @@ export default {
       this.openTab.acc = false;
       this.openTab.reservations = true;
     },
+    /* loads in the data of the correct user */
     loadUserData(Id) {
       const url =
         "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
@@ -184,21 +205,40 @@ export default {
         })
         .then((data) => {
           this.user = data;
-          console.log(data);
-          console.log(this.user);
         });
     },
+    /* removes user from firebase Auth and firebase realtime database */
     removeUser() {
       var user = projectAuth.currentUser;
-      user
-          .delete()
-          .then(function () {
-            this.$router.push("/")
-          })
-          .catch(function (error) {
-            alert(error)
-          });
+      var uid = user.uid;
+      const url =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        uid +
+        ".json";
 
+      user
+        .delete()
+        .then(() => {
+          fetch(url, { method: "DELETE" }).then((res) => console.log(res));
+          this.$router.push("/");
+        })
+        .catch(function (error) {
+          alert(error);
+        });
+    },
+    pushToHome() {
+      this.$router.push("/");
+    },
+    resetPass() {
+      var email = projectAuth.currentUser.email;
+      projectAuth
+        .sendPasswordResetEmail(email)
+        .then(() => {
+          this.passResetRequested = true;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
   },
   /* this checks if the user is logged in */
@@ -391,6 +431,211 @@ export default {
 
   #imgButtonDiv {
     display: flex;
+  }
+
+  .imgButton {
+    margin: 0px 0px 0 10px;
+  }
+
+  .underline {
+    text-decoration: underline;
+  }
+
+  /* .tab-enter-from,
+  .tab-leave-to {
+    opacity: 0;
+  }
+
+  .tab-enter-to,
+  .tab-leave-from {
+    opacity: 1;
+  }
+
+  .tab-enter-active,
+  .tab-leave-active {
+    transition: all 0.1s ease-in-out;
+  } */
+}
+
+@media screen and (max-width: 2560px) {
+  #wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 100px 0px 0 0;
+  }
+
+  #navColumn {
+    text-align: right;
+    margin: 0 100px 0 0;
+  }
+
+  h1 {
+    font-family: "raleway", sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+  }
+
+  h3 {
+    font-family: "open sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--grey);
+    margin-top: 12px;
+  }
+
+  #navItems {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+  }
+
+  h4 {
+    font-family: "open sans", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  #line {
+    border-bottom: 1px solid var(--lightBlue);
+    width: 40%;
+    margin: 25px 0 40px 0;
+    align-self: flex-end;
+  }
+
+  .navItem {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .navItem:hover {
+    text-decoration: underline;
+  }
+
+  #logout {
+    color: crimson;
+  }
+
+  #contentColumn {
+    width: 550px;
+    height: 650px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #contentColumn form {
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    border-top: 1px var(--background) solid;
+    border-bottom: 1px var(--background) solid;
+    padding: 40px 0;
+    margin: 40px 0;
+  }
+
+  #contentColumn input {
+    width: 95%;
+    color: black;
+    margin: 15px 0px;
+    border: none;
+    padding: 14px 14px;
+    border-radius: 10px;
+    background-color: #a6c9d831;
+    margin-bottom: 40px;
+  }
+
+  #contentColumn label {
+    font-family: "open sans", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .inputDiv {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #passwordField {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  #passwordField input {
+    margin: 10px 20px 0 0;
+  }
+
+  #removeAcc {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .grey {
+    color: var(--lightGrey);
+    cursor: default;
+  }
+
+  .grey:hover {
+    text-decoration: none;
+  }
+
+  #removeAcc p {
+    margin: 10px 0 0 0;
+    width: 80%;
+    font-family: "open sans", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  #removeAcc a {
+    text-align: center;
+  }
+
+  #removeAcc a {
+    color: crimson;
+    font-family: "open sans", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 12px 20px;
+    border: white 3px solid;
+    transition: all 0.15s ease-in-out;
+    border-radius: 10px;
+    width: 42%;
+  }
+
+  #removeAcc a:hover {
+    background-color: crimson;
+    color: white;
+    border: crimson 3px solid;
+    box-shadow: 0px 0px 20px 0px rgba(255, 59, 59, 0.3);
+    transform: scale(1.05);
+  }
+
+  #accImgDiv {
+    display: flex;
+    align-items: center;
+    font-size: 100px;
+    line-height: 0px;
+    color: var(--background);
+  }
+
+  #accImg {
+    margin: 0 20px 0 0;
+  }
+
+  #imgButtonDiv {
+    display: flex;
+  }
+
+  #passRequestedDiv h4 {
+    font-size: 14px;
   }
 
   .imgButton {

@@ -1,7 +1,12 @@
 <template>
+
     <the-mini-navbar v-if="true">
     </the-mini-navbar>
   <div id="wrapper">
+    <the-reservation-modal v-if="reservationModalOpen"
+      :data="modalData"
+      @cancel="reservationModalOpen=false"
+    ></the-reservation-modal>
     <transition name="listFade">
       <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
         <div id="listContent">
@@ -18,7 +23,7 @@
               activeItem: openCard == listItem.title,
             }"
             :openCard="openCard"
-            @expand="expandItem(listItem.title)"
+            @expand="expandItem(listItem)"
             @changeTime="setTime"
           ></the-list-item>
         </div>
@@ -68,6 +73,7 @@ import BaseButton from "../UI/BaseButton.vue";
 import TheListItem from "../UI/TheListItem.vue";
 import TheMiniNavbar from "../UI/TheMiniNavbar.vue";
 import TheMiniSearchbar from "../TheMiniSearchbar.vue";
+import TheReservationModal  from '../UI/TheReservationModal.vue'
 
 export default {
   components: {
@@ -76,7 +82,8 @@ export default {
     BaseButton,
     TheListItem,
     TheMiniNavbar,
-    TheMiniSearchbar
+    TheMiniSearchbar,
+    TheReservationModal
   },
   data() {
     BaseButton;
@@ -84,7 +91,7 @@ export default {
       localSearchQuery: {
         amount: 2,
         time: "1900",
-        date: "",
+        date: "21-07-2021",
       },
       center: { lat: 51.84768967381224, lng: 5.854428604054124 },
       listIsOpen: true,
@@ -92,7 +99,15 @@ export default {
       markerOptions: null,
       openCard: "",
       selectedMarker: "",
-      searchHover: false
+      searchHover: false,
+      reservationModalOpen: false,
+      modalData:{
+        restaurant: '',
+        amount:'',
+        city: "nijmegen",
+        time: '',
+        date: ''
+      }
     };
   },
   methods: {
@@ -123,6 +138,15 @@ export default {
         },
       };
     },
+    makeReservation(item){
+      this.reservationModalOpen = true;
+      this.modalData.restaurant = item.title;
+      this.modalData.amount = this.localSearchQuery.amount;
+      this.modalData.time = this.localSearchQuery.time;
+      this.modalData.location = "Nijmegen"
+      this.modalData.date = this.localSearchQuery.date
+      
+    },
     loadList() {
       fetch(
         "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/nijmegen/restaurants.json"
@@ -149,16 +173,15 @@ export default {
           this.list = results;
         });
     },
-    expandItem(cardName) {
-      if (this.openCard == cardName) {
-        this.openCard = "";
+    expandItem(item) {
+      if (this.openCard == item.title) {
+        this.makeReservation(item)
       } else {
-        this.openCard = cardName;
+        this.openCard = item.title;
       }
     },
     setTime(time) {
       this.localSearchQuery.time = time;
-      console.log(time);
     },
     getMarkerColor(title) {
       if (this.selectedMarker == title) {

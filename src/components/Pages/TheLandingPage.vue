@@ -125,4 +125,15 @@ h1 {
   color: white;
   text-decoration: none;
 }
+
+@media screen and (max-width: 1920px) {
+  #backdrop1 {
+    position: absolute;
+    height: 100%;
+    width: 100vw;
+    background-image: url("../../assets/backdrop.png");
+    z-index: -1;
+    overflow-y: visible;
+    background-position: center;  }
+}
 </style>

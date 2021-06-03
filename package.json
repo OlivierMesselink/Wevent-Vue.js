@@ -17,6 +17,7 @@
     "firebase": "^8.6.3",
     "firebase-auth": "^0.1.2",
     "primevue": "^3.3.5",
+    "qrcode.vue": "^3.2.2",
     "vue": "^3.0.0",
     "vue-fullpage.js": "^0.1.7",
     "vue-router": "^4.0.0-0",
