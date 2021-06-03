@@ -46,7 +46,6 @@ button {
   transform: scale(1.05);
 }
 
-<<<<<<< Updated upstream
 .confirm{
   display: inline-block;
   font-family: "open-sans", sans-serif;
@@ -82,8 +81,7 @@ button {
 .confirmAlt:hover{
   transform: scale(1.05);
 }
-</style>
-=======
+
 .pim {
   display: inline-block;
   font-family: "open-sans", sans-serif;
@@ -99,4 +97,4 @@ button {
   color: white;
 }
 </style>
->>>>>>> Stashed changes
+

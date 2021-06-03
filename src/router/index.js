@@ -25,16 +25,10 @@ const routes = [
     component: TheBusinessRegistration,
     meta: { title: "Wevent.nl | Je onderneming registreren" },
   },
-<<<<<<< Updated upstream
 ]
 
 
 const router = createRouter({ 
-=======
-];
-
-const router = createRouter({
->>>>>>> Stashed changes
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
