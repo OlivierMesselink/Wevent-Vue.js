@@ -40,7 +40,7 @@ export default {};
   position: absolute;
   left: 6%;
   margin-top: 6%;
-  height: 54vh;
+  height: 60vh;
   width: 100vw;
   background-size: contain;
 }
@@ -67,7 +67,6 @@ export default {};
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: white;
-
   width: 1000px;
   height: 500px;
   padding: 70px;
