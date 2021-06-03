@@ -48,9 +48,9 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
   top: 8%;
-  left: 6%;
-  height: 10%;
-  width: 10%;
+  left: 5%;
+  height: 10vh;
+  width: 100vw;
   background-image: url("../../../assets/wevent_logo.png");
 }
 
