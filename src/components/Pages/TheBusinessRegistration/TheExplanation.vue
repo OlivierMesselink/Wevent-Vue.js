@@ -41,7 +41,11 @@ export default {};
   left: 6%;
   margin-top: 6%;
   height: 60vh;
+<<<<<<< HEAD
   width: 20vw;
+=======
+  width: 100vw;
+>>>>>>> main
   background-size: contain;
 }
 
