@@ -41,7 +41,7 @@ export default {};
   left: 6%;
   margin-top: 6%;
   height: 60vh;
-  width: 100vw;
+  width: 20vw;
   background-size: contain;
 }
 
@@ -87,6 +87,6 @@ h3 {
   margin-bottom: 4%;
   margin-top: 1%;
   line-height: 35px;
-  color: var(--mediumGray);
+  color: var(--mediumGrey);
 }
 </style>

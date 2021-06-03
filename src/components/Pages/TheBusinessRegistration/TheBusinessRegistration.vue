@@ -9,16 +9,19 @@
       v-if="progressCounter == 1"
       @continue="progress"
     ></the-explanation>
+    <the-contactdetails v-if="progressCounter == 2" @continue="progress">
+    </the-contactdetails>
     <!-- </transition-group> -->
   </div>
 </template>
 
 <script>
+import TheContactdetails from "./TheContactdetails.vue";
 import TheExplanation from "./TheExplanation.vue";
 import TheIntro from "./TheIntro.vue";
 
 export default {
-  components: { TheIntro, TheExplanation },
+  components: { TheIntro, TheExplanation, TheContactdetails },
   data() {
     return {
       progressCounter: 0,

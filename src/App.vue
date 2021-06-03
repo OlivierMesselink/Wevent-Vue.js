@@ -13,7 +13,7 @@
   --blue: #86b9cf;
   --lightBlue: #a6c9d8;
   --background: #d6e0e4;
-  --mediumGray: #b7b7b7;
+  --mediumGrey: #b7b7b7;
 }
 
 html,

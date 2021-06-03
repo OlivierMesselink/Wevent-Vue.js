@@ -84,10 +84,6 @@ export default {};
   line-height: 30px;
 }
 
-.bullet-margin {
-  margin-right: 1%;
-}
-
 #block {
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -112,6 +108,6 @@ h3 {
   margin-bottom: 4%;
   margin-top: 1%;
   line-height: 33px;
-  color: var(--mediumGray);
+  color: var(--mediumGrey);
 }
 </style>
