@@ -2,25 +2,31 @@
   <div class="main">
     <div id="backdrop-texture"></div>
     <div id="backdrop-color"></div>
-    <div id="backdrop-image"></div>
     <div id="logo-top-left"></div>
-    <the-intro @continue="progress"></the-intro>
+    <!-- <transition-group> -->
+    <the-intro v-if="progressCounter == 0" @continue="progress"></the-intro>
+    <the-explanation
+      v-if="progressCounter == 1"
+      @continue="progress"
+    ></the-explanation>
+    <!-- </transition-group> -->
   </div>
 </template>
 
 <script>
+import TheExplanation from "./TheExplanation.vue";
 import TheIntro from "./TheIntro.vue";
 
 export default {
-  components: { TheIntro },
+  components: { TheIntro, TheExplanation },
   data() {
     return {
-      progressCounter: false,
+      progressCounter: 0,
     };
   },
   methods: {
     progress() {
-      this.progressCounter;
+      this.progressCounter++;
     },
   },
 };
@@ -40,20 +46,12 @@ export default {
 #logo-top-left {
   position: absolute;
   background-size: contain;
+  background-repeat: no-repeat;
   top: 8%;
   left: 6%;
   height: 10%;
   width: 10%;
   background-image: url("../../../assets/wevent_logo.png");
-}
-
-#backdrop-image {
-  position: absolute;
-  height: 115%;
-  width: 100vw;
-  background-size: cover;
-  z-index: -1;
-  background-image: url("../../../assets/bg-business-intro.png");
 }
 
 #backdrop-texture {

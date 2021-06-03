@@ -8,8 +8,8 @@
 
 <script>
 export default {
-    props:['buttonStyle']
-}
+  props: ["buttonStyle"],
+};
 </script>
 
 <style scoped>
@@ -40,12 +40,13 @@ button {
   color: var(--orange);
 }
 
-.hollow:hover{
-    background-color: var(--orange);
-    color: white;
-    transform: scale(1.05);
+.hollow:hover {
+  background-color: var(--orange);
+  color: white;
+  transform: scale(1.05);
 }
 
+<<<<<<< Updated upstream
 .confirm{
   display: inline-block;
   font-family: "open-sans", sans-serif;
@@ -82,3 +83,20 @@ button {
   transform: scale(1.05);
 }
 </style>
+=======
+.pim {
+  display: inline-block;
+  font-family: "open-sans", sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  border: var(--orange) 3px solid;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 14px 55px;
+  background-color: var(--orange);
+
+  color: white;
+}
+</style>
+>>>>>>> Stashed changes
