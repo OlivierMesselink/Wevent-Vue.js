@@ -161,7 +161,7 @@ export default {
           firstname: this.register.firstname,
           lastname: this.register.lastname,
           email: this.register.email,
-          businnessAcc: false,
+          businessAcc: false,
         }),
       })
         .then((response) => response.json())

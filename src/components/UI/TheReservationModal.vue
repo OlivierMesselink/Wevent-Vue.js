@@ -22,12 +22,16 @@
           </div>
         </div>
         <div id="buttonDiv">
-          <base-button class="button" buttonStyle="solid"
-          @click="$emit('accept')"
+          <base-button
+            class="button"
+            buttonStyle="solid"
+            @click="addReservationToUser"
             >Bevestigen</base-button
           >
-          <base-button class="button" buttonStyle="hollow"
-          @click="$emit('cancel')"
+          <base-button
+            class="button"
+            buttonStyle="hollow"
+            @click="$emit('cancel')"
             >Annuleren</base-button
           >
         </div>
@@ -43,18 +47,58 @@ export default {
   props: ["data"],
   data() {
     return {
-      restaurant: "Bistrobar Bankoh",
-      time: "19:00",
-      location: " Kaapstander 286, 6541 EX Nijmegen",
-      city: "Nijmegen",
-      amount: 4,
       uid: null,
+      user: null,
     };
+  },
+  methods: {
+    loadUserData(Id) {
+      const url =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        Id +
+        ".json";
+
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          this.user = data;
+        });
+    },
+    addReservationToUser(){
+      var currentUser = this.user
+      if (!currentUser.reservations) {currentUser.reservations = []}
+      currentUser.reservations.push(this.$props.data);
+      this.updateUser(currentUser,this.uid)
+    },
+    updateUser(newUserData,userId){
+      const fetchUrl =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        userId +
+        ".json";
+      fetch(fetchUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstname: newUserData.firstname,
+          lastname: newUserData.lastname,
+          businessAcc: newUserData.businessAcc,
+          email: newUserData.email,
+          reservations:newUserData.reservations,
+          pinned: newUserData.pinned
+        }),
+      })
+        .then(this.$router.push('/'));
+    }
   },
   beforeCreate() {
     projectAuth.onAuthStateChanged((user) => {
       if (user) {
         this.uid = user.uid;
+        this.loadUserData(user.uid)
       }
     });
   },

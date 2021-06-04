@@ -143,7 +143,7 @@ export default {
       this.modalData.restaurant = item.title;
       this.modalData.amount = this.localSearchQuery.amount;
       this.modalData.time = this.localSearchQuery.time;
-      this.modalData.location = "Nijmegen"
+      this.modalData.location = item.subtitle
       this.modalData.date = this.localSearchQuery.date
       
     },

@@ -9,7 +9,7 @@
         >
         <div @click="$router.push('/account')" id="loggedinDiv" v-if="loggedIn">
           <div id="userDiv">
-            <h3>{{ user }} <fa class="ico" icon="user-circle"></fa></h3>
+            <h3>{{ user.firstname + ' ' + user.lastname }} <fa class="ico" icon="user-circle"></fa></h3>
           </div>
         </div>
       </div>
@@ -35,13 +35,30 @@ export default {
     back() {
       this.$router.push("/");
     },
+    loadUserData(Id) {
+      const url =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        Id +
+        ".json";
+
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          this.user = data;
+        });
+    },
   },
   /* this checks if the user is logged in */
   beforeCreate() {
     projectAuth.onAuthStateChanged((user) => {
       if (user) {
         this.loggedIn = true;
-        this.user = user.email;
+        const id = user.uid
+        this.loadUserData(id)
       } else {
         this.loggedIn = false;
       }

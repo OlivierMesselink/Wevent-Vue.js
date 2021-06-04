@@ -116,6 +116,13 @@
       <transition name="tab" mode="out-in">
         <div v-if="openTab.reservations" id="reservationsWrapper">
           <h3 v-if="!reservations">Je hebt geen reserveringen.</h3>
+          <ul>
+            <li v-for=" item in reservations" :key="item.date">
+              <h3>{{ item.restaurant }}</h3>
+            <h4>op {{item.date + ' om '+ item.time}}</h4>
+            
+            </li>
+          </ul>
         </div>
       </transition>
       <transition name="tab" mode="out-in">
@@ -205,6 +212,7 @@ export default {
         })
         .then((data) => {
           this.user = data;
+          this.reservations = data.reservations
         });
     },
     /* removes user from firebase Auth and firebase realtime database */
