@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper">
+  <div id="wrapper" v-cloak>
     <section id="navColumn">
       <h1>Jouw account</h1>
       <h3>Welkom {{ user.firstname + " " + user.lastname }}</h3>
@@ -116,12 +116,26 @@
       <transition name="tab" mode="out-in">
         <div v-if="openTab.reservations" id="reservationsWrapper">
           <h3 v-if="!reservations">Je hebt geen reserveringen.</h3>
+
           <ul>
-            <li v-for=" item in reservations" :key="item.date">
-              <h3>{{ item.restaurant }}</h3>
-            <h4>op {{item.date + ' om '+ item.time}}</h4>
-            
-            </li>
+            <transition-group name="li">
+              <li v-for="item in reservations" :key="item.date">
+                <div class="listItem">
+                  <h3>{{ item.restaurant }}</h3>
+                  <h4>Op {{ item.date + " om " + item.time }}</h4>
+                </div>
+                <div class="listButtons">
+                  <base-button
+                    @click="removeReservation(item)"
+                    buttonStyle="confirmHollow"
+                    >Annuleren</base-button
+                  >
+                  <base-button id="confirmButton" buttonStyle="solid"
+                    >Bekijken</base-button
+                  >
+                </div>
+              </li>
+            </transition-group>
           </ul>
         </div>
       </transition>
@@ -166,7 +180,7 @@ export default {
       favorites: null,
       authUser: {},
       removeModalOpen: false,
-      passResetRequested: false
+      passResetRequested: false,
     };
   },
   methods: {
@@ -212,7 +226,7 @@ export default {
         })
         .then((data) => {
           this.user = data;
-          this.reservations = data.reservations
+          this.reservations = data.reservations;
         });
     },
     /* removes user from firebase Auth and firebase realtime database */
@@ -248,6 +262,34 @@ export default {
           console.log(error);
         });
     },
+    removeReservation(item) {
+      var currentUser = this.user;
+      const newReservations = currentUser.reservations.filter(
+        (reservation) => reservation.restaurant != item.restaurant
+      );
+      var newUser = currentUser;
+      newUser.reservations = newReservations;
+      this.updateUser(newUser, this.userId);
+    },
+    updateUser(newUserData, userId) {
+      const fetchUrl =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        userId +
+        ".json";
+      fetch(fetchUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstname: newUserData.firstname,
+          lastname: newUserData.lastname,
+          businessAcc: newUserData.businessAcc,
+          email: newUserData.email,
+          reservations: newUserData.reservations,
+          pinned: newUserData.pinned,
+        }),
+      });
+      this.loadUserData(this.userId);
+    },
   },
   /* this checks if the user is logged in */
   beforeCreate() {
@@ -255,6 +297,7 @@ export default {
       if (user) {
         const Id = user.uid;
         this.authUser = user;
+        this.userId = user.uid;
         this.loadUserData(Id);
       } else {
         this.$router.push("/");
@@ -646,6 +689,38 @@ export default {
     font-size: 14px;
   }
 
+  li {
+    /* background-color: var(--orange); */
+    border: solid 3px var(--orange);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 10px 0;
+  }
+
+  .listItem h3 {
+    color: var(--orange);
+    font-weight: 800;
+    font-size: 18px;
+    margin: 0 0 7px 0;
+  }
+
+  .listItem h4 {
+    color: var(--grey);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .listButtons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #confirmButton {
+    margin: 0 0 0 10px;
+  }
+
   .imgButton {
     margin: 0px 0px 0 10px;
   }
@@ -653,20 +728,19 @@ export default {
   .underline {
     text-decoration: underline;
   }
-
-  /* .tab-enter-from,
-  .tab-leave-to {
+  .li-enter-from,
+  .li-leave-to {
     opacity: 0;
   }
 
-  .tab-enter-to,
-  .tab-leave-from {
+  .li-enter-to,
+  .li-leave-from {
     opacity: 1;
   }
 
-  .tab-enter-active,
-  .tab-leave-active {
+  .li-enter-active,
+  .li-leave-active {
     transition: all 0.1s ease-in-out;
-  } */
+  }
 }
 </style>

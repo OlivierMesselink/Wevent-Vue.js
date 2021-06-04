@@ -82,6 +82,25 @@ button {
   transform: scale(1.05);
 }
 
+.confirmHollow{
+  display: inline-block;
+  font-family: "open-sans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  border: crimson 3px solid;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 12px 20px;
+  background-color: transparent;
+  color: crimson;
+}
+
+.confirmHollow:hover{
+  color: white;
+  background-color: crimson;
+}
+
 .pim {
   display: inline-block;
   font-family: "open-sans", sans-serif;
