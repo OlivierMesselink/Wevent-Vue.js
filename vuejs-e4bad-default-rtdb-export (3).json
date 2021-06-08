@@ -1,0 +1,644 @@
+{
+  "Customers" : {
+    "dVs3WEGOh9eHhGXXuSVvYLCgLx13" : {
+      "businessAcc" : false,
+      "email" : "oliviermesselink@gmail.com",
+      "firstname" : "Olivier",
+      "lastname" : "Messelink",
+      "reservations" : [ {
+        "amount" : 2,
+        "city" : "Nijmegen",
+        "date" : "21-07-2021",
+        "location" : "Mariënburg 38, 6511 PS Nijmegen",
+        "restaurant" : "Cafe Lux",
+        "time" : 2000
+      }, {
+        "amount" : 2,
+        "city" : "Nijmegen",
+        "date" : "21-07-2021",
+        "location" : "Koningstraat 26, 6511 LB Nijmegen",
+        "restaurant" : "Freddy's",
+        "time" : 2000
+      } ]
+    }
+  },
+  "arnhem" : {
+    "cafe" : {
+      "test" : {
+        "attendees" : "3",
+        "budget" : "1"
+      },
+      "testing" : {
+        "attendees" : "3",
+        "budget" : "500"
+      }
+    },
+    "restaurants" : {
+      "goed proeven" : {
+        "attendees" : {
+          "max" : 12,
+          "min" : 1
+        },
+        "budget" : 3,
+        "category" : {
+          "bar" : true,
+          "hotel" : false,
+          "lunch" : false,
+          "restaurant" : true
+        },
+        "dates" : {
+          "friday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "monday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "saturday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "sunday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "thursday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "tuesday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "wednesday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          }
+        },
+        "description" : "Elke dag beginnen wij vers. Wij hakken, snijden en roeren ons een weg naar vers gekookte soep, sausen, bijlagen en dressings.",
+        "id" : "Goed Proeven",
+        "imgLink" : "https://d1ds1nqrpp2srf.cloudfront.net/photos/1396/goed-proeven-restaurant-arnhem-2%28p-restaurant_6928%29%28c-0%29_original.jpg?1515509309",
+        "lang" : 5.91601,
+        "lat" : 51.98592,
+        "location" : "Klarendalseweg 536, 6822 GZ Arnhem",
+        "rating" : 4,
+        "split" : 0
+      },
+      "stan&co" : {
+        "attendees" : {
+          "max" : 8,
+          "min" : 1
+        },
+        "budget" : 3,
+        "category" : {
+          "bar" : true,
+          "hotel" : false,
+          "lunch" : false,
+          "restaurant" : true
+        },
+        "dates" : {
+          "friday" : {
+            "except" : false,
+            "from" : "11:00",
+            "till" : "20:00"
+          },
+          "monday" : {
+            "except" : false,
+            "from" : "11:00",
+            "till" : "20:00"
+          },
+          "saturday" : {
+            "except" : false,
+            "from" : "11:00",
+            "till" : "20:00"
+          },
+          "sunday" : {
+            "except" : false,
+            "from" : "11:00",
+            "till" : "20:00"
+          },
+          "thursday" : {
+            "except" : false,
+            "from" : "11:00",
+            "till" : "20:00"
+          },
+          "tuesday" : {
+            "except" : false,
+            "from" : "11:00",
+            "till" : "20:00"
+          },
+          "wednesday" : {
+            "except" : false,
+            "from" : "11:00",
+            "till" : "20:00"
+          }
+        },
+        "description" : "Stoer, avontuurlijk, levendig, licht en verfijnd. Dat is STAN&CO Arnhem.",
+        "id" : "STAN&CO",
+        "imgLink" : "https://www.nijmegen.business/media/k2/items/cache/98bce7d9d49222dae020697d2909b8d4_XL.jpg",
+        "lang" : 5.906841750120002,
+        "lat" : 51.98390805203996,
+        "location" : "Willemsplein 46, 6811 KD Arnhem",
+        "rating" : 3,
+        "split" : 0
+      }
+    }
+  },
+  "nijmegen" : {
+    "cafe" : {
+      "test" : {
+        "attendees" : "5",
+        "budget" : "3"
+      }
+    },
+    "restaurants" : {
+      "Bistrobar Bankoh" : {
+        "attendees" : {
+          "max" : 8,
+          "min" : 2
+        },
+        "budget" : 4,
+        "category" : {
+          "bar" : false,
+          "hotel" : false,
+          "lunch" : false,
+          "restaurant" : true
+        },
+        "dates" : {
+          "friday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "22:00"
+          },
+          "monday" : {
+            "except" : false,
+            "from" : "16:30",
+            "till" : "22:00"
+          },
+          "saturday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "22:00"
+          },
+          "sunday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "22:00"
+          },
+          "thursday" : {
+            "except" : false,
+            "from" : "16:30",
+            "till" : "22:00"
+          },
+          "tuesday" : {
+            "except" : false,
+            "from" : "16:30",
+            "till" : "22:00"
+          },
+          "wednesday" : {
+            "except" : false,
+            "from" : "16:30",
+            "till" : "22:00"
+          }
+        },
+        "description" : "Ontdek het middelpunt van smaak. Asian with a twist aan de waal in Nijmegen.",
+        "id" : "Bistrobar Bankoh",
+        "imgLink" : "https://www.dewereldreizigers.nl/wp-content/uploads/2019/04/IMG_1559-e1556614402849.jpg",
+        "lang" : 5.854684576653753,
+        "lat" : 51.851006607503386,
+        "location" : "Kaapstander 286, 6541 EX Nijmegen",
+        "rating" : 5,
+        "split" : 0
+      },
+      "Cafe Lux" : {
+        "attendees" : {
+          "max" : 8,
+          "min" : 2
+        },
+        "budget" : 4,
+        "category" : {
+          "bar" : true,
+          "hotel" : false,
+          "lunch" : false,
+          "movie" : true,
+          "restaurant" : false
+        },
+        "dates" : {
+          "friday" : {
+            "except" : false,
+            "from" : "09:00",
+            "till" : "20:00"
+          },
+          "monday" : {
+            "except" : false,
+            "from" : "09:00",
+            "till" : "20:00"
+          },
+          "saturday" : {
+            "except" : false,
+            "from" : "09:00",
+            "till" : "20:00"
+          },
+          "sunday" : {
+            "except" : false,
+            "from" : "09:00",
+            "till" : "20:00"
+          },
+          "thursday" : {
+            "except" : false,
+            "from" : "09:00",
+            "till" : "20:00"
+          },
+          "tuesday" : {
+            "except" : false,
+            "from" : "09:00",
+            "till" : "20:00"
+          },
+          "wednesday" : {
+            "except" : false,
+            "from" : "09:00",
+            "till" : "20:00"
+          }
+        },
+        "description" : "Café LUX is een bruisende en gastvrije ontmoetingsplek in hartje Nijmegen, waar je de hele dag terecht kunt voor een kop koffie of glas wijn, ontbijt, lunch, borrel en diner.",
+        "id" : "Cafe Lux",
+        "imgLink" : "https://i.pinimg.com/originals/86/6e/ae/866eaea859d5c3a0e62aae752a616364.jpg",
+        "lang" : 5.866924851075248,
+        "lat" : 51.844927937576486,
+        "location" : "Mariënburg 38, 6511 PS Nijmegen",
+        "rating" : 3,
+        "split" : 0
+      },
+      "Credible" : {
+        "attendees" : {
+          "max" : 8,
+          "min" : 2
+        },
+        "budget" : 4,
+        "category" : {
+          "bar" : true,
+          "hotel" : true,
+          "lunch" : false,
+          "restaurant" : true
+        },
+        "dates" : {
+          "friday" : {
+            "except" : false,
+            "from" : "07:00",
+            "till" : "20:00"
+          },
+          "monday" : {
+            "except" : false,
+            "from" : "07:00",
+            "till" : "20:00"
+          },
+          "saturday" : {
+            "except" : false,
+            "from" : "08:00",
+            "till" : "20:00"
+          },
+          "sunday" : {
+            "except" : false,
+            "from" : "08:00",
+            "till" : "20:00"
+          },
+          "thursday" : {
+            "except" : false,
+            "from" : "07:00",
+            "till" : "20:00"
+          },
+          "tuesday" : {
+            "except" : false,
+            "from" : "07:00",
+            "till" : "20:00"
+          },
+          "wednesday" : {
+            "except" : false,
+            "from" : "07:00",
+            "till" : "20:00"
+          }
+        },
+        "description" : "in-Credible verblijf je niet, je bént er. En als je er bent, dan is de kans groot dat je blijft.",
+        "id" : "Hotel Credible",
+        "imgLink" : "https://cf.bstatic.com/images/hotel/max500/256/256096398.jpg",
+        "lang" : 5.869200822563575,
+        "lat" : 51.84637130232598,
+        "location" : "Hertogstraat 1, 6511 RV Nijmegen",
+        "rating" : 4,
+        "split" : 0
+      },
+      "Freddy's" : {
+        "attendees" : {
+          "max" : 8,
+          "min" : 2
+        },
+        "budget" : 4,
+        "category" : {
+          "bar" : true,
+          "hotel" : false,
+          "lunch" : false,
+          "restaurant" : true
+        },
+        "dates" : {
+          "friday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "18:00"
+          },
+          "monday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "18:00"
+          },
+          "saturday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "18:00"
+          },
+          "sunday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "18:00"
+          },
+          "thursday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "18:00"
+          },
+          "tuesday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "18:00"
+          },
+          "wednesday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "18:00"
+          }
+        },
+        "description" : "Een jaren '70 concept; Amerikaanse burgers, hotdogs en meer urban gerechten. ELKE DAG OPEN VANAF 10:00!",
+        "id" : "Freddy's",
+        "imgLink" : "https://media.indebuurt.nl/nijmegen/2019/09/05235920/freddys_binnen.jpg",
+        "lang" : 5.864509199994889,
+        "lat" : 51.845410228516826,
+        "location" : "Koningstraat 26, 6511 LB Nijmegen",
+        "rating" : 4,
+        "split" : 0
+      },
+      "Loetje Nijmegen" : {
+        "attendees" : {
+          "max" : 8,
+          "min" : 2
+        },
+        "budget" : 4,
+        "category" : {
+          "bar" : false,
+          "hotel" : false,
+          "lunch" : true,
+          "restaurant" : true
+        },
+        "dates" : {
+          "friday" : {
+            "except" : false,
+            "from" : "10:00",
+            "till" : "20:00"
+          },
+          "monday" : {
+            "except" : false,
+            "from" : "10:00",
+            "till" : "20:00"
+          },
+          "saturday" : {
+            "except" : false,
+            "from" : "10:00",
+            "till" : "20:00"
+          },
+          "sunday" : {
+            "except" : false,
+            "from" : "10:00",
+            "till" : "20:00"
+          },
+          "thursday" : {
+            "except" : false,
+            "from" : "10:00",
+            "till" : "20:00"
+          },
+          "tuesday" : {
+            "except" : false,
+            "from" : "10:00",
+            "till" : "20:00"
+          },
+          "wednesday" : {
+            "except" : false,
+            "from" : "10:00",
+            "till" : "20:00"
+          }
+        },
+        "description" : "Bestel de lekkerste Loetje gerechten voor thuis zowel voor lunch als diner!",
+        "id" : "Loetje Nijmegen",
+        "imgLink" : "https://nijmegen.loetje.nl/wp-content/uploads/sites/19/2018/09/nijmegen-foto4.jpg",
+        "lang" : 5.854120836713236,
+        "lat" : 51.849102672769845,
+        "location" : "Kraanstraat 214, 6541 EJ Nijmegen",
+        "rating" : 4,
+        "split" : 0
+      },
+      "Zappa's Nijmegen" : {
+        "attendees" : {
+          "max" : 8,
+          "min" : 2
+        },
+        "budget" : 4,
+        "category" : {
+          "bar" : false,
+          "hotel" : false,
+          "lunch" : false,
+          "restaurant" : true
+        },
+        "dates" : {
+          "friday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "monday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "saturday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "sunday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "thursday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "tuesday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          },
+          "wednesday" : {
+            "except" : false,
+            "from" : "12:00",
+            "till" : "20:00"
+          }
+        },
+        "description" : "Zappa's! Vers, puur en smaakvol.",
+        "id" : "Zappa's Nijmegen",
+        "imgLink" : "https://d1ds1nqrpp2srf.cloudfront.net/photos/71781/25790940_377581082683092_8488040844335175252_o_original.jpg?1524672183",
+        "lang" : 5.863061878630546,
+        "lat" : 51.84557361198692,
+        "location" : "Plein 1944 155, 6511 JH Nijmegen",
+        "rating" : 3,
+        "split" : 0
+      },
+      "humphrey's" : {
+        "attendees" : {
+          "max" : 10,
+          "min" : 1
+        },
+        "budget" : 3,
+        "category" : {
+          "bar" : false,
+          "hotel" : false,
+          "lunch" : true,
+          "restaurant" : true
+        },
+        "dates" : {
+          "friday" : {
+            "except" : false,
+            "from" : "11:30",
+            "till" : "20:00"
+          },
+          "monday" : {
+            "except" : false,
+            "from" : "11:30",
+            "till" : "20:00"
+          },
+          "saturday" : {
+            "except" : false,
+            "from" : "11:30",
+            "till" : "20:00"
+          },
+          "sunday" : {
+            "except" : false,
+            "from" : "11:30",
+            "till" : "20:00"
+          },
+          "thursday" : {
+            "except" : false,
+            "from" : "11:30",
+            "till" : "20:00"
+          },
+          "tuesday" : {
+            "except" : false,
+            "from" : "11:30",
+            "till" : "20:00"
+          },
+          "wednesday" : {
+            "except" : false,
+            "from" : "11:30",
+            "till" : "20:00"
+          }
+        },
+        "description" : "Ons concept is simpel: Bourgondisch eten waar je je goed bij voelt!",
+        "id" : "Humphrey's",
+        "imgLink" : "https://www.mato.nl/wp-content/uploads/2019/09/MATO-website_slideshow_Humphreys_14.jpg",
+        "lang" : 5.86738,
+        "lat" : 51.84464,
+        "location" : "Mariënburg 59, 6511 PS Nijmegen",
+        "rating" : 5,
+        "split" : 0
+      },
+      "restaurant de portier" : {
+        "attendees" : {
+          "max" : 8,
+          "min" : 2
+        },
+        "budget" : 4,
+        "category" : {
+          "bar" : false,
+          "hotel" : false,
+          "lunch" : false,
+          "restaurant" : true
+        },
+        "dates" : {
+          "friday" : {
+            "except" : {
+              "from" : "15:00",
+              "till" : "17:30"
+            },
+            "from" : "12:00",
+            "till" : "00:00"
+          },
+          "monday" : {
+            "except" : {
+              "from" : "15:00",
+              "till" : "17:30"
+            },
+            "from" : "12:00",
+            "till" : "00:00"
+          },
+          "saturday" : {
+            "except" : {
+              "from" : "15:00",
+              "till" : "17:30"
+            },
+            "from" : "12:00",
+            "till" : "00:00"
+          },
+          "sunday" : false,
+          "thursday" : {
+            "except" : {
+              "from" : "15:00",
+              "till" : "17:30"
+            },
+            "from" : "12:00",
+            "till" : "00:00"
+          },
+          "tuesday" : {
+            "except" : {
+              "from" : "15:00",
+              "till" : "17:30"
+            },
+            "from" : "12:00",
+            "till" : "00:00"
+          },
+          "wednesday" : {
+            "except" : {
+              "from" : "15:00",
+              "till" : "17:30"
+            },
+            "from" : "12:00",
+            "till" : "00:00"
+          }
+        },
+        "description" : "Laat je in de watten leggen en geniet met volle teugen van onze mooie gerechten en heerlijke wijnen in een relaxte ambiance.",
+        "id" : "Restaurant de Portier",
+        "imgLink" : "https://media-cdn.tripadvisor.com/media/photo-s/1a/ce/f3/20/interieur-serre.jpg",
+        "lang" : 5.87137,
+        "lat" : 51.84608,
+        "location" : "Kelfkensbos 57, 6511 TB Nijmegen",
+        "rating" : 3,
+        "split" : 0
+      }
+    }
+  }
+}

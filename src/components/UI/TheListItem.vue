@@ -1,89 +1,170 @@
 <template>
-<div id="wrapper">
-  <div
-    id="listItemImage"
-    :style="{ backgroundImage: 'url(' + listItem.imageLink + ')' }"
-  ></div>
-  <div id="listItemContent">
-    <h1>{{ listItem.title }}</h1>
-    <h2>{{ listItem.subtitle }}</h2>
-    <p>{{ listItem.description }}</p>
-    <transition name="expandContent">
-      <div v-show="openCard == listItem.title" id="expandedItem">
-        <h3>Selecteer een tijd:</h3>
-        <div class="timeButtons">
-          <toggle-button
-            :solid="localSearchQuery.time == '1900'"
-            @click="setTime(1900)"
-            >19:00</toggle-button
-          >
-          <toggle-button
-            :solid="localSearchQuery.time == '1915'"
-            @click="setTime(1915)"
-            >19:15</toggle-button
-          >
-          <toggle-button
-            :solid="localSearchQuery.time == '1930'"
-            @click="setTime(1930)"
-            >19:30</toggle-button
-          >
+  <div id="wrapper">
+    <div
+      id="listItemImage"
+      :style="{ backgroundImage: 'url(' + listItem.imageLink + ')' }"
+    ></div>
+    <div id="listItemContent">
+      <h1>{{ listItem.title }}</h1>
+      <h2>{{ listItem.subtitle }}</h2>
+      <p>{{ listItem.description }}</p>
+      <transition name="expandContent">
+        <div v-show="openCard == listItem.title" id="expandedItem">
+          <h3>Selecteer een tijd:</h3>
+          <div class="timeButtons">
+            <toggle-button
+              :solid="localSearchQuery.time == '1900'"
+              @click="setTime(1900)"
+              >19:00</toggle-button
+            >
+            <toggle-button
+              :solid="localSearchQuery.time == '1915'"
+              @click="setTime(1915)"
+              >19:15</toggle-button
+            >
+            <toggle-button
+              :solid="localSearchQuery.time == '1930'"
+              @click="setTime(1930)"
+              >19:30</toggle-button
+            >
+          </div>
+          <div class="timeButtons">
+            <toggle-button
+              :solid="localSearchQuery.time == '1945'"
+              @click="setTime(1945)"
+              >19:45</toggle-button
+            >
+            <toggle-button
+              :solid="localSearchQuery.time == '2000'"
+              @click="setTime(2000)"
+              >20:00</toggle-button
+            >
+            <toggle-button
+              :solid="localSearchQuery.time == '2015'"
+              @click="setTime(2015)"
+              >20:15</toggle-button
+            >
+          </div>
+          <input
+            type="text"
+            placeholder="Eventuele opmerking (allergieën etc.)."
+          />
         </div>
-        <div class="timeButtons">
-          <toggle-button
-            :solid="localSearchQuery.time == '1945'"
-            @click="setTime(1945)"
-            >19:45</toggle-button
-          >
-          <toggle-button
-            :solid="localSearchQuery.time == '2000'"
-            @click="setTime(2000)"
-            >20:00</toggle-button
-          >
-          <toggle-button
-            :solid="localSearchQuery.time == '2015'"
-            @click="setTime(2015)"
-            >20:15</toggle-button
-          >
-        </div>
-        <input
-          type="text"
-          placeholder="Eventuele opmerking (allergieën etc.)."
-        />
-      </div>
-    </transition>
-    <a id="reserveButton" @click="$emit('expand')"
-      ><img src="../../assets/calendar.png" />
-      <p>RESERVEREN</p></a
-    >
-  </div>
-  <div id="ListItemButtons">
-    <div>
-      <img
-        v-if="!listItem.pinned"
-        id="pinImg"
-        src="../../assets/tack-inactive.png"
-      />
-      <img v-else id="pinImg" src="../../assets/tack-active.png" />
+      </transition>
+      <a id="reserveButton" @click="$emit('expand')"
+        ><img src="../../assets/calendar.png" />
+        <p>RESERVEREN</p></a
+      >
     </div>
-    <img id="Stars" />
+    <div id="ListItemButtons">
+      <div>
+        <img
+          v-if="!isPinned"
+          id="pinImg"
+          src="../../assets/tack-inactive.png"
+          @click="pinItemToUser"
+        />
+        <img v-else id="pinImg" src="../../assets/tack-active.png" />
+      </div>
+      <img id="Stars" />
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-export default {
-  props: ["listItem", "localSearchQuery", "expandClass", "openCard", ],
-  methods:{
-      setTime(time){
-          this.$emit('changeTime', time)
-      }
-  }
+import { projectAuth } from "../../firebaseConfig.js";
 
+export default {
+  props: ["listItem", "localSearchQuery", "expandClass", "openCard"],
+  emits: ["updateData"],
+  data() {
+    return {
+      user: null,
+      isPinned: false,
+      userId: null,
+      authUser: null,
+    };
+  },
+  methods: {
+    setTime(time) {
+      this.$emit("changeTime", time);
+    },
+    loadUserData(Id) {
+      const url =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        Id +
+        ".json";
+
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          this.user = data;
+          this.getPinStatus(this.user);
+        });
+    },
+    getPinStatus(user) {
+      if (user.pinned) {
+        for (var i = 0; i < user.pinned.length; i++) {
+          if (user.pinned[i] == this.listItem.title) {
+            this.isPinned = true;
+            return;
+          } else {
+            this.isPinned = false;
+          }
+        }
+      }
+    },
+    pinItemToUser() {
+      var currentUser = this.user;
+      if (!currentUser.pinned) {
+        currentUser.pinned = [];
+      }
+      var newUser = currentUser;
+      newUser.pinned.push(this.listItem.title);
+      this.updateUser(newUser, this.userId);
+    },
+    updateUser(newUserData, userId) {
+      const fetchUrl =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        userId +
+        ".json";
+      fetch(fetchUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstname: newUserData.firstname,
+          lastname: newUserData.lastname,
+          businessAcc: newUserData.businessAcc,
+          email: newUserData.email,
+          reservations: newUserData.reservations,
+          pinned: newUserData.pinned,
+        }),
+      }).then((response) => {
+        if (response.ok) {
+          this.getPinStatus
+        }
+      });
+    },
+  },
+  computed: {},
+  beforeCreate() {
+    projectAuth.onAuthStateChanged((user) => {
+      if (user) {
+        const Id = user.uid;
+        this.authUser = user;
+        this.userId = user.uid;
+        this.loadUserData(Id);
+      }
+    });
+  },
 };
 </script>
 
 <style scoped>
-
 #wrapper {
   margin: 20px;
   border-radius: 10px;

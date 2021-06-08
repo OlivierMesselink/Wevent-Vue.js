@@ -1,5 +1,12 @@
 <template>
   <section id="featuredWrapper">
+    <transition name="fade">
+    <the-event-modal
+      @close="modal = null"
+      v-if="modal"
+      :listItem="modal"
+    ></the-event-modal>
+    </transition>
     <div id="backdrop"></div>
     <div id="featuredContent">
       <h1>Uitgelicht</h1>
@@ -8,6 +15,7 @@
           v-for="listItem in list.slice(0, 8)"
           :key="listItem.title"
           :item="listItem"
+          @click="modal = listItem"
         ></the-featured-item>
       </div>
     </div>
@@ -17,14 +25,17 @@
 
 <script>
 import TheFeaturedItem from "./UI/TheFeaturedItem.vue";
+import TheEventModal from "./UI/TheEventModal.vue";
 
 export default {
   components: {
     TheFeaturedItem,
+    TheEventModal,
   },
   data() {
     return {
       list: "",
+      modal: null,
     };
   },
   methods: {
@@ -63,11 +74,30 @@ export default {
 </script>
 
 <style scoped>
+
+.fade-enter-from {
+  opacity: 0;
+
+}
+.fade-enter-active {
+  transition: all 0.075s ease-out;
+}
+.fade-leave-active {
+  transition: all 0.075s ease-in;
+}
+
+.fade-leave-to {
+  opacity: 0;
+
+}
+
+
 @media only screen and (min-width: 2160px) {
   #featuredWrapper {
     height: 100vh;
     width: 100vw;
     background-color: var(--background);
+    position: relative;
   }
 
   #featuredContent {
@@ -104,6 +134,7 @@ export default {
     z-index: 0;
     background-size: cover;
   }
+
 }
 
 @media only screen and (max-width: 1920px) {
