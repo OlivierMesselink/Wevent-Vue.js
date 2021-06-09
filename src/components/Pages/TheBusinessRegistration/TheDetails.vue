@@ -15,22 +15,34 @@
         <p class="items-margin">
           Vanaf en tot welk aantal gasten kan een gebruiker een reservering
           plaatsen bij je onderneming?
-          <input id="min" type="text" placeholder="Plaats" />
-          <input id="max" type="text" placeholder="Straatnaam" />
         </p>
+        <div class="flex-container">
+          <div id="min">
+            <label for="min">Minimaal</label>
+            <input type="text" placeholder="Bijv. 2" />
+          </div>
+          <div id="max">
+            <label for="max">Maximaal</label>
+            <input type="text" placeholder="Bijv. 12" />
+          </div>
+        </div>
       </div>
 
       <div id="contact-section">
         <p>
-          Hoe kunnen de gasten je bereiken?
+          Binnen welke (gemiddeld gezien) prijsklasse valt jouw onderneming?
         </p>
-        <input id="phone" type="text" placeholder="Selecteer" />
+        <select id="price" name="prijsklasse">
+          <option value="Selecteer een optie" selected>Selecteer</option>
+          <option value="10 tm 20">10 tm 20</option>
+        </select>
       </div>
     </div>
-
-    <base-button @click="$emit('continue')" buttonStyle="pim"
-      >Beginnen</base-button
-    >
+    <div id="continue-btn">
+      <base-button @click="$emit('continue')" buttonStyle="pim"
+        >Volgende stap</base-button
+      >
+    </div>
   </div>
 </template>
 
@@ -43,21 +55,45 @@ export default {
 </script>
 
 <style scoped>
-#form-body #website {
-  width: 40%;
-  margin-bottom: 8%;
+#continue-btn {
+  display: flex;
 }
 
-#form-body #phone {
-  margin-right: 3%;
-  width: 25%;
+#contact-section {
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
-#form-body #email {
-  width: 40%;
+#form-body #total-guests {
+  width: 10%;
+  margin-bottom: 5%;
+  display: flex;
 }
 
-#form-body input {
+.flex-container {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.flex-container input {
+  margin-left: 3% !important;
+  margin-bottom: 3% !important;
+  width: 15%;
+}
+
+select {
+  width: 35%;
+  /* Dropdown-arrow styling */
+  appearance: none;
+  background-image: url("../../../assets/caret-down.png");
+  background-repeat: no-repeat;
+  background-position-x: 90%;
+  background-position-y: 50%;
+  background-size: 5%;
+}
+
+#form-body input,
+select {
   margin: 10px 0px;
   border: none;
   padding: 14px 14px;
@@ -66,7 +102,8 @@ export default {
   margin-bottom: 20px;
 }
 
-input[type="text"] {
+input[type="text"],
+select {
   font-size: 16px;
   color: var(--grey);
   font-family: "open sans", "sans serif";
@@ -77,25 +114,6 @@ input[type="text"] {
   opacity: 15%;
   font-family: "open sans", "sans serif";
   font-size: 16px;
-}
-
-#form-body #city {
-  width: 40%;
-  display: flex;
-}
-
-#form-body #street {
-  width: 35%;
-}
-
-#form-body #number {
-  width: 8%;
-  margin-right: 3%;
-  margin-left: 1%;
-}
-
-#form-body #name {
-  width: 75%;
 }
 
 #progress-bar {
@@ -110,7 +128,7 @@ input[type="text"] {
 }
 
 .items-margin {
-  margin-bottom: 3%;
+  margin-bottom: 1%;
 }
 
 #form-body {
@@ -127,8 +145,8 @@ input[type="text"] {
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: white;
-  width: 900px;
-  height: 770px;
+  width: 850px;
+  height: 680px;
   padding: 70px;
   margin-left: 20%;
 }

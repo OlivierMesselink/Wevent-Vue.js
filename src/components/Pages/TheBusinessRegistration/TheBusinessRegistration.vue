@@ -11,17 +11,27 @@
     ></the-explanation>
     <the-contactdetails v-if="progressCounter == 2" @continue="progress">
     </the-contactdetails>
+    <the-details v-if="progressCounter == 3" @continue="progress"></the-details>
+    <the-times v-if="progressCounter == 4" @continue="progress"></the-times>
     <!-- </transition-group> -->
   </div>
 </template>
 
 <script>
 import TheContactdetails from "./TheContactdetails.vue";
+import TheDetails from "./TheDetails.vue";
 import TheExplanation from "./TheExplanation.vue";
 import TheIntro from "./TheIntro.vue";
+import TheTimes from "./TheTimes.vue";
 
 export default {
-  components: { TheIntro, TheExplanation, TheContactdetails },
+  components: {
+    TheIntro,
+    TheExplanation,
+    TheContactdetails,
+    TheDetails,
+    TheTimes,
+  },
   data() {
     return {
       progressCounter: 0,

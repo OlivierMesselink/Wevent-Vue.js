@@ -39,7 +39,7 @@
     </div>
 
     <base-button @click="$emit('continue')" buttonStyle="pim"
-      >Beginnen</base-button
+      >Volgende stap</base-button
     >
   </div>
 </template>
@@ -150,7 +150,7 @@ input[type="text"] {
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: white;
-  width: 900px;
+  width: 800px;
   height: 770px;
   padding: 70px;
   margin-left: 20%;

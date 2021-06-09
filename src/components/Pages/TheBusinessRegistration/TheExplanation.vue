@@ -22,10 +22,11 @@
         geven wanneer de status van je aanvraag is veranderd.
       </p>
     </div>
-
-    <base-button @click="$emit('continue')" buttonStyle="pim"
-      >Beginnen</base-button
-    >
+    <div id="continue-btn">
+      <base-button @click="$emit('continue')" buttonStyle="pim"
+        >Beginnen</base-button
+      >
+    </div>
   </div>
 </template>
 
@@ -34,6 +35,10 @@ export default {};
 </script>
 
 <style scoped>
+#continue-btn {
+  display: flex;
+}
+
 #progress-bar {
   background-image: url("../../../assets/progress-indicator-1.png");
   background-repeat: no-repeat;

@@ -46,7 +46,7 @@ button {
   transform: scale(1.05);
 }
 
-.confirm{
+.confirm {
   display: inline-block;
   font-family: "open-sans", sans-serif;
   font-weight: 700;
@@ -60,11 +60,11 @@ button {
   color: white;
 }
 
-.confirm:hover{
+.confirm:hover {
   transform: scale(1.05);
 }
 
-.confirmAlt{
+.confirmAlt {
   display: inline-block;
   font-family: "open-sans", sans-serif;
   font-weight: 700;
@@ -78,7 +78,7 @@ button {
   color: var(--grey);
 }
 
-.confirmAlt:hover{
+.confirmAlt:hover {
   transform: scale(1.05);
 }
 
@@ -112,8 +112,6 @@ button {
   transition: all 0.2s ease-in-out;
   padding: 14px 55px;
   background-color: var(--orange);
-
   color: white;
 }
 </style>
-
