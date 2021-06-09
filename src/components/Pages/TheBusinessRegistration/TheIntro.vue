@@ -50,7 +50,7 @@
         </p>
       </div>
       <div id="continue-btn">
-        <base-button @click="$emit('continue')" buttonStyle="pim"
+        <base-button @click="$emit('payload')" buttonStyle="pim"
           >Yes, let's go</base-button
         >
       </div>
@@ -70,7 +70,7 @@ export default {};
 
 #backdrop-image {
   position: absolute;
-  height: 115%;
+  height: 100%;
   width: 100vw;
   background-size: cover;
   z-index: -1;
@@ -115,7 +115,7 @@ h1 {
 h3 {
   font-family: "raleway", sans-serif;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 18px;
   width: 1000px;
   margin-bottom: 4%;
   margin-top: 1%;

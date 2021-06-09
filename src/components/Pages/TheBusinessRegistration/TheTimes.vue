@@ -109,7 +109,7 @@
       </div>
 
       <div id="continue-btn">
-        <base-button @click="$emit('continue')" buttonStyle="pim"
+        <base-button @click="$emit('data')" buttonStyle="pim"
           >Volgende stap</base-button
         >
       </div>
@@ -162,8 +162,8 @@ export default {
   margin-right: 1%;
 }
 .checkboxes-container {
-  height: 40px;
-  width: 40px;
+  height: 20px;
+  width: 20px;
   background-color: #a6c9d831;
   appearance: none;
   border-radius: 0px !important;
@@ -174,7 +174,7 @@ export default {
 .checkboxes-container:checked {
   background-image: url("../../../assets/checkmark.png") !important;
   background-repeat: no-repeat;
-  background-size: 70%;
+  background-size: 60%;
   background-position-x: 50%;
   background-position-y: 50%;
 }
@@ -188,7 +188,7 @@ export default {
 }
 
 input[type="text"] {
-  /* font-size: 16px; */
+  font-size: 14px;
   color: var(--grey);
   font-family: "open sans", "sans serif";
 }
@@ -197,7 +197,7 @@ input[type="text"] {
   color: black;
   opacity: 15%;
   font-family: "open sans", "sans serif";
-  font-size: 16px;
+  font-size: 14px;
 }
 
 #progress-bar {
@@ -220,7 +220,7 @@ input[type="text"] {
   display: flex;
   flex-direction: column;
   font-family: "open sans", "sans-serif";
-  font-size: 18px;
+  font-size: 14px;
   width: 930px;
   line-height: 33px;
   margin-left: 4%;
@@ -239,7 +239,7 @@ input[type="text"] {
 h1 {
   font-family: "raleway", sans-serif;
   font-weight: 800;
-  font-size: 50px;
+  font-size: 36px;
   margin-bottom: 4%;
   margin-left: 4%;
 }

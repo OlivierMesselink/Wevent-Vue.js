@@ -71,7 +71,7 @@
       >
       <div id="createAcc">
         <p>
-          <a v-on:click="toggleSignUp" href="#">{{ getA }}</a>
+          <a @click="toggleSignUp" href="#">{{ getA }}</a>
         </p>
       </div>
     </div>

@@ -2,22 +2,27 @@
   <div class="main">
     <div id="backdrop-texture"></div>
     <div id="backdrop-color"></div>
-    <div id="logo-top-left"></div>
+    <div @click="$router.push('/')" id="logo-top-left"></div>
     <!-- <transition-group> -->
-    <the-intro v-if="progressCounter == 0" @continue="progress"></the-intro>
+    <the-intro v-if="progressCounter == 0" @data="addData(payload)"></the-intro>
     <the-explanation
       v-if="progressCounter == 1"
-      @continue="progress"
+      @data="addData(payload)"
     ></the-explanation>
-    <the-contactdetails v-if="progressCounter == 2" @continue="progress">
+    <the-contactdetails v-if="progressCounter == 2" @data="addData(payload)">
     </the-contactdetails>
-    <the-details v-if="progressCounter == 3" @continue="progress"></the-details>
-    <the-times v-if="progressCounter == 4" @continue="progress"></the-times>
+    <the-details
+      v-if="progressCounter == 3"
+      @data="addData(payload)"
+    ></the-details>
+    <the-times v-if="progressCounter == 4" @data="addData(payload)"></the-times>
     <!-- </transition-group> -->
   </div>
 </template>
 
 <script>
+// import { projectAuth } from "../../firebaseConfig.js";
+
 import TheContactdetails from "./TheContactdetails.vue";
 import TheDetails from "./TheDetails.vue";
 import TheExplanation from "./TheExplanation.vue";
@@ -35,10 +40,74 @@ export default {
   data() {
     return {
       progressCounter: 0,
+      registration: {
+        //   category: {
+        //     bar: false,
+        //     restaurant: false,
+        //     hotel: false,
+        //     lunch: false,
+        //   },
+        //   attendees: {
+        //     max: "",
+        //     min: "",
+        //   },
+        //   budget: "",
+        //   dates: {
+        //     monday: {
+        //       expect: null,
+        //       from: "",
+        //       till: "",
+        //     },
+        //     tuesday: {
+        //       expect: null,
+        //       from: "",
+        //       till: "",
+        //     },
+        //     wednesday: {
+        //       expect: null,
+        //       from: "",
+        //       till: "",
+        //     },
+        //     thursdag: {
+        //       expect: null,
+        //       from: "",
+        //       till: "",
+        //     },
+        //     friday: {
+        //       expect: null,
+        //       from: "",
+        //       till: "",
+        //     },
+        //     saturday: {
+        //       expect: null,
+        //       from: "",
+        //       till: "",
+        //     },
+        //     sunday: {
+        //       expect: null,
+        //       from: "",
+        //       till: "",
+        //     },
+        //   },
+        //   name: "",
+        //   description: "",
+        //   city: "",
+        //   street: "",
+        //   number: "",
+        //   postal: "",
+        //   imgLink: "",
+        //   lang: "",
+        //   lat: "",
+        //   rating: "",
+        //   split: null,
+      },
     };
   },
   methods: {
-    progress() {
+    addData(payload) {
+      console.log(payload);
+      this.registration = this.registration + payload;
+      console.log(this.registration);
       this.progressCounter++;
     },
   },
@@ -65,6 +134,7 @@ export default {
   height: 10vh;
   width: 100vw;
   background-image: url("../../../assets/wevent_logo.png");
+  cursor: pointer;
 }
 
 #backdrop-texture {

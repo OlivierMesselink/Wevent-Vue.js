@@ -5,14 +5,12 @@
 
     <div id="form-body">
       <div id="guest-section">
-        <p class="items-margin">
+        <p>
           Hoeveel plek is er in totaal voor gasten?
           <input id="total-guests" type="text" placeholder="Bijv. 180" />
         </p>
-      </div>
 
-      <div id="location-section">
-        <p class="items-margin">
+        <p>
           Vanaf en tot welk aantal gasten kan een gebruiker een reservering
           plaatsen bij je onderneming?
         </p>
@@ -28,18 +26,44 @@
         </div>
       </div>
 
-      <div id="contact-section">
+      <div id="restaurant-section">
         <p>
           Binnen welke (gemiddeld gezien) prijsklasse valt jouw onderneming?
         </p>
         <select id="price" name="prijsklasse">
           <option value="Selecteer een optie" selected>Selecteer</option>
-          <option value="10 tm 20">10 tm 20</option>
+          <option value="1">Goedkoop</option>
+          <option value="2">Betaalbaar</option>
+          <option value="3">Redelijk betaalbaar</option>
+          <option value="4">Bovengemiddeld</option>
+          <option value="5">Michelin</option>
         </select>
+
+        <p>
+          Binnen welke categorie valt jouw onderneming?
+        </p>
+        <select id="category" name="soort">
+          <option value="Selecteer een optie" selected>Selecteer soort</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="bar">Bar</option>
+          <option value="hotel">Hotel</option>
+          <option value="lunch">Lunch</option>
+        </select>
+
+        <p>
+          Geef een korte omschrijving van het restaurant
+          <textarea
+            id="desc"
+            type="text"
+            placeholder="Bijv. Restaurant 't Vogeltje is een Turkse delicatesse zaak"
+            cols="10"
+            rows="4"
+          ></textarea>
+        </p>
       </div>
     </div>
     <div id="continue-btn">
-      <base-button @click="$emit('continue')" buttonStyle="pim"
+      <base-button @click="$emit('data')" buttonStyle="pim"
         >Volgende stap</base-button
       >
     </div>
@@ -59,14 +83,33 @@ export default {
   display: flex;
 }
 
-#contact-section {
+textarea {
+  resize: none;
+  border-radius: 10px;
+  background-color: #a6c9d831;
+  border: none;
+  font-family: "open sans", "sans serif";
+  display: flex;
+  width: 80%;
+  color: black;
+  padding: 10px;
+  color: var(--grey);
+  margin: 10px 0px;
+}
+
+textarea::placeholder {
+  color: black;
+  opacity: 15%;
+}
+
+#restaurant-section {
   margin-top: 5%;
-  margin-bottom: 5%;
+  margin-bottom: 4%;
 }
 
 #form-body #total-guests {
   width: 10%;
-  margin-bottom: 5%;
+  /* margin-bottom: 5%; */
   display: flex;
 }
 
@@ -77,7 +120,7 @@ export default {
 
 .flex-container input {
   margin-left: 3% !important;
-  margin-bottom: 3% !important;
+  margin-bottom: 2% !important;
   width: 15%;
 }
 
@@ -99,21 +142,21 @@ select {
   padding: 14px 14px;
   border-radius: 10px;
   background-color: #a6c9d831;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 input[type="text"],
 select {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--grey);
   font-family: "open sans", "sans serif";
 }
 
-#form-body input::placeholder {
+input::placeholder {
   color: black;
   opacity: 15%;
   font-family: "open sans", "sans serif";
-  font-size: 16px;
+  font-size: 14px;
 }
 
 #progress-bar {
@@ -127,17 +170,12 @@ select {
   background-size: contain;
 }
 
-.items-margin {
-  margin-bottom: 1%;
-}
-
 #form-body {
   color: var(--grey);
   display: flex;
   flex-direction: column;
   font-family: "open sans", "sans-serif";
-  font-size: 18px;
-  width: 930px;
+  font-size: 14px;
   line-height: 33px;
 }
 
@@ -145,16 +183,14 @@ select {
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: white;
-  width: 850px;
-  height: 680px;
-  padding: 70px;
+  padding: 60px;
   margin-left: 20%;
 }
 
 h1 {
   font-family: "raleway", sans-serif;
   font-weight: 800;
-  font-size: 50px;
+  font-size: 36px;
   margin-bottom: 4%;
 }
 
