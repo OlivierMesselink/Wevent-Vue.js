@@ -65,7 +65,7 @@
 
 <script>
 export default {
-  emits: ["addData"],
+  emits: ["add"],
   data() {
     return {
       register: {
@@ -74,9 +74,9 @@ export default {
         street: "",
         number: "",
         postal: "",
-        phone: "",
-        email: "",
-        website: "",
+        // phone: "",
+        // email: "",
+        // website: "",
       },
     };
   },

@@ -109,7 +109,7 @@
       </div>
 
       <div id="continue-btn">
-        <base-button @click="$emit('data')" buttonStyle="pim"
+        <base-button @click="$emit('payload')" buttonStyle="pim"
           >Volgende stap</base-button
         >
       </div>

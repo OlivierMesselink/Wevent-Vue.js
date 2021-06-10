@@ -4,18 +4,18 @@
     <div id="backdrop-color"></div>
     <div @click="$router.push('/')" id="logo-top-left"></div>
     <!-- <transition-group> -->
-    <the-intro v-if="progressCounter == 0" @data="addData(payload)"></the-intro>
+    <the-intro v-if="progressCounter == 0" @payload="add(payload)"></the-intro>
     <the-explanation
       v-if="progressCounter == 1"
-      @data="addData(payload)"
+      @payload="add(payload)"
     ></the-explanation>
-    <the-contactdetails v-if="progressCounter == 2" @data="addData(payload)">
+    <the-contactdetails v-if="progressCounter == 2" @payload="add(payload)">
     </the-contactdetails>
     <the-details
       v-if="progressCounter == 3"
-      @data="addData(payload)"
+      @payload="add(payload)"
     ></the-details>
-    <the-times v-if="progressCounter == 4" @data="addData(payload)"></the-times>
+    <the-times v-if="progressCounter == 4" @payload="add(payload)"></the-times>
     <!-- </transition-group> -->
   </div>
 </template>
@@ -104,7 +104,7 @@ export default {
     };
   },
   methods: {
-    addData(payload) {
+    add(payload) {
       console.log(payload);
       this.registration = this.registration + payload;
       console.log(this.registration);
