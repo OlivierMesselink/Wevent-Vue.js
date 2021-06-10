@@ -58,7 +58,7 @@ h1{
 h3{
     color: var(--grey);
     font-family: 'open sans', sans-serif;
-    font-size: 18x;
+    font-size: 18px;
     line-height: 20px;
     font-weight: 700;
     text-align: center;

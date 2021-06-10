@@ -90,17 +90,17 @@ export default {};
   display: flex;
   flex-direction: column;
   font-family: "open sans", "sans-serif";
-  font-size: 18px;
-  width: 930px;
-  line-height: 30px;
+  font-size: 14px;
+
+  line-height: 21px;
 }
 
 #block {
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: white;
-  width: 1000px;
-  height: 770px;
+  width: 800px;
+  /* height: 770px; */
   padding: 70px;
   margin-left: 20%;
   display: inline-block;
@@ -109,14 +109,14 @@ export default {};
 h1 {
   font-family: "raleway", sans-serif;
   font-weight: 800;
-  font-size: 50px;
+  font-size: 36px;
 }
 
 h3 {
   font-family: "raleway", sans-serif;
   font-weight: 600;
-  font-size: 24px;
-  width: 1000px;
+  font-size: 18px;
+  /* width: 1000px; */
   margin-bottom: 4%;
   margin-top: 1%;
   line-height: 33px;

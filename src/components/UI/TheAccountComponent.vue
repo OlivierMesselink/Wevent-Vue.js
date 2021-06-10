@@ -1,4 +1,11 @@
 <template>
+  <the-event-modal
+    v-if="eventModal"
+    :listItem="eventModal"
+    @close="eventModal = null"
+    style="top: -100px"
+  ></the-event-modal>
+
   <div id="wrapper" v-cloak>
     <section id="navColumn">
       <h1>Jouw account</h1>
@@ -20,6 +27,7 @@
         </h4>
         <h4
           @click="gotoFavo"
+          v-if="false"
           class="navItem"
           :class="{ underline: openTab.favo }"
         >
@@ -130,7 +138,10 @@
                     buttonStyle="confirmHollow"
                     >Annuleren</base-button
                   >
-                  <base-button id="confirmButton" buttonStyle="solid"
+                  <base-button
+                    @click="test(item)"
+                    id="confirmButton"
+                    buttonStyle="solid"
                     >Bekijken</base-button
                   >
                 </div>
@@ -140,8 +151,13 @@
         </div>
       </transition>
       <transition name="tab" mode="out-in">
-        <div v-if="openTab.favo" id="favoWrapper">
-          <h3 v-if="!favorites">Je hebt geen favorieten.</h3>
+        <div v-if="false" id="favoWrapper">
+          <h3 v-if="!user.pinned">Je hebt geen favorieten.</h3>
+          <ul>
+            <li v-for="pin in user.pinned" :key="pin">
+              <h4>{{ pin }}</h4>
+            </li>
+          </ul>
         </div>
       </transition>
     </section>
@@ -162,10 +178,12 @@
 <script>
 import { projectAuth } from "../../firebaseConfig.js";
 import TheModal from "./TheModal.vue";
+import TheEventModal from "../UI/TheEventModal.vue";
 
 export default {
   components: {
     TheModal,
+    TheEventModal,
   },
   data() {
     return {
@@ -181,9 +199,13 @@ export default {
       authUser: {},
       removeModalOpen: false,
       passResetRequested: false,
+      eventModal: null,
     };
   },
   methods: {
+    test(item){
+      console.log(item)
+    },
     /* logs out the user */
     logout() {
       projectAuth
