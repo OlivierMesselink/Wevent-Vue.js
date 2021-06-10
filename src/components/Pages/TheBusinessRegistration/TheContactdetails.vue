@@ -8,6 +8,7 @@
         <p class="items-margin">
           Wat is de naam van je onderneming?
           <input
+            v-model="register.name"
             id="name"
             type="text"
             placeholder="Bijv. Restaurant 't Vogeltje"
@@ -18,10 +19,30 @@
       <div id="location-section">
         <p class="items-margin">
           Waar is je onderneming?
-          <input id="city" type="text" placeholder="Plaats" />
-          <input id="street" type="text" placeholder="Straatnaam" />
-          <input id="number" type="text" placeholder="Nr" />
-          <input id="postal" type="text" placeholder="Postcode" />
+          <input
+            v-model="register.city"
+            id="city"
+            type="text"
+            placeholder="Plaats"
+          />
+          <input
+            v-model="register.street"
+            id="street"
+            type="text"
+            placeholder="Straatnaam"
+          />
+          <input
+            v-model="register.number"
+            id="number"
+            type="text"
+            placeholder="Nr"
+          />
+          <input
+            v-model="register.postal"
+            id="postal"
+            type="text"
+            placeholder="Postcode"
+          />
         </p>
       </div>
 
@@ -38,14 +59,13 @@
       </div>
     </div>
 
-    <base-button @click="$emit('continue')" buttonStyle="pim"
-      >Volgende stap</base-button
-    >
+    <base-button @click="submit" buttonStyle="pim">Volgende stap</base-button>
   </div>
 </template>
 
 <script>
 export default {
+  emits: ["addData"],
   data() {
     return {
       register: {
@@ -54,13 +74,25 @@ export default {
         street: "",
         number: "",
         postal: "",
-      },
-      contact: {
         phone: "",
         email: "",
         website: "",
       },
     };
+  },
+  methods: {
+    submit() {
+      var payload = {};
+      payload.location =
+        this.register.street +
+        " " +
+        this.register.number +
+        " " +
+        this.register.postal;
+      payload.id = this.register.name;
+      console.log(payload);
+      this.$emit("payload", payload);
+    },
   },
 };
 </script>
@@ -90,7 +122,7 @@ export default {
 }
 
 input[type="text"] {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--grey);
   font-family: "open sans", "sans serif";
 }
@@ -99,7 +131,7 @@ input[type="text"] {
   color: black;
   opacity: 15%;
   font-family: "open sans", "sans serif";
-  font-size: 16px;
+  font-size: 14px;
 }
 
 #form-body #city {
@@ -141,8 +173,7 @@ input[type="text"] {
   display: flex;
   flex-direction: column;
   font-family: "open sans", "sans-serif";
-  font-size: 18px;
-  width: 930px;
+  font-size: 14px;
   line-height: 33px;
 }
 
@@ -150,8 +181,7 @@ input[type="text"] {
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: white;
-  width: 800px;
-  height: 770px;
+  height: 700px;
   padding: 70px;
   margin-left: 20%;
 }
@@ -159,14 +189,14 @@ input[type="text"] {
 h1 {
   font-family: "raleway", sans-serif;
   font-weight: 800;
-  font-size: 50px;
+  font-size: 36px;
   margin-bottom: 4%;
 }
 
 h3 {
   font-family: "raleway", sans-serif;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 18px;
   width: 1000px;
   margin-bottom: 4%;
   margin-top: 1%;

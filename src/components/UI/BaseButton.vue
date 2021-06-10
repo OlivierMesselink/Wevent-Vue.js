@@ -82,7 +82,7 @@ button {
   transform: scale(1.05);
 }
 
-.confirmHollow{
+.confirmHollow {
   display: inline-block;
   font-family: "open-sans", sans-serif;
   font-weight: 700;
@@ -96,7 +96,7 @@ button {
   color: crimson;
 }
 
-.confirmHollow:hover{
+.confirmHollow:hover {
   color: white;
   background-color: crimson;
 }
@@ -105,7 +105,7 @@ button {
   display: inline-block;
   font-family: "open-sans", sans-serif;
   font-weight: 700;
-  font-size: 19px;
+  font-size: 14px;
   border: var(--orange) 3px solid;
   border-radius: 10px;
   cursor: pointer;

@@ -2,7 +2,7 @@
   <section id="navWrapper">
     <div id="navContent">
       <div @click="$router.push('/')" id="logo">
-        <img :src="logoImg" />
+        <img :src="pageslogoImg" />
       </div>
       <div id="navButtons">
         <base-button @click="login" v-if="!loggedIn" buttonStyle="solid"
@@ -10,7 +10,10 @@
         >
         <div @click="$router.push('/account')" id="loggedinDiv" v-if="loggedIn">
           <div id="userDiv">
-            <h3>{{ user.firstname + ' ' + user.lastname }}<fa class="ico" icon="user-circle"></fa></h3>
+            <h3>
+              {{ user.firstname + " " + user.lastname
+              }}<fa class="ico" icon="user-circle"></fa>
+            </h3>
           </div>
         </div>
       </div>
@@ -49,13 +52,12 @@ export default {
           this.user = data;
         });
     },
-
   },
   beforeCreate() {
     projectAuth.onAuthStateChanged((user) => {
       if (user) {
         this.loggedIn = true;
-        const id = user.uid
+        const id = user.uid;
         this.loadUserData(id);
       } else {
         this.loggedIn = false;
@@ -71,7 +73,7 @@ export default {
   position: fixed;
   width: 100%;
   background-image: linear-gradient(
-    rgba(48, 48, 48, .267),
+    rgba(48, 48, 48, 0.267),
     rgba(255, 255, 255, 0)
   );
   z-index: 10;
@@ -89,10 +91,10 @@ export default {
 img {
   height: 70px;
   cursor: pointer;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
-img:hover{
+img:hover {
   transform: scale(1.05);
 }
 
