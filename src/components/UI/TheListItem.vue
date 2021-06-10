@@ -56,10 +56,10 @@
         <p>RESERVEREN</p></a
       >
     </div>
-    <div id="ListItemButtons">
+    <div v-if="false" id="ListItemButtons">
       <div>
         <img
-          v-if="!isPinned"
+          v-if="!getPinStatus"
           id="pinImg"
           src="../../assets/tack-inactive.png"
           @click="pinItemToUser"
@@ -88,66 +88,6 @@ export default {
   methods: {
     setTime(time) {
       this.$emit("changeTime", time);
-    },
-    loadUserData(Id) {
-      const url =
-        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
-        Id +
-        ".json";
-
-      fetch(url)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          this.user = data;
-          this.getPinStatus(this.user);
-        });
-    },
-    getPinStatus(user) {
-      if (user.pinned) {
-        for (var i = 0; i < user.pinned.length; i++) {
-          if (user.pinned[i] == this.listItem.title) {
-            this.isPinned = true;
-            return;
-          } else {
-            this.isPinned = false;
-          }
-        }
-      }
-    },
-    pinItemToUser() {
-      var currentUser = this.user;
-      if (!currentUser.pinned) {
-        currentUser.pinned = [];
-      }
-      var newUser = currentUser;
-      newUser.pinned.push(this.listItem.title);
-      this.updateUser(newUser, this.userId);
-    },
-    updateUser(newUserData, userId) {
-      const fetchUrl =
-        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
-        userId +
-        ".json";
-      fetch(fetchUrl, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstname: newUserData.firstname,
-          lastname: newUserData.lastname,
-          businessAcc: newUserData.businessAcc,
-          email: newUserData.email,
-          reservations: newUserData.reservations,
-          pinned: newUserData.pinned,
-        }),
-      }).then((response) => {
-        if (response.ok) {
-          this.getPinStatus
-        }
-      });
     },
   },
   computed: {},

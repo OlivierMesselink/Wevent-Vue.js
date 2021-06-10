@@ -13,6 +13,7 @@
           <fa v-if="item.category.lunch" class="ico" icon="coffee"></fa>
           <fa v-if="item.category.restaurant" class="ico" icon="utensils"></fa>
           <fa v-if="item.category.hotel" class="ico" icon="bed"></fa>
+          <fa v-if="item.category.movie" class="ico" icon="film"></fa>
         </div>
       </transition>
       <transition name="rating">

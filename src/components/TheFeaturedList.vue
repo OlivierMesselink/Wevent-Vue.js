@@ -41,7 +41,7 @@ export default {
   methods: {
     loadList() {
       fetch(
-        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/nijmegen/restaurants.json"
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/featured.json"
       )
         .then((response) => {
           if (response.ok) {

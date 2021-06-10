@@ -1,16 +1,43 @@
 <template>
-  <the-medium-card>
-    <div class="backdrop"></div>
-  </the-medium-card>
+  <section>
+    <div><base-button id="button" @click="test" buttonStyle="solid">TEST!</base-button></div>
+  </section>
 </template>
 
 <script>
-import TheMediumCard from "./TheBusinessRegistration/TheIntro.vue";
 export default {
-  components: {
-    TheMediumCard,
+  methods: {
+    test() {
+      const fetchUrl = "http://owenhauptmeijer.pythonanywhere.com/nijmegen/4/4/monday/1900";
+
+      fetch(fetchUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      })
+        .then((response) => response.json(
+          console.log(response.json)
+        ))
+    },
   },
 };
 </script>
 
-<style scoped></style>
+
+
+<style scoped>
+section {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div {
+  /* background-color: aqua; */
+}
+
+#button{
+  transform: scale(3);
+}
+</style>
