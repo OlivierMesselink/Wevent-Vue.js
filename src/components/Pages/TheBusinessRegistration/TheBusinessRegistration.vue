@@ -4,18 +4,23 @@
     <div id="backdrop-color"></div>
     <div @click="$router.push('/')" id="logo-top-left"></div>
     <!-- <transition-group> -->
-    <the-intro v-if="progressCounter == 0" @payload="add(payload)"></the-intro>
+    <the-intro v-if="progressCounter == 0" @next="advanceCounter"></the-intro>
     <the-explanation
       v-if="progressCounter == 1"
-      @payload="add(payload)"
+      @next="advanceCounter"
     ></the-explanation>
-    <the-contactdetails v-if="progressCounter == 2" @payload="add(payload)">
-    </the-contactdetails>
+    <the-contactdetails
+      v-if="progressCounter == 2"
+      @emitData="addContact($event)"
+    ></the-contactdetails>
     <the-details
       v-if="progressCounter == 3"
-      @payload="add(payload)"
+      @emitData="addDetails($event)"
     ></the-details>
-    <the-times v-if="progressCounter == 4" @payload="add(payload)"></the-times>
+    <the-times
+      v-if="progressCounter == 4"
+      @emitData="addTimes($event)"
+    ></the-times>
     <!-- </transition-group> -->
   </div>
 </template>
@@ -40,6 +45,7 @@ export default {
   data() {
     return {
       progressCounter: 0,
+      userId:"",
       registration: {
         //   category: {
         //     bar: false,
@@ -104,12 +110,37 @@ export default {
     };
   },
   methods: {
-    add(payload) {
-      console.log(payload);
-      this.registration = this.registration + payload;
-      console.log(this.registration);
+    advanceCounter() {
       this.progressCounter++;
     },
+    addContact(payload) {
+      this.registration.title = payload.title;
+      this.registration.subtitle = payload.subtitle;
+      this.progressCounter++;
+    },
+    addDetails(payload) {
+      this.registration.attendees = payload.attendees;
+      this.registration.budget = payload.budget;
+      this.registration.category = payload.category;
+      this.registration.description = payload.description;
+      console.log(this.registration.description);
+      this.progressCounter++;
+    },
+    addTimes(payload) {
+      this.registration.dates = payload;
+      this.progressCounter++;
+    },
+  },
+  oploadData() {},
+  beforeCreate() {
+    projectAuth.onAuthStateChanged((user) => {
+      if (user) {
+        const id = user.uid;
+        this.userId = id
+      } else {
+        this.$router.push('/')
+      }
+    });
   },
 };
 </script>

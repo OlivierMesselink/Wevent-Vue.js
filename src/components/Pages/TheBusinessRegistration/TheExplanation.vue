@@ -23,7 +23,7 @@
       </p>
     </div>
     <div id="continue-btn">
-      <base-button @click="$emit('payload')" buttonStyle="pim"
+      <base-button @click="$emit('next')" buttonStyle="pim"
         >Beginnen</base-button
       >
     </div>
@@ -31,7 +31,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+    emits:["next"]
+};
 </script>
 
 <style scoped>

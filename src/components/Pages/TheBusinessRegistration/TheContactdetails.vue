@@ -56,16 +56,17 @@
           <input id="email" type="text" placeholder="E-mailadres" />
         </div>
         <input id="website" type="text" placeholder="Website" />
+        <p style="color: crimson" v-if="invalidInput" id="invalid">Vul alle velden correct in en probeer opniew.</p>
       </div>
     </div>
 
-    <base-button @click="submit" buttonStyle="pim">Volgende stap</base-button>
+    <base-button @click="submitData" buttonStyle="pim">Volgende stap</base-button>
   </div>
 </template>
 
 <script>
 export default {
-  emits: ["add"],
+  emits:['emitData'],
   data() {
     return {
       register: {
@@ -78,22 +79,31 @@ export default {
         // email: "",
         // website: "",
       },
+      invalidInput: false
     };
   },
   methods: {
-    submit() {
-      var payload = {};
-      payload.location =
-        this.register.street +
-        " " +
-        this.register.number +
-        " " +
-        this.register.postal;
-      payload.id = this.register.name;
-      console.log(payload);
-      this.$emit("payload", payload);
+    submitData() {
+      var newData = {}
+      newData.subtitle = this.register.street + " " +  this.register.number + " " + this.register.postal + " " +  this.register.city
+      newData.title = this.register.name
+      if(this.formIsFilled){
+      this.$emit('emitData', newData)}
+      else {this.invalidInput = true}
     },
   },
+  computed:{
+    formIsFilled(){
+      if(
+        this.register.name == "" ||
+        this.register.city == "" ||
+        this.register.street == "" ||
+        this.register.number == "" ||
+        this.register.postal == "" 
+      ){return false}
+      else  {return true}
+    }
+  }
 };
 </script>
 

@@ -7,7 +7,12 @@
       <div id="guest-section">
         <p>
           Hoeveel plek is er in totaal voor gasten?
-          <input id="total-guests" type="text" placeholder="Bijv. 180" />
+          <input
+            ref="total"
+            id="total-guests"
+            type="text"
+            placeholder="Bijv. 180"
+          />
         </p>
 
         <p>
@@ -17,11 +22,21 @@
         <div class="flex-container">
           <div id="min">
             <label for="min">Minimaal</label>
-            <input type="text" placeholder="Bijv. 2" />
+            <input
+              ref="min"
+              type="text"
+              placeholder="Bijv. 2"
+              v-model="register.attendees.min"
+            />
           </div>
           <div id="max">
             <label for="max">Maximaal</label>
-            <input type="text" placeholder="Bijv. 12" />
+            <input
+              ref="max"
+              type="text"
+              placeholder="Bijv. 12"
+              v-model="register.attendees.max"
+            />
           </div>
         </div>
       </div>
@@ -30,8 +45,13 @@
         <p>
           Binnen welke (gemiddeld gezien) prijsklasse valt jouw onderneming?
         </p>
-        <select id="price" name="prijsklasse">
-          <option value="Selecteer een optie" selected>Selecteer</option>
+        <select
+          id="price"
+          name="prijsklasse"
+          v-model="register.budget"
+          ref="budget"
+        >
+          <option value="0" selected>Selecteer</option>
           <option value="1">Goedkoop</option>
           <option value="2">Betaalbaar</option>
           <option value="3">Redelijk betaalbaar</option>
@@ -39,31 +59,77 @@
           <option value="5">Michelin</option>
         </select>
 
-        <p>
-          Binnen welke categorie valt jouw onderneming?
-        </p>
-        <select id="category" name="soort">
-          <option value="Selecteer een optie" selected>Selecteer soort</option>
+        <p>Binnen welke categorie valt jouw onderneming?</p>
+        <select id="category" name="soort" v-if="false">
+          <option value="0" selected>Selecteer soort</option>
           <option value="restaurant">Restaurant</option>
           <option value="bar">Bar</option>
           <option value="hotel">Hotel</option>
           <option value="lunch">Lunch</option>
         </select>
-
+        <div id="iconList">
+          <div>
+            <fa
+              class="ico"
+              icon="beer"
+              :class="{ active: register.category.bar }"
+              @click="register.category.bar = !register.category.bar"
+            ></fa>
+          </div>
+          <div>
+            <fa
+              class="ico"
+              icon="coffee"
+              :class="{ active: register.category.lunch }"
+              @click="register.category.lunch = !register.category.lunch"
+            ></fa>
+          </div>
+          <div>
+            <fa
+              class="ico"
+              icon="utensils"
+              :class="{ active: register.category.restaurant }"
+              @click="
+                register.category.restaurant = !register.category.restaurant
+              "
+            ></fa>
+          </div>
+          <div>
+            <fa
+              class="ico"
+              icon="bed"
+              :class="{ active: register.category.hotel }"
+              @click="register.category.hotel = !register.category.hotel"
+            ></fa>
+          </div>
+          <div>
+            <fa
+              class="ico"
+              icon="film"
+              :class="{ active: register.category.movie }"
+              @click="register.category.movie = !register.category.movie"
+            ></fa>
+          </div>
+        </div>
         <p>
           Geef een korte omschrijving van het restaurant
           <textarea
+            ref="description"
             id="desc"
             type="text"
             placeholder="Bijv. Restaurant 't Vogeltje is een Turkse delicatesse zaak"
             cols="10"
             rows="4"
+            v-model="register.description"
           ></textarea>
         </p>
       </div>
+      <p style="color: crimson" v-if="invalidInput" id="invalid">
+        Vul alle velden correct in en probeer opniew.
+      </p>
     </div>
     <div id="continue-btn">
-      <base-button @click="$emit('data')" buttonStyle="pim"
+      <base-button @click="submitData" buttonStyle="pim"
         >Volgende stap</base-button
       >
     </div>
@@ -72,8 +138,31 @@
 
 <script>
 export default {
+  emits: ["emitData"],
   data() {
-    return {};
+    return {
+      register: {
+        attendees: {
+          min: "",
+          max: "",
+        },
+        budget: "",
+        category: {
+          bar: false,
+          hotel: false,
+          lunch: false,
+          restaurant: false,
+          movie: false,
+        },
+        description: null,
+        invalidInput: false,
+      },
+    };
+  },
+  methods: {
+    submitData() {
+      this.$emit("emitData", this.register);
+    },
   },
 };
 </script>
@@ -203,5 +292,28 @@ h3 {
   margin-top: 1%;
   line-height: 35px;
   color: var(--mediumGray);
+}
+
+.ico {
+  width: 28px;
+  color: white;
+  background-color: var(--background);
+  border-radius: 10px;
+  font-size: 24px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.active {
+  background-color: var(--orange);
+}
+
+#iconList {
+  margin: 15px 0 10px 0;
+  display: flex;
+  width: 280px;
+  justify-content: space-between;
+  /* background-color: crimson; */
 }
 </style>

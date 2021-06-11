@@ -9,14 +9,34 @@
         <label class="label-day" for="checkbox">Maandag</label>
         <span class="van-span">Van</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.monday.from1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.monday.from2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
         <span class="tot-span">tot</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.monday.to1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.monday.to2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
       </div>
 
       <div id="dinsdag" class="row">
@@ -24,14 +44,34 @@
         <label class="label-day" for="checkbox">Dinsdag</label>
         <span class="van-span">Van</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.thuesday.from1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.thuesday.from2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
         <span class="tot-span">tot</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.thuesday.to1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.thuesday.to2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
       </div>
 
       <div id="wednesday" class="row">
@@ -39,14 +79,34 @@
         <label class="label-day" for="checkbox">Woensdag</label>
         <span class="van-span">Van</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.wednesday.from1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.wednesday.from2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
         <span class="tot-span">tot</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.wednesday.to1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.wednesday.to2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
       </div>
 
       <div id="thursday" class="row">
@@ -54,14 +114,34 @@
         <label class="label-day" for="checkbox">Donderdag</label>
         <span class="van-span">Van</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.thursday.from1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.thursday.from2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
         <span class="tot-span">tot</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.thursday.to1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.thursday.to2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
       </div>
 
       <div id="friday" class="row">
@@ -69,14 +149,34 @@
         <label class="label-day" for="checkbox">Vrijdag</label>
         <span class="van-span">Van</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.friday.from1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.friday.from2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
         <span class="tot-span">tot</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.friday.to1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.friday.to2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
       </div>
 
       <div id="saturday" class="row">
@@ -84,43 +184,187 @@
         <label class="label-day" for="checkbox">Zaterdag</label>
         <span class="van-span">Van</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.saturday.from1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.saturday.from2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
         <span class="tot-span">tot</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.saturday.to1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.saturday.to2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
       </div>
       <div id="sunday" class="row items-margin">
         <input class="checkboxes-container" type="checkbox" />
         <label class="label-day" for="checkbox">Zondag</label>
         <span class="van-span">Van</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.sunday.from1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.sunday.from2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
         <span class="tot-span">tot</span>
 
-        <input type="text" class="time-input" placeholder="Uur" />
+        <input
+          v-model="register.sunday.to1"
+          type="text"
+          class="time-input"
+          placeholder="Uur"
+        />
         <label class="label-time" for="text">:</label>
-        <input type="text" class="time-input" placeholder="Min" />
+        <input
+          v-model="register.sunday.to2"
+          type="text"
+          class="time-input"
+          placeholder="Min"
+        />
       </div>
-
       <div id="continue-btn">
-        <base-button @click="$emit('payload')" buttonStyle="pim"
+        <base-button @click="bundleData" buttonStyle="pim"
           >Volgende stap</base-button
         >
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
 export default {
+  emits: ["emitData"],
   data() {
-    return {};
+    return {
+      register: {
+        monday: {
+          from1: "",
+          from2: "",
+          to1: "",
+          to2: "",
+        },
+        thuesday: {
+          from1: "",
+          from2: "",
+          to1: "",
+          to2: "",
+        },
+        wednesday: {
+          from1: "",
+          from2: "",
+          to1: "",
+          to2: "",
+        },
+        thursday: {
+          from1: "",
+          from2: "",
+          to1: "",
+          to2: "",
+        },
+        friday: {
+          from1: "",
+          from2: "",
+          to1: "",
+          to2: "",
+        },
+        saturday: {
+          from1: "",
+          from2: "",
+          to1: "",
+          to2: "",
+        },
+        sunday: {
+          from1: "",
+          from2: "",
+          to1: "",
+          to2: "",
+        },
+      },
+    };
+  },
+  methods:{
+    bundleData(){
+      var monday = this.getMonday
+      var thuesday = this.getThuesday
+      var wednesday = this.getWednesday
+      var thursday = this.getThursday
+      var friday = this.getFriday
+      var saturday = this.getSaturday
+      var sunday = this.getSunday
+      var dates = {monday, thuesday, wednesday, thursday, friday, saturday, sunday}
+
+      this.$emit('emitData', dates)
+    }
+  },
+  computed: {
+    getMonday() {
+      var from = this.register.monday.from1 + ":" + this.register.monday.from2;
+      var to = this.register.monday.to1 + ":" + this.register.monday.to2;
+      var monday = { from, to };
+      return monday;
+    },
+    getThuesday() {
+      var from = this.register.thuesday.from1 + ":" + this.register.thuesday.from2;
+      var to = this.register.thuesday.to1 + ":" + this.register.thuesday.to2;
+      var thuesday = { from, to };
+      return thuesday;
+    },
+    getWednesday() {
+      var from = this.register.wednesday.from1 + ":" + this.register.wednesday.from2;
+      var to = this.register.wednesday.to1 + ":" + this.register.wednesday.to2;
+      var wednesday = { from, to };
+      return wednesday;
+    },
+    getThursday() {
+      var from = this.register.thursday.from1 + ":" + this.register.thursday.from2;
+      var to = this.register.thursday.to1 + ":" + this.register.thursday.to2;
+      var thursday = { from, to };
+      return thursday;
+    },
+    getFriday() {
+      var from = this.register.friday.from1 + ":" + this.register.friday.from2;
+      var to = this.register.friday.to1 + ":" + this.register.friday.to2;
+      var friday = { from, to };
+      return friday;
+    },
+    getSaturday() {
+      var from = this.register.saturday.from1 + ":" + this.register.saturday.from2;
+      var to = this.register.saturday.to1 + ":" + this.register.saturday.to2;
+      var saturday = { from, to };
+      return saturday;
+    },
+    getSunday() {
+      var from = this.register.sunday.from1 + ":" + this.register.sunday.from2;
+      var to = this.register.sunday.to1 + ":" + this.register.sunday.to2;
+      var sunday = { from, to };
+      return sunday;
+    },
   },
 };
 </script>
