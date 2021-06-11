@@ -10,41 +10,6 @@
       <p>{{ listItem.description }}</p>
       <transition name="expandContent">
         <div v-show="openCard == listItem.title" id="expandedItem">
-          <h3>Selecteer een tijd:</h3>
-          <div class="timeButtons">
-            <toggle-button
-              :solid="localSearchQuery.time == '1900'"
-              @click="setTime(1900)"
-              >19:00</toggle-button
-            >
-            <toggle-button
-              :solid="localSearchQuery.time == '1915'"
-              @click="setTime(1915)"
-              >19:15</toggle-button
-            >
-            <toggle-button
-              :solid="localSearchQuery.time == '1930'"
-              @click="setTime(1930)"
-              >19:30</toggle-button
-            >
-          </div>
-          <div class="timeButtons">
-            <toggle-button
-              :solid="localSearchQuery.time == '1945'"
-              @click="setTime(1945)"
-              >19:45</toggle-button
-            >
-            <toggle-button
-              :solid="localSearchQuery.time == '2000'"
-              @click="setTime(2000)"
-              >20:00</toggle-button
-            >
-            <toggle-button
-              :solid="localSearchQuery.time == '2015'"
-              @click="setTime(2015)"
-              >20:15</toggle-button
-            >
-          </div>
           <input
             type="text"
             placeholder="Eventuele opmerking (allergieën etc.)."
@@ -90,7 +55,6 @@ export default {
       this.$emit("changeTime", time);
     },
   },
-  computed: {},
   beforeCreate() {
     projectAuth.onAuthStateChanged((user) => {
       if (user) {

@@ -1,11 +1,10 @@
 <template>
-
-    <the-mini-navbar v-if="true">
-    </the-mini-navbar>
+  <the-mini-navbar v-if="true"> </the-mini-navbar>
   <div id="wrapper">
-    <the-reservation-modal v-if="reservationModalOpen"
+    <the-reservation-modal
+      v-if="reservationModalOpen"
       :data="modalData"
-      @cancel="reservationModalOpen=false"
+      @cancel="reservationModalOpen = false"
     ></the-reservation-modal>
     <transition name="listFade">
       <div :class="{ openList: listIsOpen, closedList: !listIsOpen }">
@@ -62,36 +61,35 @@
           "
         />
       </GoogleMap>
-            
     </div>
   </div>
 </template>
 
 <script>
 import { GoogleMap, Marker } from "vue3-google-map";
-import BaseButton from "../UI/BaseButton.vue";
 import TheListItem from "../UI/TheListItem.vue";
 import TheMiniNavbar from "../UI/TheMiniNavbar.vue";
 import TheMiniSearchbar from "../TheMiniSearchbar.vue";
-import TheReservationModal  from '../UI/TheReservationModal.vue'
+import TheReservationModal from "../UI/TheReservationModal.vue";
 
 export default {
   components: {
     GoogleMap,
     Marker,
-    BaseButton,
     TheListItem,
     TheMiniNavbar,
     TheMiniSearchbar,
-    TheReservationModal
+    TheReservationModal,
   },
+
   data() {
-    BaseButton;
     return {
       localSearchQuery: {
-        amount: 2,
-        time: "1900",
-        date: "21-07-2021",
+        location: this.$route.params.location,
+        budget: this.$route.params.budget,
+        amount: this.$route.params.amount,
+        date: this.$route.params.date,
+        time: this.$route.params.time,
       },
       center: { lat: 51.84768967381224, lng: 5.854428604054124 },
       listIsOpen: true,
@@ -101,13 +99,13 @@ export default {
       selectedMarker: "",
       searchHover: false,
       reservationModalOpen: false,
-      modalData:{
-        restaurant: '',
-        amount:'',
+      modalData: {
+        restaurant: "",
+        amount: "",
         city: "Nijmegen",
-        time: '',
-        date: ''
-      }
+        time: "",
+        date: "",
+      },
     };
   },
   methods: {
@@ -126,31 +124,45 @@ export default {
         position: newLatLng,
         title: title,
         icon: {
-          path:
-            "M20,0C9,0,0,9,0,20c0,14.8,20,38.7,20,38.7s20-24,20-38.7C40.1,9,31.1,0,20,0z M20,30.4	c-5.7,0-10.4-4.6-10.4-10.4S14.3,9.7,20,9.7s10.4,4.6,10.4,10.4S25.8,30.4,20,30.4z",
+          path: "M20,0C9,0,0,9,0,20c0,14.8,20,38.7,20,38.7s20-24,20-38.7C40.1,9,31.1,0,20,0z M20,30.4	c-5.7,0-10.4-4.6-10.4-10.4S14.3,9.7,20,9.7s10.4,4.6,10.4,10.4S25.8,30.4,20,30.4z",
           fillColor: markerColor,
           fillOpacity: 1.0,
           strokeColor: "#edb295",
           strokeWeight: 0,
           scale: size,
           zIndex: Zindex,
-          optimized: false, 
+          optimized: false,
         },
       };
     },
-    makeReservation(item){
+    makeReservation(item) {
       this.reservationModalOpen = true;
       this.modalData.restaurant = item.title;
       this.modalData.amount = this.localSearchQuery.amount;
       this.modalData.time = this.localSearchQuery.time;
-      this.modalData.location = item.subtitle
-      this.modalData.date = this.localSearchQuery.date
-      
+      this.modalData.location = item.subtitle;
+      this.modalData.date = this.localSearchQuery.date;
     },
-    loadList() {
-      fetch(
-        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/nijmegen/restaurants.json"
-      )
+    loadList2() {
+      var location = this.$route.params.location;
+      var budget = this.$route.params.budget;
+      var amount = this.$route.params.amount;
+      var date = this.$route.params.date;
+      var time = this.$route.params.time;
+
+      const fetchUrl =
+        "http://owenhauptmeijer.pythonanywhere.com/" +
+        location +
+        "/" +
+        budget +
+        "/" +
+        amount +
+        "/" +
+        date +
+        "/" +
+        time;
+
+      fetch(fetchUrl)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -169,13 +181,13 @@ export default {
               lang: data[id].lang,
             });
           }
-
           this.list = results;
         });
     },
+
     expandItem(item) {
       if (this.openCard == item.title) {
-        this.makeReservation(item)
+        this.makeReservation(item);
       } else {
         this.openCard = item.title;
       }
@@ -222,7 +234,7 @@ export default {
     },
   },
   mounted() {
-    this.loadList();
+    this.loadList2();
   },
 };
 </script>
@@ -230,7 +242,6 @@ export default {
 <style scoped>
 #wrapper {
   display: flex;
-
 }
 
 .openList {
@@ -421,7 +432,7 @@ export default {
   font-style: italic;
 }
 
-#searchbar{
+#searchbar {
   position: absolute;
   top: 0px;
   padding: 20px 0 60px 0;
@@ -429,8 +440,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(0,0,0);
-  background: linear-gradient(180deg, rgba(0,0,0,0.2690651260504201) 25%, rgba(255,255,255,0) 81%);
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.2690651260504201) 25%,
+    rgba(255, 255, 255, 0) 81%
+  );
 }
 
 .expandContent-enter-from {
@@ -474,10 +489,9 @@ export default {
 }
 
 @media only screen and (max-width: 1920px) {
-  #backButton{
+  #backButton {
     top: auto;
     bottom: 20px;
   }
 }
-
 </style>

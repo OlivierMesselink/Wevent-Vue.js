@@ -14,9 +14,11 @@ const routes = [
     meta: { title: "Wevent.nl | Login" },
   },
   {
-    path: "/search",
+    path: "/search/:location/:budget/:amount/:date/:time",
     component: TheListPage,
-    meta: { title: "Wevent.nl | Zoekopdracht" },
+    meta: { title: "Wevent.nl | Zoekopdracht" ,
+    props: true
+  },
   },
   { path: "/test", component: TestPage },
   { path: "/account", component: TheAccountPage },

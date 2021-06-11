@@ -12,7 +12,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 
-
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 library.add(fas)
 library.add(far)
@@ -28,5 +29,7 @@ app.component('fa', FontAwesomeIcon)
 app.component('base-button', BaseButton)
 app.component('toggle-button', ToggleButton)
 app.component( 'the-navbar', TheNavbar)
+
+app.use(VueAxios, axios)
 
 app.mount('#app')

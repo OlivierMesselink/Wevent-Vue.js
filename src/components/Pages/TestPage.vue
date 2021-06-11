@@ -1,22 +1,39 @@
 <template>
   <section>
-    <div><base-button id="button" @click="test" buttonStyle="solid">TEST!</base-button></div>
+    <div>
+      <base-button id="button" @click="test2" buttonStyle="solid"
+        >TEST!</base-button
+      >
+    </div>
   </section>
 </template>
 
 <script>
+// import axios from "axios";
+
 export default {
   methods: {
     test() {
-      const fetchUrl = "http://owenhauptmeijer.pythonanywhere.com/nijmegen/4/4/monday/1900";
+      const fetchUrl =
+        "http://owenhauptmeijer.pythonanywhere.com/arnhem/4/4/Monday/18:00.json";
+      fetch(fetchUrl)
+        .then((response) => response.json)
+        .then((data) => console.log(data));
+    },
 
-      fetch(fetchUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-      })
-        .then((response) => response.json(
-          console.log(response.json)
-        ))
+    test2() {
+      const fetchUrl =
+        "http://owenhauptmeijer.pythonanywhere.com/nijmegen/4/4/Monday/18:00";
+
+    fetch(fetchUrl)
+        .then((response) => {
+          if (response.ok) {
+            return response;
+          }
+        })
+        .then((data) => {
+          console.log(data.json())
+        });
     },
   },
 };
@@ -33,11 +50,7 @@ section {
   align-items: center;
 }
 
-div {
-  /* background-color: aqua; */
-}
-
-#button{
+#button {
   transform: scale(3);
 }
 </style>

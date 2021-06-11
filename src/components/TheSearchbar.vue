@@ -115,15 +115,19 @@
         <div @click="toggleDate">
           <h3 id="dateH3">Wanneer wil je gaan?</h3>
           <p id="dateP">
-            {{ displayCorrectDate }} om {{ localSearchQuery.time }}
+            {{ displayCorrectDate }} om {{ getTime }}
           </p>
         </div>
         <transition name="fade">
           <div v-if="dateBoxOpen" class="dropdown" id="dateDropdown">
-            <h3 id="amountH3">Selecteer een tijdstip:</h3>
-            <input type="date" v-model="localSearchQuery.date" />
-            <input type="time" v-model="localSearchQuery.time" />
-            <base-button @click="setCurrentTimeAndDate" id="todayButton" buttonStyle='hollow'>Vandaag</base-button>
+            <DatePicker
+              mode="dateTime"
+              v-model="localSearchQuery.date"
+              color="orange"
+              :model-config="dateConfig"
+              :minute-increment="5"
+              is24hr
+            />
           </div>
         </transition>
       </div>
@@ -139,19 +143,23 @@
 
 <script>
 import TheBudgetRating from "./UI/TheBudgetRating.vue";
+import { DatePicker } from "v-calendar";
 
 export default {
   components: {
     TheBudgetRating,
+
+    DatePicker,
   },
   data() {
     return {
+      timezone: "",
       localSearchQuery: {
-        location: "Nijmegen - Centrum",
+        location: "Nijmegen",
         amount: 2,
         budget: 2,
         date: "",
-        time: null,
+        time: "",
       },
       locationBoxOpen: false,
       amountBOxOpen: false,
@@ -159,6 +167,10 @@ export default {
       dateBoxOpen: false,
 
       locations: this.$store.state.locations,
+      dateConfig: {
+        type: "string",
+        mask: "dDD-MM-YYYY-HH:mm",
+      },
     };
   },
 
@@ -171,15 +183,44 @@ export default {
         return "persoon";
       }
     },
-    /* converts american date notation to europe notation */
     displayCorrectDate() {
+      const today = new Date();
+      const date = today.getDate() + "-" + "0" + (today.getMonth() + 1) +"-" + today.getFullYear()
       const workDate = this.localSearchQuery.date;
-      const year = workDate.slice(0, 4);
-      const month = workDate.slice(5, 7);
-      const day = workDate.slice(8, 10);
-
-      return day + "-" + month + "-" + year;
+      if (this.localSearchQuery.date == "") {return date}
+      else{return workDate.slice(1, 11);}
     },
+    getWeekdays() {
+      var day = this.localSearchQuery.date.slice(0, 1);
+      if (day == 1) {
+        return "monday";
+      }
+      if (day == 2) {
+        return "thuesday";
+      }
+      if (day == 3) {
+        return "wednesday";
+      }
+      if (day == 4) {
+        return "thursday";
+      }
+      if (day == 5) {
+        return "friday";
+      }
+      if (day == 6) {
+        return "saturday";
+      } else {
+        return "sunday";
+      }
+    },
+    getTime(){
+      const today = new Date();
+      const time = today.getHours() + 2 + ":" + today.getMinutes();
+      if (this.localSearchQuery.date == "") {return time}
+      else{
+        console.log(this.localSearchQuery.date.slice(12, 17))
+        return this.localSearchQuery.date.slice(12, 17)}
+    }
   },
 
   methods: {
@@ -222,27 +263,26 @@ export default {
     setLocation(newLocation) {
       this.localSearchQuery.location = newLocation;
     },
-    /* finds current time and date and updates searchQuery */
-    setCurrentTimeAndDate() {
-      const today = new Date();
-      const date =
-        today.getFullYear() +
-        "-" +
-        "0" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
-      const time = today.getHours() + 2 + ":" + today.getMinutes();
+    submitSearchQuery() {
+      var location = this.localSearchQuery.location;
+      var budget = this.localSearchQuery.budget;
+      var amount = this.localSearchQuery.amount;
+      var date = this.getWeekdays;
+      var time = this.getTime
 
-      this.localSearchQuery.time = time;
-      this.localSearchQuery.date = date;
+      var searchUrl =
+        "/search/" +
+        location +
+        "/" +
+        budget +
+        "/" +
+        amount +
+        "/" +
+        date +
+        "/" +
+        time;
+      this.$router.push(searchUrl)
     },
-    submitSearchQuery(){
-      this.$router.push('/search')
-    }
-  },
-  mounted() {
-    this.setCurrentTimeAndDate();
   },
 };
 </script>
@@ -366,7 +406,6 @@ export default {
   margin-left: -25px;
 }
 
-
 #budgetDropdown {
   display: flex;
   width: 80%;
@@ -439,15 +478,19 @@ input[type="range"]:focus::-webkit-slider-runnable-track {
   background: #ccc;
 }
 
-#dateDropdown{
+#dateDropdown {
+  margin: 20px 0 0 -60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  padding: none;
+  background-color: transparent;
+  box-shadow: none;
 }
 
-#todayButton{
-  margin: 15px 0 0 0 ;
+#todayButton {
+  margin: 15px 0 0 0;
 }
 
 #dateDropdown input[type="date"] {
@@ -514,6 +557,4 @@ input[type="date"]::-webkit-clear-button {
   opacity: 0;
   transform: scale(0.5);
 }
-
-
 </style>

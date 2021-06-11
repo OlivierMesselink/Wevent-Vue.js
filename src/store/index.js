@@ -7,22 +7,20 @@ export default createStore({
 
     searchQuery: {
       location: "",
-      groupSize: null,
+      amount: null,
       budget: null,
       date: null,
       time: null,
     },
     locations: [
-      { id: 1, name: "Nijmegen - Centrum" },
-      { id: 2, name: "Nijmegen - Oost" },
-      { id: 3, name: "Arnhem - Centrum" },
-      { id: 4, name: "Arnhem - Spijkerkwartier" },
+      { id: 1, name: "Nijmegen" },
+      { id: 2, name: "Arnhem" },
     ],
   },
   mutations: {
     updateSearchQuery(state, payload) {
       state.searchQuery.location = payload.location;
-      state.searchQuery.groupSize = payload.amount;
+      state.searchQuery.amount = payload.amount;
       state.searchQuery.budget = payload.budget;
       state.searchQuery.date = payload.date;
       state.searchQuery.time = payload.time;
@@ -35,6 +33,10 @@ export default createStore({
   actions: {
     updateSearchQuery(context, payload) {
       context.commit("updateSearchQuery", payload);
+      console.log("payload:")
+      console.log(payload)
+      console.log("state:")
+      console.log(this.state.searchQuery)
     },
     updateLogin(context, payload){
       context.commit('updateLogin', payload);
@@ -45,11 +47,8 @@ export default createStore({
     getLoggedinState(state){
       return state.isLoggedin
     },
-    getAccountData(state){
-      return state.currentAccount
-    },
-    getUserDatabase(state){
-      return state.userDatabase
+    getSearchQuery(state){
+      return state.searchQuery
     }
   }
 });
