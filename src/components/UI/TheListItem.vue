@@ -58,10 +58,8 @@ export default {
   beforeCreate() {
     projectAuth.onAuthStateChanged((user) => {
       if (user) {
-        const Id = user.uid;
         this.authUser = user;
         this.userId = user.uid;
-        this.loadUserData(Id);
       }
     });
   },

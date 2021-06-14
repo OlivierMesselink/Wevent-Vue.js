@@ -23,7 +23,7 @@
             <fa class="ico" icon="certificate"></fa>
             <h3>Kortingsacties</h3>
             <p>
-              Krijg speciale kortingen kortingen en acties voor cafe’s, restaurants en zelfs festivals!
+              Krijg speciale kortingen en acties voor cafe’s, restaurants en zelfs festivals!
             </p>
           </div>
           <div class="accCard">
@@ -86,7 +86,7 @@
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    cursor: pointer;
+    /* cursor: pointer; */
     transition: all 0.2s ease-in-out;
   }
 
@@ -106,7 +106,6 @@
     font-size: 14px;
     line-height: 18px;
     color: var(--grey);
-    width: %;
   }
 
   .ico {
@@ -180,7 +179,7 @@
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    cursor: pointer;
+    /* cursor: pointer; */
     transition: all 0.2s ease-in-out;
   }
 

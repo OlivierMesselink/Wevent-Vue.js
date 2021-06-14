@@ -146,7 +146,6 @@ import { DatePicker } from "v-calendar";
 export default {
   components: {
     TheBudgetRating,
-
     DatePicker,
   },
   data() {
@@ -223,6 +222,7 @@ export default {
     getTime() {
       const today = new Date();
       const time = today.getHours() + 2 + ":" + today.getMinutes();
+<<<<<<< Updated upstream
       if (this.localSearchQuery.date == "") {
         return time;
       } else {
@@ -230,6 +230,12 @@ export default {
         return this.localSearchQuery.date.slice(12, 17);
       }
     },
+=======
+      if (this.localSearchQuery.date == "") {return time}
+      else{
+        return this.localSearchQuery.date.slice(12, 17)}
+    }
+>>>>>>> Stashed changes
   },
 
   methods: {
@@ -265,8 +271,8 @@ export default {
       if (this.localSearchQuery.amount <= 1) {
         this.localSearchQuery.amount = 1;
       }
-      if (this.localSearchQuery.amount >= 8) {
-        this.localSearchQuery.amount = 8;
+      if (this.localSearchQuery.amount == 12) {
+        this.localSearchQuery.amount = 12;
       }
     },
     setLocation(newLocation) {
@@ -277,7 +283,13 @@ export default {
       var budget = this.localSearchQuery.budget;
       var amount = this.localSearchQuery.amount;
       var date = this.getWeekdays;
+<<<<<<< Updated upstream
       var time = this.getTime;
+=======
+      var time = this.getTime
+      var longDate = this.displayCorrectDate
+
+>>>>>>> Stashed changes
 
       var searchUrl =
         "/search/" +
@@ -289,8 +301,15 @@ export default {
         "/" +
         date +
         "/" +
+<<<<<<< Updated upstream
         time;
       this.$router.push(searchUrl);
+=======
+        time
+         + "/" + longDate
+
+      this.$router.push(searchUrl)
+>>>>>>> Stashed changes
     },
   },
 };

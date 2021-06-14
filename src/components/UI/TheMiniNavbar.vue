@@ -2,7 +2,7 @@
   <section id="navWrapper">
     <div id="navContent">
       <div @click="back" id="logo"><img :src="logoImg" /></div>
-      <div><h1>Restaurants in Nijmegen</h1></div>
+      <div><h1>Restaurants in {{ $route.params.location }}</h1></div>
       <div id="navButtons">
         <base-button @click="login" v-if="!loggedIn" buttonStyle="solid"
           >Inloggen</base-button

@@ -100,6 +100,7 @@ export default {
         this.uid = user.uid;
         this.loadUserData(user.uid)
       }
+      else(this.$router.push("/login"))
     });
   },
 };

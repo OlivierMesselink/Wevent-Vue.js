@@ -1,6 +1,7 @@
 <template>
   <div id="formWrapper">
     <div id="headingDiv">
+      <img src="../../assets/wevent_logo.png" @click="$router.push('/')"/>
       <h1 id="heading">{{ getHeader }}</h1>
     </div>
 
@@ -290,4 +291,17 @@ a {
   width: 43%;
   margin: 20px 0px 40px 0;
 }
+
+#headingDiv img{
+  height: 70px;
+  margin: 0 0 60px -20px;
+  padding: 0;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+#headingDiv img:hover{
+  transform: scale(1.05);
+}
+
 </style>

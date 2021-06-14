@@ -140,7 +140,10 @@ export default {
       this.progressCounter++;
     },
   },
-  oploadData() {},
+  oploadData() {
+    
+
+  },
   beforeCreate() {
     projectAuth.onAuthStateChanged((user) => {
       if (user) {

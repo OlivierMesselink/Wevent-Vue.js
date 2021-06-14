@@ -1,5 +1,5 @@
 <template>
-  <router-view></router-view>
+  <router-view :key="$route.fullPath"></router-view>
 </template>
 
 <style>
@@ -20,5 +20,10 @@ html,
 body {
   max-width: 100%;
   overflow-x: hidden;
+}
+
+*{
+    padding:0;
+    margin:0;
 }
 </style>

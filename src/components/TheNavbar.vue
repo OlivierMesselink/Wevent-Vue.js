@@ -2,7 +2,7 @@
   <section id="navWrapper">
     <div id="navContent">
       <div @click="$router.push('/')" id="logo">
-        <img :src="pageslogoImg" />
+        <img :src="logoImg" />
       </div>
       <div id="navButtons">
         <base-button @click="login" v-if="!loggedIn" buttonStyle="solid"

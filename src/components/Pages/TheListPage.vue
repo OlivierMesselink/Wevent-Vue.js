@@ -44,7 +44,9 @@
             :buttonStyle="getButtonstyle"
             >{{ getButtonTxt }}</base-button
           >
-          <div id="searchbar"><the-mini-searchbar></the-mini-searchbar></div>
+          <div id="searchbar"><the-mini-searchbar
+            @reload="reload"
+          ></the-mini-searchbar></div>
         </CustomControl>
         <Marker
           v-for="item in list"
@@ -109,6 +111,9 @@ export default {
     };
   },
   methods: {
+    reload(){
+      this.loadList2()
+      },
     closeList() {
       this.listIsOpen = !this.listIsOpen;
     },

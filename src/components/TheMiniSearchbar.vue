@@ -1,5 +1,9 @@
 <template>
-  <div id="searchbarWrapper" @mouseenter="hover = true" @mouseleave="hover = false">
+  <div
+    id="searchbarWrapper"
+    @mouseenter="hover = true"
+    @mouseleave="hover = false"
+  >
     <div id="baseWrapper">
       <div id="locationDiv">
         <div @click="toggleLocation">
@@ -40,10 +44,10 @@
               <fa
                 class="ico"
                 icon="minus-circle"
-                @click="changeAmount(-1)"
+                @click="subtractAmount()"
               ></fa>
               <h2>{{ localSearchQuery.amount }}</h2>
-              <fa class="ico" icon="plus-circle" @click="changeAmount(1)"></fa>
+              <fa class="ico" icon="plus-circle" @click="addAmount()"></fa>
             </div>
           </div>
         </transition>
@@ -114,16 +118,18 @@
       <div id="dateDiv">
         <div @click="toggleDate">
           <h3 id="dateH3">Wanneer wil je gaan?</h3>
-          <p id="dateP">
-            {{ displayCorrectDate }} om {{ localSearchQuery.time }}
-          </p>
+          <p id="dateP">{{ displayCorrectDate }} om {{ getTime }}</p>
         </div>
         <transition name="fade">
           <div v-if="dateBoxOpen" class="dropdown" id="dateDropdown">
-            <h3 id="amountH3">Selecteer een tijdstip:</h3>
-            <input type="date" v-model="localSearchQuery.date" />
-            <input type="time" v-model="localSearchQuery.time" />
-            <base-button @click="setCurrentTimeAndDate" id="todayButton" buttonStyle='hollow'>Vandaag</base-button>
+            <DatePicker
+              mode="dateTime"
+              v-model="localSearchQuery.date"
+              color="orange"
+              :model-config="dateConfig"
+              :minute-increment="5"
+              is24hr
+            />
           </div>
         </transition>
       </div>
@@ -139,19 +145,23 @@
 
 <script>
 import TheBudgetRating from "./UI/TheBudgetRating.vue";
+import { DatePicker } from "v-calendar";
 
 export default {
   components: {
     TheBudgetRating,
+    DatePicker,
   },
+  emits: ["reload"],
   data() {
+    this;
     return {
       localSearchQuery: {
-        location: "Nijmegen - Centrum",
-        amount: 2,
-        budget: 2,
+        location: this.$route.params.location,
+        amount: this.$route.params.amount,
+        budget: this.$route.params.budget,
         date: "",
-        time: null,
+        time: "",
       },
       locationBoxOpen: false,
       amountBOxOpen: false,
@@ -160,7 +170,10 @@ export default {
 
       locations: this.$store.state.locations,
 
-      hover: true
+      dateConfig: {
+        type: "string",
+        mask: "dDD-MM-YYYY-HH:mm",
+      },
     };
   },
 
@@ -173,17 +186,47 @@ export default {
         return "persoon";
       }
     },
-    /* converts american date notation to europe notation */
     displayCorrectDate() {
+      const searchDate = this.$route.params.longDate;
       const workDate = this.localSearchQuery.date;
-      const year = workDate.slice(0, 4);
-      const month = workDate.slice(5, 7);
-      const day = workDate.slice(8, 10);
-
-      return day + "-" + month + "-" + year;
+      if (this.localSearchQuery.date == "") {
+        return searchDate;
+      } else {
+        return workDate.slice(1, 11);
+      }
+    },
+    getWeekdays() {
+      var day = this.localSearchQuery.date.slice(0, 1);
+      if (day == 1) {
+        return "monday";
+      }
+      if (day == 2) {
+        return "thuesday";
+      }
+      if (day == 3) {
+        return "wednesday";
+      }
+      if (day == 4) {
+        return "thursday";
+      }
+      if (day == 5) {
+        return "friday";
+      }
+      if (day == 6) {
+        return "saturday";
+      } else {
+        return "sunday";
+      }
+    },
+    getTime() {
+      const searchTime = this.$route.params.time;
+      if (this.localSearchQuery.date == "") {
+        return searchTime;
+      } else {
+        return this.localSearchQuery.date.slice(12, 17);
+      }
     },
   },
-
   methods: {
     /* The following four methods make sure all other dropwowns are closed before
     opening the according dropdown */
@@ -212,37 +255,53 @@ export default {
       this.dateBoxOpen = !this.dateBoxOpen;
     },
     /* makes sure amount var does not exceed 8 or falls below 1 */
-    changeAmount(change) {
-      this.localSearchQuery.amount = this.localSearchQuery.amount + change;
-      if (this.localSearchQuery.amount <= 1) {
-        this.localSearchQuery.amount = 1;
+    // changeAmount(change) {
+    //   this.localSearchQuery.amount = this.localSearchQuery.amount + change;
+    //   if (this.localSearchQuery.amount <= 1) {
+    //     this.localSearchQuery.amount = 1;
+    //   }
+    //   if (this.localSearchQuery.amount >= 12) {
+    //     this.localSearchQuery.amount = 12;
+    //   }
+    // },
+    subtractAmount() {
+      if (this.localSearchQuery.amount > 1) {
+        this.localSearchQuery.amount--;
       }
-      if (this.localSearchQuery.amount >= 8) {
-        this.localSearchQuery.amount = 8;
+    },
+    addAmount() {
+      if (this.localSearchQuery.amount < 12) {
+        this.localSearchQuery.amount++;
       }
     },
     setLocation(newLocation) {
       this.localSearchQuery.location = newLocation;
     },
-    /* finds current time and date and updates searchQuery */
-    setCurrentTimeAndDate() {
-      const today = new Date();
-      const date =
-        today.getFullYear() +
-        "-" +
-        "0" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
-      const time = today.getHours() + 2 + ":" + today.getMinutes();
+    submitSearchQuery() {
+      var location = this.localSearchQuery.location;
+      var budget = this.localSearchQuery.budget;
+      var amount = this.localSearchQuery.amount;
+      var date = this.getWeekdays;
+      var time = this.getTime;
+      var longDate = this.displayCorrectDate;
+      var searchUrl =
+        "/search/" +
+        location +
+        "/" +
+        budget +
+        "/" +
+        amount +
+        "/" +
+        date +
+        "/" +
+        time +
+        "/" +
+        longDate;
 
-      this.localSearchQuery.time = time;
-      this.localSearchQuery.date = date;
+        this.$router.push(searchUrl)
     },
   },
-  mounted() {
-    this.setCurrentTimeAndDate();
-  },
+  
 };
 </script>
 
@@ -255,7 +314,6 @@ export default {
 #searchButton {
   margin: 0 0 0 -30px;
 }
-
 
 #baseWrapper {
   display: flex;
@@ -364,7 +422,6 @@ export default {
   margin-left: -25px;
 }
 
-
 #budgetDropdown {
   display: flex;
   width: 80%;
@@ -437,15 +494,15 @@ input[type="range"]:focus::-webkit-slider-runnable-track {
   background: #ccc;
 }
 
-#dateDropdown{
+#dateDropdown {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
 
-#todayButton{
-  margin: 15px 0 0 0 ;
+#todayButton {
+  margin: 15px 0 0 0;
 }
 
 #dateDropdown input[type="date"] {
@@ -512,6 +569,4 @@ input[type="date"]::-webkit-clear-button {
   opacity: 0;
   transform: scale(0.5);
 }
-
-
 </style>

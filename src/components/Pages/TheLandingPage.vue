@@ -18,7 +18,7 @@
       </div>
     </section>
 
-    <section class="child">
+    <section v-if="!loggedIn" class="child" >
       <the-account-ad></the-account-ad>
     </section>
 
@@ -32,6 +32,7 @@
 import TheSearchbar from "../TheSearchbar.vue";
 import TheAccountAd from "../TheAccountAd.vue";
 import TheFeaturedList from "../TheFeaturedList.vue";
+import { projectAuth } from "../../firebaseConfig.js"
 
 export default {
   components: {
@@ -45,8 +46,17 @@ export default {
         title: "leip cafe",
         link: "https://www.leipcafe.nl",
       },
+      loggedIn: false
     };
   },
+  mounted(){
+    projectAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.loggedIn = true
+      }
+      else(this.loggedIn = false)
+    });
+  }
 };
 </script>
 

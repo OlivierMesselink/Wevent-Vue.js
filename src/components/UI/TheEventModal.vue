@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <div id="modalBody">
-      <div id="imageDiv" :style="{ backgroundImage: 'url(' + listItem.imageLink + ')' }"></div>
+      <div v-if="listItem.imagelink" id="imageDiv" :style="{ backgroundImage: 'url(' + listItem.imageLink + ')' }"></div>
       <div id="contentDiv">
         <h1>{{ listItem.title }}</h1>
         <h2>{{ listItem.subtitle }}</h2>
@@ -9,7 +9,7 @@
       </div>
       <div id="buttonDiv">
         <base-button id="closeButton" @click="$emit('close')" buttonStyle="hollow">Sluiten </base-button>
-        <base-button buttonStyle="solid" @click="$router.push('/search')">Reserveren</base-button>
+        <base-button buttonStyle="solid" @click="$router.push(getUrl)">Reserveren</base-button>
       </div>
     </div>
   </div>
@@ -21,14 +21,19 @@ export default {
   components: { BaseButton },
   props: ["listItem"],
   emits:['close'],
-  data() {
-    return {
-      title: "Bistrobar Bankoh",
-      location: "Nijmegen",
-      desciption: "123467890",
-      img: "https://media-cdn.tripadvisor.com/media/photo-s/18/e7/f0/30/bistrobar-bankoh.jpg"
-    };
-  },
+  computed:{
+    getUrl(){
+      var date = new Date()
+      var year = date.getFullYear()
+      var month = date.getMonth()
+      var day = date.getDay()
+
+      var today = day + '-' + month + '-' + year
+
+      var url = "/search/" + this.listItem.city + "/" + 4 + "/" + 4 + "/friday/19:00/" + today
+      return url
+    }
+  }
 };
 </script>
 

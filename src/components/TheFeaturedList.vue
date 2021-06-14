@@ -61,6 +61,7 @@ export default {
               lang: data[id].lang,
               category: data[id].category,
               rating: data[id].rating,
+              city: data[id].city
             });
           }
           this.list = results;

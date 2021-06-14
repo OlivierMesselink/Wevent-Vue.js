@@ -14,7 +14,7 @@ const routes = [
     meta: { title: "Wevent.nl | Login" },
   },
   {
-    path: "/search/:location/:budget/:amount/:date/:time",
+    path: "/search/:location/:budget/:amount/:date/:time/:longDate",
     component: TheListPage,
     meta: { title: "Wevent.nl | Zoekopdracht" ,
     props: true

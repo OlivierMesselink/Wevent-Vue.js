@@ -1,11 +1,4 @@
 <template>
-  <the-event-modal
-    v-if="eventModal"
-    :listItem="eventModal"
-    @close="eventModal = null"
-    style="top: -100px"
-  ></the-event-modal>
-
   <div id="wrapper" v-cloak>
     <section id="navColumn">
       <h1>Jouw account</h1>
@@ -138,12 +131,6 @@
                     buttonStyle="confirmHollow"
                     >Annuleren</base-button
                   >
-                  <base-button
-                    @click="test(item)"
-                    id="confirmButton"
-                    buttonStyle="solid"
-                    >Bekijken</base-button
-                  >
                 </div>
               </li>
             </transition-group>
@@ -178,12 +165,10 @@
 <script>
 import { projectAuth } from "../../firebaseConfig.js";
 import TheModal from "./TheModal.vue";
-import TheEventModal from "../UI/TheEventModal.vue";
 
 export default {
   components: {
     TheModal,
-    TheEventModal,
   },
   data() {
     return {
@@ -199,13 +184,9 @@ export default {
       authUser: {},
       removeModalOpen: false,
       passResetRequested: false,
-      eventModal: null,
     };
   },
   methods: {
-    test(item){
-      console.log(item)
-    },
     /* logs out the user */
     logout() {
       projectAuth
