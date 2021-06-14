@@ -26,7 +26,7 @@
 </template>
 
 <script>
-// import { projectAuth } from "../../firebaseConfig.js";
+import { projectAuth } from "../../../firebaseConfig.js";
 
 import TheContactdetails from "./TheContactdetails.vue";
 import TheDetails from "./TheDetails.vue";
