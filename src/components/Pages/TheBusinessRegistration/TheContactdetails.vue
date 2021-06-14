@@ -56,17 +56,21 @@
           <input id="email" type="text" placeholder="E-mailadres" />
         </div>
         <input id="website" type="text" placeholder="Website" />
-        <p style="color: crimson" v-if="invalidInput" id="invalid">Vul alle velden correct in en probeer opniew.</p>
+        <p style="color: crimson" v-if="invalidInput" id="invalid">
+          Vul alle velden correct in en probeer opniew.
+        </p>
       </div>
     </div>
 
-    <base-button @click="submitData" buttonStyle="pim">Volgende stap</base-button>
+    <base-button @click="submitData" buttonStyle="pim"
+      >Volgende stap</base-button
+    >
   </div>
 </template>
 
 <script>
 export default {
-  emits:['emitData'],
+  emits: ["emitData"],
   data() {
     return {
       register: {
@@ -79,31 +83,43 @@ export default {
         // email: "",
         // website: "",
       },
-      invalidInput: false
+      invalidInput: false,
     };
   },
   methods: {
     submitData() {
-      var newData = {}
-      newData.subtitle = this.register.street + " " +  this.register.number + " " + this.register.postal + " " +  this.register.city
-      newData.title = this.register.name
-      if(this.formIsFilled){
-      this.$emit('emitData', newData)}
-      else {this.invalidInput = true}
+      var newData = {};
+      newData.subtitle =
+        this.register.street +
+        " " +
+        this.register.number +
+        " " +
+        this.register.postal +
+        " " +
+        this.register.city;
+      newData.title = this.register.name;
+      if (this.formIsFilled) {
+        this.$emit("emitData", newData);
+      } else {
+        this.invalidInput = true;
+      }
     },
   },
-  computed:{
-    formIsFilled(){
-      if(
+  computed: {
+    formIsFilled() {
+      if (
         this.register.name == "" ||
         this.register.city == "" ||
         this.register.street == "" ||
         this.register.number == "" ||
-        this.register.postal == "" 
-      ){return false}
-      else  {return true}
-    }
-  }
+        this.register.postal == ""
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+  },
 };
 </script>
 
@@ -191,7 +207,7 @@ input[type="text"] {
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: white;
-  height: 700px;
+  height: 650px;
   padding: 70px;
   margin-left: 20%;
 }

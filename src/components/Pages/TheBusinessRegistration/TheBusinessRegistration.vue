@@ -21,6 +21,11 @@
       v-if="progressCounter == 4"
       @emitData="addTimes($event)"
     ></the-times>
+    <the-media v-if="progressCounter == 5" @next="advanceCounter"></the-media>
+    <the-success-page
+      v-if="progressCounter == 6"
+      @next="advanceCounter"
+    ></the-success-page>
     <!-- </transition-group> -->
   </div>
 </template>
@@ -33,6 +38,8 @@ import TheDetails from "./TheDetails.vue";
 import TheExplanation from "./TheExplanation.vue";
 import TheIntro from "./TheIntro.vue";
 import TheTimes from "./TheTimes.vue";
+import TheMedia from "./TheMedia.vue";
+import TheSuccessPage from "./TheSuccessPage.vue";
 
 export default {
   components: {
@@ -41,11 +48,13 @@ export default {
     TheContactdetails,
     TheDetails,
     TheTimes,
+    TheMedia,
+    TheSuccessPage,
   },
   data() {
     return {
       progressCounter: 0,
-      userId:"",
+      userId: "",
       registration: {
         //   category: {
         //     bar: false,
@@ -136,9 +145,9 @@ export default {
     projectAuth.onAuthStateChanged((user) => {
       if (user) {
         const id = user.uid;
-        this.userId = id
+        this.userId = id;
       } else {
-        this.$router.push('/')
+        this.$router.push("/");
       }
     });
   },
@@ -158,12 +167,14 @@ export default {
 
 #logo-top-left {
   position: absolute;
+  display: flex;
+  flex-flow: column wrap;
   background-size: contain;
   background-repeat: no-repeat;
   top: 8%;
   left: 5%;
   height: 10vh;
-  width: 100vw;
+  width: 10%;
   background-image: url("../../../assets/wevent_logo.png");
   cursor: pointer;
 }

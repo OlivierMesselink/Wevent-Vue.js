@@ -114,4 +114,19 @@ button {
   background-color: var(--orange);
   color: white;
 }
+
+.disabled {
+  display: inline-block;
+  font-family: "open-sans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  border: #FE9462 3px solid;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 14px 55px;
+  background-color: #FE9462;
+  color: white;
+  opacity: 60%;
+}
 </style>

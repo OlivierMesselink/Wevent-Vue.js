@@ -114,9 +114,7 @@
       <div id="dateDiv">
         <div @click="toggleDate">
           <h3 id="dateH3">Wanneer wil je gaan?</h3>
-          <p id="dateP">
-            {{ displayCorrectDate }} om {{ getTime }}
-          </p>
+          <p id="dateP">{{ displayCorrectDate }} om {{ getTime }}</p>
         </div>
         <transition name="fade">
           <div v-if="dateBoxOpen" class="dropdown" id="dateDropdown">
@@ -185,10 +183,19 @@ export default {
     },
     displayCorrectDate() {
       const today = new Date();
-      const date = today.getDate() + "-" + "0" + (today.getMonth() + 1) +"-" + today.getFullYear()
+      const date =
+        today.getDate() +
+        "-" +
+        "0" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getFullYear();
       const workDate = this.localSearchQuery.date;
-      if (this.localSearchQuery.date == "") {return date}
-      else{return workDate.slice(1, 11);}
+      if (this.localSearchQuery.date == "") {
+        return date;
+      } else {
+        return workDate.slice(1, 11);
+      }
     },
     getWeekdays() {
       var day = this.localSearchQuery.date.slice(0, 1);
@@ -213,14 +220,16 @@ export default {
         return "sunday";
       }
     },
-    getTime(){
+    getTime() {
       const today = new Date();
       const time = today.getHours() + 2 + ":" + today.getMinutes();
-      if (this.localSearchQuery.date == "") {return time}
-      else{
-        console.log(this.localSearchQuery.date.slice(12, 17))
-        return this.localSearchQuery.date.slice(12, 17)}
-    }
+      if (this.localSearchQuery.date == "") {
+        return time;
+      } else {
+        console.log(this.localSearchQuery.date.slice(12, 17));
+        return this.localSearchQuery.date.slice(12, 17);
+      }
+    },
   },
 
   methods: {
@@ -268,7 +277,7 @@ export default {
       var budget = this.localSearchQuery.budget;
       var amount = this.localSearchQuery.amount;
       var date = this.getWeekdays;
-      var time = this.getTime
+      var time = this.getTime;
 
       var searchUrl =
         "/search/" +
@@ -281,7 +290,7 @@ export default {
         date +
         "/" +
         time;
-      this.$router.push(searchUrl)
+      this.$router.push(searchUrl);
     },
   },
 };
@@ -367,7 +376,6 @@ export default {
 
 #amountDropdown {
   margin-right: -40px;
-  display: ;
 }
 
 #changeAmountDiv {
