@@ -6,6 +6,7 @@
         <div>
           <h2>{{ data.restaurant }}</h2>
           <h3>{{ data.location }}</h3>
+          <h3>op: {{ data.date }}</h3>
         </div>
         <div id="boxesDiv">
           <div class="box">
@@ -88,7 +89,8 @@ export default {
           businessAcc: newUserData.businessAcc,
           email: newUserData.email,
           reservations:newUserData.reservations,
-          pinned: newUserData.pinned
+          pinned: newUserData.pinned,
+          restaurants: newUserData.restaurants
         }),
       })
         .then(this.$router.push('/'));

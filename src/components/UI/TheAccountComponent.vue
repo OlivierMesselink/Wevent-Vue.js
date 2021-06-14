@@ -36,8 +36,10 @@
           Onderneming toevoegen
         </h4>
         <h4
+          @click="gotoBusiness"
           class="navItem"
-          :class="{ grey: !user.businessAcc }"
+          :class="{ grey: !user.businessAcc, underline: openTab.business }"
+          
           id="manageBusiness"
         >
           Ondernemingen beheren
@@ -123,7 +125,17 @@
               <li v-for="item in reservations" :key="item.date">
                 <div class="listItem">
                   <h3>{{ item.restaurant }}</h3>
-                  <h4>Op {{ item.date + " om " + item.time }}</h4>
+                  <h4>
+                    Op
+                    {{
+                      item.date +
+                      " om " +
+                      item.time +
+                      " met " +
+                      item.amount +
+                      " personen"
+                    }}
+                  </h4>
                 </div>
                 <div class="listButtons">
                   <base-button
@@ -138,11 +150,20 @@
         </div>
       </transition>
       <transition name="tab" mode="out-in">
-        <div v-if="false" id="favoWrapper">
-          <h3 v-if="!user.pinned">Je hebt geen favorieten.</h3>
+        <div v-if="openTab.business" id="businessWrapper">
           <ul>
-            <li v-for="pin in user.pinned" :key="pin">
-              <h4>{{ pin }}</h4>
+            <li class="businessItem" v-for="item in businessRestaurants" :key="item.title">
+              <div class="listItem">
+                <h3>{{ item.title }}</h3>
+                <h4>{{ item.subtitle }}</h4>
+              </div>
+              <div>
+                <fa v-if="item.category.bar" class="ico" icon="beer"></fa>
+                <fa v-if="item.category.lunch" class="ico" icon="coffee"></fa>
+                <fa v-if="item.category.restaurant" class="ico" icon="utensils"></fa>
+                <fa v-if="item.category.hotel" class="ico" icon="bed"></fa>
+                <fa v-if="item.category.movie" class="ico" icon="film"></fa>
+              </div>
             </li>
           </ul>
         </div>
@@ -178,12 +199,14 @@ export default {
         acc: true,
         favo: false,
         reservations: false,
+        business: false,
       },
       reservations: null,
       favorites: null,
       authUser: {},
       removeModalOpen: false,
       passResetRequested: false,
+      businessRestaurants: null,
     };
   },
   methods: {
@@ -202,17 +225,26 @@ export default {
     gotoAccount() {
       this.openTab.reservations = false;
       this.openTab.favo = false;
+      this.openTab.business = false;
       this.openTab.acc = true;
     },
     gotoFavo() {
       this.openTab.reservations = false;
       this.openTab.acc = false;
+      this.openTab.business = false;
       this.openTab.favo = true;
     },
     gotoReservations() {
       this.openTab.favo = false;
       this.openTab.acc = false;
+      this.openTab.business = false;
       this.openTab.reservations = true;
+    },
+    gotoBusiness() {
+      this.openTab.favo = false;
+      this.openTab.acc = false;
+      this.openTab.reservations = false;
+      this.openTab.business = true;
     },
     /* loads in the data of the correct user */
     loadUserData(Id) {
@@ -230,6 +262,7 @@ export default {
         .then((data) => {
           this.user = data;
           this.reservations = data.reservations;
+          this.businessRestaurants = data.restaurants;
         });
     },
     /* removes user from firebase Auth and firebase realtime database */
@@ -744,6 +777,31 @@ export default {
   .li-enter-active,
   .li-leave-active {
     transition: all 0.1s ease-in-out;
+  }
+
+  .businessItem{
+    background-color: var(--orange);
+    align-items: center;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+  }
+  
+  .businessItem:hover{
+    transform: scale(1.02);
+  }
+
+  .businessItem h3{
+    color: black;
+  }
+  .businessItem h4{
+    color: white;
+    font-weight: 500;
+  }
+
+  .ico{
+    color: black;
+    font-size: 18px;
+    margin: 0 5px;
   }
 }
 </style>

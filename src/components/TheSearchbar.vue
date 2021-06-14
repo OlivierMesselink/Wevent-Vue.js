@@ -276,7 +276,6 @@ export default {
       var time = this.getTime
       var longDate = this.displayCorrectDate
 
-
       var searchUrl =
         "/search/" +
         location +

@@ -90,8 +90,9 @@ export default {
         location: this.$route.params.location,
         budget: this.$route.params.budget,
         amount: this.$route.params.amount,
-        date: this.$route.params.date,
+        date: this.$route.params.longDate,
         time: this.$route.params.time,
+        day: this.$route.params.date,
       },
       center: { lat: 51.84768967381224, lng: 5.854428604054124 },
       listIsOpen: true,
@@ -107,6 +108,7 @@ export default {
         city: "Nijmegen",
         time: "",
         date: "",
+        day: ""
       },
     };
   },
@@ -147,6 +149,8 @@ export default {
       this.modalData.time = this.localSearchQuery.time;
       this.modalData.location = item.subtitle;
       this.modalData.date = this.localSearchQuery.date;
+      this.modalData.day = this.localSearchQuery.day;
+
     },
     loadList2() {
       var location = this.$route.params.location;

@@ -21,10 +21,10 @@
       v-if="progressCounter == 4"
       @emitData="addTimes($event)"
     ></the-times>
-    <the-media v-if="progressCounter == 5" @next="advanceCounter"></the-media>
+    <the-media v-if="progressCounter == 5" @next="uploadData()"></the-media>
     <the-success-page
       v-if="progressCounter == 6"
-      @next="advanceCounter"
+      @next="$router.push('/account')"
     ></the-success-page>
     <!-- </transition-group> -->
   </div>
@@ -55,67 +55,8 @@ export default {
     return {
       progressCounter: 0,
       userId: "",
-      registration: {
-        //   category: {
-        //     bar: false,
-        //     restaurant: false,
-        //     hotel: false,
-        //     lunch: false,
-        //   },
-        //   attendees: {
-        //     max: "",
-        //     min: "",
-        //   },
-        //   budget: "",
-        //   dates: {
-        //     monday: {
-        //       expect: null,
-        //       from: "",
-        //       till: "",
-        //     },
-        //     tuesday: {
-        //       expect: null,
-        //       from: "",
-        //       till: "",
-        //     },
-        //     wednesday: {
-        //       expect: null,
-        //       from: "",
-        //       till: "",
-        //     },
-        //     thursdag: {
-        //       expect: null,
-        //       from: "",
-        //       till: "",
-        //     },
-        //     friday: {
-        //       expect: null,
-        //       from: "",
-        //       till: "",
-        //     },
-        //     saturday: {
-        //       expect: null,
-        //       from: "",
-        //       till: "",
-        //     },
-        //     sunday: {
-        //       expect: null,
-        //       from: "",
-        //       till: "",
-        //     },
-        //   },
-        //   name: "",
-        //   description: "",
-        //   city: "",
-        //   street: "",
-        //   number: "",
-        //   postal: "",
-        //   imgLink: "",
-        //   lang: "",
-        //   lat: "",
-        //   rating: "",
-        //   split: null,
-      },
+      user: null,
+      registration: {},
     };
   },
   methods: {
@@ -125,6 +66,7 @@ export default {
     addContact(payload) {
       this.registration.title = payload.title;
       this.registration.subtitle = payload.subtitle;
+      this.registration.city = payload.city;
       this.progressCounter++;
     },
     addDetails(payload) {
@@ -132,23 +74,85 @@ export default {
       this.registration.budget = payload.budget;
       this.registration.category = payload.category;
       this.registration.description = payload.description;
-      console.log(this.registration.description);
       this.progressCounter++;
     },
     addTimes(payload) {
       this.registration.dates = payload;
       this.progressCounter++;
     },
-  },
-  oploadData() {
-    
+    uploadData() {
+      var city = this.registration.city.toLowerCase();
+      const fetchUrl =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/" +
+        city +
+        "/restaurants/" +
+        this.registration.title +
+        ".json";
 
+      fetch(fetchUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: this.registration.title,
+          location: this.registration.subtitle,
+          budget: this.registration.budget,
+          attendees: this.registration.attendees,
+          category: this.registration.category,
+          dates: this.registration.dates,
+          description: this.registration.description,
+          rating: 3,
+          split: 0,
+        }),
+      }).then(this.updateUser(this.user, this.userId));
+    },
+    updateUser(newUserData, userId) {
+      if(!newUserData.businessAcc) {newUserData.restaurants = []}
+      newUserData.restaurants.push(this.registration)
+      const userUrl =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        userId +
+        ".json";
+
+      fetch(userUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstname: newUserData.firstname,
+          lastname: newUserData.lastname,
+          businessAcc: true,
+          email: newUserData.email,
+          reservations: newUserData.reservations,
+          pinned: newUserData.pinned,
+          restaurants: newUserData.restaurants
+        }),
+      }).then(
+        this.progressCounter++
+      );
+    },
+    loadUserData(Id) {
+      const url =
+        "https://vuejs-e4bad-default-rtdb.europe-west1.firebasedatabase.app/Customers/" +
+        Id +
+        ".json";
+
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          this.user = data;
+        });
+    },
   },
+
   beforeCreate() {
     projectAuth.onAuthStateChanged((user) => {
       if (user) {
         const id = user.uid;
         this.userId = id;
+        this.loadUserData(id);
       } else {
         this.$router.push("/");
       }

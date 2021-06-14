@@ -89,15 +89,9 @@ export default {
   methods: {
     submitData() {
       var newData = {};
-      newData.subtitle =
-        this.register.street +
-        " " +
-        this.register.number +
-        " " +
-        this.register.postal +
-        " " +
-        this.register.city;
+      newData.subtitle = this.register.street + " " + this.register.number + " " + this.register.postal + " " + this.register.city;
       newData.title = this.register.name;
+      newData.city = this.register.city;
       if (this.formIsFilled) {
         this.$emit("emitData", newData);
       } else {

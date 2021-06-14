@@ -124,9 +124,6 @@
           ></textarea>
         </p>
       </div>
-      <p style="color: crimson" v-if="invalidInput" id="invalid">
-        Vul alle velden correct in en probeer opniew.
-      </p>
     </div>
     <div id="continue-btn">
       <base-button @click="submitData" buttonStyle="pim"
@@ -155,7 +152,6 @@ export default {
           movie: false,
         },
         description: null,
-        invalidInput: false,
       },
     };
   },

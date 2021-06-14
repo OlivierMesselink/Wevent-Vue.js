@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
     <div id="modalBody">
-      <div v-if="listItem.imagelink" id="imageDiv" :style="{ backgroundImage: 'url(' + listItem.imageLink + ')' }"></div>
+      <div id="imageDiv" :style="{ backgroundImage: 'url(' + listItem.imageLink + ')' }"></div>
       <div id="contentDiv">
         <h1>{{ listItem.title }}</h1>
         <h2>{{ listItem.subtitle }}</h2>
@@ -9,7 +9,7 @@
       </div>
       <div id="buttonDiv">
         <base-button id="closeButton" @click="$emit('close')" buttonStyle="hollow">Sluiten </base-button>
-        <base-button buttonStyle="solid" @click="$router.push(getUrl)">Reserveren</base-button>
+        <base-button buttonStyle="solid" @click="$router.push(getUrl)">Bekijken</base-button>
       </div>
     </div>
   </div>

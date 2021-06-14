@@ -24,13 +24,6 @@
           krijgt dan dat je al had.
         </p>
 
-        <!-- Ratings -->
-        <p class="items-margin">
-          <fa class="bullet-margin" icon="caret-right"></fa>
-          Je kunt op de landingspage in de spotlichten komen door ons eenmalig
-          een bedrag te betalen waardoor je twee weken (!) nog meer exposure
-          krijgt dan dat je al had.
-        </p>
 
         <!-- Prevent -->
         <p class="items-margin">
@@ -39,7 +32,7 @@
           beoordeling geven als ze daadwerkelijk bij je zijn komen eten en/of
           drinken aan de hand van een reservering die ze hebben gemaakt met
           Wevent.
-        </p>
+        </p>  
 
         <!-- Ratings -->
         <p class="items-margin">
