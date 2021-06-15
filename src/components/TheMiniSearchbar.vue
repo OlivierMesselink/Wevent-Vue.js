@@ -16,7 +16,7 @@
         </div>
         <transition name="fade">
           <div v-if="locationBoxOpen" class="dropdown">
-            <h3 id="amountH3">Selecteer een locatie:</h3>
+            <h3 id="amountH3">Selecteer locatie:</h3>
             <ul>
               <li
                 v-for="location in locations"
@@ -201,7 +201,7 @@ export default {
         return "monday";
       }
       if (day == 2) {
-        return "thuesday";
+        return "tuesday";
       }
       if (day == 3) {
         return "wednesday";

@@ -44,9 +44,9 @@
             :buttonStyle="getButtonstyle"
             >{{ getButtonTxt }}</base-button
           >
-          <div id="searchbar"><the-mini-searchbar
-            @reload="reload"
-          ></the-mini-searchbar></div>
+          <div id="searchbar">
+            <the-mini-searchbar @reload="reload"></the-mini-searchbar>
+          </div>
         </CustomControl>
         <Marker
           v-for="item in list"
@@ -108,14 +108,14 @@ export default {
         city: "Nijmegen",
         time: "",
         date: "",
-        day: ""
+        day: "",
       },
     };
   },
   methods: {
-    reload(){
-      this.loadList2()
-      },
+    reload() {
+      this.loadList();
+    },
     closeList() {
       this.listIsOpen = !this.listIsOpen;
     },
@@ -150,9 +150,11 @@ export default {
       this.modalData.location = item.subtitle;
       this.modalData.date = this.localSearchQuery.date;
       this.modalData.day = this.localSearchQuery.day;
-
     },
-    loadList2() {
+
+
+    
+    loadList() {
       var location = this.$route.params.location;
       var budget = this.$route.params.budget;
       var amount = this.$route.params.amount;
@@ -160,16 +162,8 @@ export default {
       var time = this.$route.params.time;
 
       const fetchUrl =
-        "http://owenhauptmeijer.pythonanywhere.com/" +
-        location +
-        "/" +
-        budget +
-        "/" +
-        amount +
-        "/" +
-        date +
-        "/" +
-        time;
+        "http://owenhauptmeijer.pythonanywhere.com/" + location + "/" + budget + "/" +
+        amount + "/" + date + "/" + time;
 
       fetch(fetchUrl)
         .then((response) => {
@@ -192,7 +186,9 @@ export default {
           }
           this.list = results;
         });
-    },
+    }, 
+
+
 
     expandItem(item) {
       if (this.openCard == item.title) {
@@ -243,7 +239,7 @@ export default {
     },
   },
   mounted() {
-    this.loadList2();
+    this.loadList();
   },
 };
 </script>

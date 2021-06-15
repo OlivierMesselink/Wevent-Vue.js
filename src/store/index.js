@@ -15,6 +15,7 @@ export default createStore({
     locations: [
       { id: 1, name: "Nijmegen" },
       { id: 2, name: "Arnhem" },
+      {id: 3, name: "Amersfoort"},
     ],
   },
   mutations: {

@@ -45,14 +45,14 @@
         <span class="van-span">Van</span>
 
         <input
-          v-model="register.thuesday.from1"
+          v-model="register.tuesday.from1"
           type="text"
           class="time-input"
           placeholder="Uur"
         />
         <label class="label-time" for="text">:</label>
         <input
-          v-model="register.thuesday.from2"
+          v-model="register.tuesday.from2"
           type="text"
           class="time-input"
           placeholder="Min"
@@ -60,14 +60,14 @@
         <span class="tot-span">tot</span>
 
         <input
-          v-model="register.thuesday.to1"
+          v-model="register.tuesday.to1"
           type="text"
           class="time-input"
           placeholder="Uur"
         />
         <label class="label-time" for="text">:</label>
         <input
-          v-model="register.thuesday.to2"
+          v-model="register.tuesday.to2"
           type="text"
           class="time-input"
           placeholder="Min"
@@ -268,7 +268,7 @@ export default {
           to1: "",
           to2: "",
         },
-        thuesday: {
+        tuesday: {
           from1: "",
           from2: "",
           to1: "",
@@ -310,7 +310,7 @@ export default {
   methods: {
     bundleData() {
       var monday = this.getMonday;
-      var thuesday = this.getThuesday;
+      var tuesday = this.gettuesday;
       var wednesday = this.getWednesday;
       var thursday = this.getThursday;
       var friday = this.getFriday;
@@ -318,7 +318,7 @@ export default {
       var sunday = this.getSunday;
       var dates = {
         monday,
-        thuesday,
+        tuesday,
         wednesday,
         thursday,
         friday,
@@ -337,13 +337,13 @@ export default {
       var monday = { from, except, till };
       return monday;
     },
-    getThuesday() {
+    gettuesday() {
       var from =
-      this.register.thuesday.from1 + ":" + this.register.thuesday.from2;
-      var till = this.register.thuesday.to1 + ":" + this.register.thuesday.to2;
+      this.register.tuesday.from1 + ":" + this.register.tuesday.from2;
+      var till = this.register.tuesday.to1 + ":" + this.register.tuesday.to2;
       var except = false;
-      var thuesday = { from, except, till };
-      return thuesday;
+      var tuesday = { from, except, till };
+      return tuesday;
     },
     getWednesday() {
       var from =

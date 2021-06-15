@@ -12,7 +12,7 @@
         </div>
         <transition name="fade">
           <div v-if="locationBoxOpen" class="dropdown">
-            <h3 id="amountH3">Selecteer een locatie:</h3>
+            <h3 id="amountH3">Selecteer locatie:</h3>
             <ul>
               <li
                 v-for="location in locations"
@@ -202,7 +202,7 @@ export default {
         return "monday";
       }
       if (day == 2) {
-        return "thuesday";
+        return "tuesday";
       }
       if (day == 3) {
         return "wednesday";
@@ -268,6 +268,18 @@ export default {
     setLocation(newLocation) {
       this.localSearchQuery.location = newLocation;
     },
+
+
+
+
+
+
+
+
+
+
+
+
     submitSearchQuery() {
       var location = this.localSearchQuery.location;
       var budget = this.localSearchQuery.budget;
@@ -276,24 +288,30 @@ export default {
       var time = this.getTime
       var longDate = this.displayCorrectDate
 
-      var searchUrl =
-        "/search/" +
-        location +
-        "/" +
-        budget +
-        "/" +
-        amount +
-        "/" +
-        date +
-        "/" +
-        time
-         + "/" + longDate
-
+      var searchUrl = "/search/" + location + "/" + budget + "/" + amount + "/" + date + "/" + time + "/" + longDate
       this.$router.push(searchUrl)
     },
   },
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style scoped>
 #searchbarWrapper {
