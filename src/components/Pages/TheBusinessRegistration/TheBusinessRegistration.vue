@@ -101,6 +101,9 @@ export default {
           dates: this.registration.dates,
           description: this.registration.description,
           rating: 3,
+          lang: 5,
+          lat: 51,
+          imgLink: "https://loadslammer.com/wp-content/uploads/2021/01/photo-placeholder-icon-17.jpg",
           split: 0,
         }),
       }).then(this.updateUser(this.user, this.userId));

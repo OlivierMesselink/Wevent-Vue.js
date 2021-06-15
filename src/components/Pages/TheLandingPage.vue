@@ -43,8 +43,8 @@ export default {
   data() {
     return {
       featured: {
-        title: "leip cafe",
-        link: "https://www.leipcafe.nl",
+        title: "BRASS Nijmegen",
+        link: "https://www.brassnijmegen.nl/",
       },
       loggedIn: false
     };

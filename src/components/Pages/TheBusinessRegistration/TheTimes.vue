@@ -254,7 +254,6 @@
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -308,61 +307,81 @@ export default {
       },
     };
   },
-  methods:{
-    bundleData(){
-      var monday = this.getMonday
-      var thuesday = this.getThuesday
-      var wednesday = this.getWednesday
-      var thursday = this.getThursday
-      var friday = this.getFriday
-      var saturday = this.getSaturday
-      var sunday = this.getSunday
-      var dates = {monday, thuesday, wednesday, thursday, friday, saturday, sunday}
+  methods: {
+    bundleData() {
+      var monday = this.getMonday;
+      var thuesday = this.getThuesday;
+      var wednesday = this.getWednesday;
+      var thursday = this.getThursday;
+      var friday = this.getFriday;
+      var saturday = this.getSaturday;
+      var sunday = this.getSunday;
+      var dates = {
+        monday,
+        thuesday,
+        wednesday,
+        thursday,
+        friday,
+        saturday,
+        sunday,
+      };
 
-      this.$emit('emitData', dates)
-    }
+      this.$emit("emitData", dates);
+    },
   },
   computed: {
     getMonday() {
       var from = this.register.monday.from1 + ":" + this.register.monday.from2;
-      var to = this.register.monday.to1 + ":" + this.register.monday.to2;
-      var monday = { from, to };
+      var till = this.register.monday.to1 + ":" + this.register.monday.to2;
+      var except = false;
+      var monday = { from, except, till };
       return monday;
     },
     getThuesday() {
-      var from = this.register.thuesday.from1 + ":" + this.register.thuesday.from2;
-      var to = this.register.thuesday.to1 + ":" + this.register.thuesday.to2;
-      var thuesday = { from, to };
+      var from =
+      this.register.thuesday.from1 + ":" + this.register.thuesday.from2;
+      var till = this.register.thuesday.to1 + ":" + this.register.thuesday.to2;
+      var except = false;
+      var thuesday = { from, except, till };
       return thuesday;
     },
     getWednesday() {
-      var from = this.register.wednesday.from1 + ":" + this.register.wednesday.from2;
-      var to = this.register.wednesday.to1 + ":" + this.register.wednesday.to2;
-      var wednesday = { from, to };
+      var from =
+      this.register.wednesday.from1 + ":" + this.register.wednesday.from2;
+      var till =
+      this.register.wednesday.to1 + ":" + this.register.wednesday.to2;
+      var except = false;
+      var wednesday = { from, except, till };
       return wednesday;
     },
     getThursday() {
-      var from = this.register.thursday.from1 + ":" + this.register.thursday.from2;
-      var to = this.register.thursday.to1 + ":" + this.register.thursday.to2;
-      var thursday = { from, to };
+      var from =
+      this.register.thursday.from1 + ":" + this.register.thursday.from2;
+      var till = this.register.thursday.to1 + ":" + this.register.thursday.to2;
+      var except = false;
+      var thursday = { from, except, till };
       return thursday;
     },
     getFriday() {
       var from = this.register.friday.from1 + ":" + this.register.friday.from2;
-      var to = this.register.friday.to1 + ":" + this.register.friday.to2;
-      var friday = { from, to };
+      var till = this.register.friday.to1 + ":" + this.register.friday.to2;
+      var except = false;
+      var friday = { from, except, till };
       return friday;
     },
     getSaturday() {
-      var from = this.register.saturday.from1 + ":" + this.register.saturday.from2;
-      var to = this.register.saturday.to1 + ":" + this.register.saturday.to2;
-      var saturday = { from, to };
+      var from =
+      this.register.saturday.from1 + ":" + this.register.saturday.from2;
+      var till = this.register.saturday.to1 + ":" + this.register.saturday.to2;
+      var except = false;
+      var saturday = { from, except, till };
       return saturday;
     },
     getSunday() {
       var from = this.register.sunday.from1 + ":" + this.register.sunday.from2;
-      var to = this.register.sunday.to1 + ":" + this.register.sunday.to2;
-      var sunday = { from, to };
+      var till = this.register.sunday.to1 + ":" + this.register.sunday.to2;
+      var except = false;
+      var sunday = { from, except, till };
       return sunday;
     },
   },

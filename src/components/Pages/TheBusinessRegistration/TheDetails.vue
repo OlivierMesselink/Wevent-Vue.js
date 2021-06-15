@@ -157,6 +157,23 @@ export default {
   },
   methods: {
     submitData() {
+      var register = this.register
+
+      var oldMin = this.register.attendees.min
+      var oldMax = this.register.attendees.max
+      var oldBudget = this.register.budget
+
+      var newMin = parseInt(oldMin)
+      var newMax = parseInt(oldMax)
+      var newBudget = parseInt(oldBudget)
+
+      register.attendees.min = newMin
+      register.attendees.max = newMax
+      register.budget = newBudget
+
+
+      console.log(register)
+
       this.$emit("emitData", this.register);
     },
   },
