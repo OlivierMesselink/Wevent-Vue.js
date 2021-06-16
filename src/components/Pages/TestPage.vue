@@ -2,66 +2,92 @@
   <kinesis-container>
     <section>
       <div id="wrapper">
-        <kinesis-element id="kinesis" :strength="6" type="depth">
-          <div
-            id="creditcardWrapper"
-            v-bind:style="{ backgroundImage: 'url(' + getImgLink + ')' }"
-          >
-            <div id="creditCard">
-              <div id="creditContent">
-                <div id="imgDiv">
-                  <img
-                    id="chip"
-                    src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
-                  />
-                  <img id="visa" src="../../assets/visa.png" />
-                </div>
-                <div id="number">
-                  <h1 :key="cardNumber">
-                    {{
-                      cardNumber.slice(0, 4) +
-                      " " +
-                      cardNumber.slice(4, 8) +
-                      " " +
-                      cardNumber.slice(8, 12) +
-                      " " +
-                      cardNumber.slice(12, 16)
-                    }}
-                  </h1>
-                </div>
-                <div id="cardDetails">
-                  <div id="detailsSmall">
-                    <div class="small">
-                      <p>Card holder</p>
-                      <h2>{{ cardName }}</h2>
-                    </div>
-                    <div class="small">
-                      <p>Expires</p>
-                      <h2>{{ cardMonth }} / {{ cardYear }}</h2>
+        <kinesis-element id="kinesis" :strength="4" type="depth">
+          <transition name="flip" tag="div" mode="out-in">
+            <div
+              id="creditcardWrapper"
+              v-bind:style="{ backgroundImage: 'url(' + getImgLink + ')' }"
+              v-if="displayFront"
+            >
+              <div id="creditCard">
+                <div id="creditContent">
+                  <div id="imgDiv">
+                    <img
+                      id="chip"
+                      src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
+                    />
+                    <img id="visa" src="../../assets/visa.png" />
+                  </div>
+                  <div id="number">
+                    <h1 :key="cardNumber">
+                      {{
+                        cardNumber.slice(0, 4) +
+                        " " +
+                        cardNumber.slice(4, 8) +
+                        " " +
+                        cardNumber.slice(8, 12) +
+                        " " +
+                        cardNumber.slice(12, 16)
+                      }}
+                    </h1>
+                  </div>
+                  <div id="cardDetails">
+                    <div id="detailsSmall">
+                      <div class="small">
+                        <p>Card holder</p>
+                        <h2>{{ cardName }}</h2>
+                      </div>
+                      <div class="small">
+                        <p>Expires</p>
+                        <h2>{{ cardMonth }} / {{ cardYear }}</h2>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+            <div
+              id="creditcardWrapperBack"
+              v-bind:style="{ backgroundImage: 'url(' + getImgLink + ')' }"
+              v-else
+            >
+              <div id="creditCardBack">
+                <div id="blackBar"></div>
+                <div id="creditContentBack">
+                  <h2 id="cvch2">{{ cardCvc }}</h2>
+                  <div>
+                    <img id="visa" src="../../assets/visa.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
         </kinesis-element>
         <div id="creditFormWrapper">
           <div id="creditForm">
             <label>Card number</label>
             <input
+              @focus="displayFront = true"
+              @click="displayFront = true"
               type="text"
               name="cardNumber"
               v-model="inputNumber"
               maxlength="16"
             />
             <label>Card holder</label>
-            <input type="text" name="cardHolder" v-model="inputName" />
+            <input
+              type="text"
+              name="cardHolder"
+              v-model="inputName"
+              @focus="displayFront = true"
+            />
             <div id="smallInput">
               <div id="expireDiv">
                 <label>Expiration date</label>
                 <div>
-                  <select type="select" v-model="cardMonth">
+                  <select type="select" v-model="cardMonth" @click="displayFront = true" @focus="displayFront = true" >
                     <option
+                      
                       v-for="month in months"
                       :key="month.id"
                       :value="month.value"
@@ -69,7 +95,12 @@
                       {{ month.id }}
                     </option>
                   </select>
-                  <select type="select" v-model="cardYear">
+                  <select
+                    type="select"
+                    v-model="cardYear"
+                    @click="displayFront = true"
+                    @focus="displayFront = true"
+                  >
                     <option
                       v-for="year in years"
                       :key="year"
@@ -82,7 +113,14 @@
               </div>
               <div id="CVCDiv">
                 <label for="CVC">CVC</label>
-                <input type="number" name="CVC" />
+                <input
+                  v-model="cardCvc"
+                  type="number"
+                  name="CVC"
+                  min="000"
+                  max="9999"
+                  @focus="displayFront = false"
+                />
               </div>
             </div>
             <button id="confirmButton">Submit</button>
@@ -111,8 +149,10 @@ export default {
       cardName: "FULL NAME",
       cardMonth: "MM",
       cardYear: "YY",
+      cardCvc: "123132",
       inputNumber: "",
       inputName: "",
+      displayFront: true,
       months: [
         { id: "January", value: "01" },
         { id: "Febuary", value: "02" },
@@ -203,7 +243,50 @@ section {
   background-color: rgba(1, 1, 1, 0.38);
 }
 
-#kinesis{
+#creditcardWrapperBack {
+  border-radius: 15px;
+  box-shadow: 3px 13px 30px 0px rgba(21, 34, 67, 0.2);
+  background-size: cover;
+  z-index: 1;
+  height: 300px;
+  width: 480px;
+  margin: 0 0 -60px 0;
+}
+
+#creditCardBack {
+  height: 300px;
+  border-radius: 15px;
+  background-color: rgba(1, 1, 1, 0.38);
+  padding: 40px 0;
+  box-sizing: border-box;
+}
+
+#cvch2 {
+  padding: 15px 20px;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  box-shadow: 3px 13px 30px 0px rgba(21, 34, 67, 0.2);
+
+}
+
+#creditContentBack {
+  height: inherit;
+  padding: 0 40px;
+  height: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#blackBar {
+  width: 100%;
+  height: 60px;
+  background-color: rgba(1, 1, 1, 0.9);
+}
+
+#kinesis {
   position: relative;
   z-index: 2;
 }
@@ -344,17 +427,20 @@ label {
   transform: scale(1.01);
 }
 
-.fade-enter-from {
-  opacity: 0;
+.flip-enter-from,
+.flip-leave-to {
+  transform: rotateY(85deg);
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.2s ease-in-out;
+.flip-enter-active {
+  transition: all 0.18s cubic-bezier(0.71, 0.03, 0.56, 0.85);
+}
+.flip-leave-active {
+  transition: all 0.18s cubic-bezier(0.71, 0.03, 0.56, 0.85);
 }
 
-.fade-enter-to,
-.fade-leave-from {
-  opacity: 1;
+.flip-enter-to,
+.flip-leave-from {
+  transform: rotateY(0deg);
 }
 </style>
