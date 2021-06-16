@@ -1,96 +1,106 @@
 <template>
-  <section>
-    <div id="wrapper">
-      <div
-        id="creditcardWrapper"
-        v-bind:style="{ backgroundImage: 'url(' + getImgLink + ')' }"
-      >
-        <div id="creditCard">
-          <div id="creditContent">
-            <div id="imgDiv">
-              <img
-                id="chip"
-                src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
-              />
-              <img id="visa" src="../../assets/visa.png" />
-            </div>
-            <div id="number">
-              <h1 :key="cardNumber">
-                {{
-                  cardNumber.slice(0, 4) +
-                  " " +
-                  cardNumber.slice(4, 8) +
-                  " " +
-                  cardNumber.slice(8, 12) +
-                  " " +
-                  cardNumber.slice(12, 16)
-                }}
-              </h1>
-            </div>
-            <div id="cardDetails">
-              <div id="detailsSmall">
-                <div class="small">
-                  <p>Card holder</p>
-                  <h2>{{ cardName }}</h2>
+  <kinesis-container>
+    <section>
+      <div id="wrapper">
+        <kinesis-element id="kinesis" :strength="6" type="depth">
+          <div
+            id="creditcardWrapper"
+            v-bind:style="{ backgroundImage: 'url(' + getImgLink + ')' }"
+          >
+            <div id="creditCard">
+              <div id="creditContent">
+                <div id="imgDiv">
+                  <img
+                    id="chip"
+                    src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
+                  />
+                  <img id="visa" src="../../assets/visa.png" />
                 </div>
-                <div class="small">
-                  <p>Expires</p>
-                  <h2>{{ cardMonth }} / {{ cardYear }}</h2>
+                <div id="number">
+                  <h1 :key="cardNumber">
+                    {{
+                      cardNumber.slice(0, 4) +
+                      " " +
+                      cardNumber.slice(4, 8) +
+                      " " +
+                      cardNumber.slice(8, 12) +
+                      " " +
+                      cardNumber.slice(12, 16)
+                    }}
+                  </h1>
+                </div>
+                <div id="cardDetails">
+                  <div id="detailsSmall">
+                    <div class="small">
+                      <p>Card holder</p>
+                      <h2>{{ cardName }}</h2>
+                    </div>
+                    <div class="small">
+                      <p>Expires</p>
+                      <h2>{{ cardMonth }} / {{ cardYear }}</h2>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div id="creditFormWrapper">
-        <div id="creditForm">
-          <label>Card number</label>
-          <input
-            type="text"
-            name="cardNumber"
-            v-model="inputNumber"
-            maxlength="16"
-          />
-          <label>Card holder</label>
-          <input type="text" name="cardHolder" v-model="inputName" />
-          <div id="smallInput">
-            <div id="expireDiv">
-              <label>Expiration date</label>
-              <div>
-                <select type="select" v-model="cardMonth">
-                  <option
-                    v-for="month in months"
-                    :key="month.id"
-                    :value="month.value"
-                  >
-                    {{ month.id }}
-                  </option>
-                </select>
-                <select type="select" v-model="cardYear">
-                  <option
-                    v-for="year in years"
-                    :key="year"
-                    :value="year.slice(2, 4)"
-                  >
-                    {{ year }}
-                  </option>
-                </select>
+        </kinesis-element>
+        <div id="creditFormWrapper">
+          <div id="creditForm">
+            <label>Card number</label>
+            <input
+              type="text"
+              name="cardNumber"
+              v-model="inputNumber"
+              maxlength="16"
+            />
+            <label>Card holder</label>
+            <input type="text" name="cardHolder" v-model="inputName" />
+            <div id="smallInput">
+              <div id="expireDiv">
+                <label>Expiration date</label>
+                <div>
+                  <select type="select" v-model="cardMonth">
+                    <option
+                      v-for="month in months"
+                      :key="month.id"
+                      :value="month.value"
+                    >
+                      {{ month.id }}
+                    </option>
+                  </select>
+                  <select type="select" v-model="cardYear">
+                    <option
+                      v-for="year in years"
+                      :key="year"
+                      :value="year.slice(2, 4)"
+                    >
+                      {{ year }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div id="CVCDiv">
+                <label for="CVC">CVC</label>
+                <input type="number" name="CVC" />
               </div>
             </div>
-            <div id="CVCDiv">
-              <label for="CVC">CVC</label>
-              <input type="number" name="CVC" />
-            </div>
+            <button id="confirmButton">Submit</button>
           </div>
-          <button id="confirmButton">Submit</button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </kinesis-container>
 </template>
 
 <script>
+import { KinesisContainer, KinesisElement } from "vue-kinesis";
+
 export default {
+  components: {
+    KinesisContainer,
+    KinesisElement,
+  },
   data() {
     return {
       imgLink:
@@ -118,7 +128,7 @@ export default {
         { id: "December", value: "12" },
       ],
       years: ["2022", "2023", "2024", "2025", "2026"],
-      imgLinks:[
+      imgLinks: [
         "https://images.unsplash.com/photo-1590856847323-0e481c3b1a8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
         "https://images.unsplash.com/photo-1576180510889-d91ca5078e14?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80",
         "https://images.unsplash.com/photo-1576180510889-d91ca5078e14?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80",
@@ -128,17 +138,15 @@ export default {
         "https://images.unsplash.com/photo-1577138017060-8ed59846a432?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1650&q=80",
         "https://images.unsplash.com/photo-1554188248-986adbb73be4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
         "https://images.unsplash.com/photo-1604076913837-52ab5629fba9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",
-        "https://images.unsplash.com/photo-1604076984203-587c92ab2e58?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
-
-
-      ]
+        "https://images.unsplash.com/photo-1604076984203-587c92ab2e58?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80",
+      ],
     };
   },
-  computed:{
-    getImgLink(){
-      var random = Math.floor(Math.random()* 10)
-      return this.imgLinks[random]
-    }
+  computed: {
+    getImgLink() {
+      var random = Math.floor(Math.random() * 10);
+      return this.imgLinks[random];
+    },
   },
   watch: {
     inputNumber() {
@@ -170,7 +178,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color:   #4d4d4d;
+  background-color: #4d4d4d;
 }
 
 #wrapper {
@@ -193,6 +201,11 @@ section {
   height: 300px;
   border-radius: 15px;
   background-color: rgba(1, 1, 1, 0.38);
+}
+
+#kinesis{
+  position: relative;
+  z-index: 2;
 }
 
 #creditContent {
@@ -262,7 +275,7 @@ p {
   background-color: white;
   box-shadow: 3px 13px 30px 0px rgba(21, 34, 67, 0.2);
   border-radius: 15px;
-  padding:  70px 40px 40px 40px;
+  padding: 70px 40px 40px 40px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -275,7 +288,6 @@ p {
   flex-direction: column;
   width: 90%;
   background-color: white;
-
 }
 
 input,
@@ -313,10 +325,10 @@ label {
   flex-direction: column;
 }
 
-#confirmButton{
-  background-color: #01497E;
+#confirmButton {
+  background-color: #01497e;
   border-radius: 5px;
-  border: 1px solid #01497E;
+  border: 1px solid #01497e;
   padding: 16px 10px;
   font-family: "Lato", sans-serif;
   color: white;
@@ -324,25 +336,25 @@ label {
   font-size: 16px;
   margin: 40px 0 20px 0;
   box-shadow: 3px 13px 30px 0px #00246654;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
 
-#confirmButton:hover{
-  transform: scale(1.01) ;
+#confirmButton:hover {
+  transform: scale(1.01);
 }
 
-.fade-enter-from{
+.fade-enter-from {
   opacity: 0;
 }
 
 .fade-enter-active,
-.fade-leave-active{
-  transition: all .2s ease-in-out;
+.fade-leave-active {
+  transition: all 0.2s ease-in-out;
 }
 
 .fade-enter-to,
-.fade-leave-from{
+.fade-leave-from {
   opacity: 1;
 }
 </style>

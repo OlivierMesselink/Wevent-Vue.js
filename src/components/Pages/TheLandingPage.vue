@@ -130,10 +130,13 @@ h1 {
 
 #featuredDiv a {
   font-family: "open-sans", sans-serif;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 16px;
   color: white;
   text-decoration: none;
+  background-color: rgba(1, 1, 1, .3) ;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 @media screen and (max-width: 1920px) {

@@ -74,6 +74,7 @@ import TheMiniNavbar from "../UI/TheMiniNavbar.vue";
 import TheMiniSearchbar from "../TheMiniSearchbar.vue";
 import TheReservationModal from "../UI/TheReservationModal.vue";
 
+
 export default {
   components: {
     GoogleMap,
